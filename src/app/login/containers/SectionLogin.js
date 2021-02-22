@@ -1,14 +1,15 @@
 import { connect } from 'react-redux';
-import Login from '../components/SectionLogin';
-import { fetchUserList } from '../actions';
-1
+import {logOut, processLoginForm} from '../actions';
+import SectionLogin from '../components/SectionLogin';
+
 const mapStateToProps = state => ({
     lukas: 'lukas'
 });
 
 //my redux actions
 const mapDispatchToProps = {
-    fetchUserList
+    processLoginForm,
+    logOut
   };
 
-  export default connect(mapStateToProps, mapDispatchToProps)(Login);
+  export default connect(mapStateToProps, mapDispatchToProps)(SectionLogin);

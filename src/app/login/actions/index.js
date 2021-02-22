@@ -1,8 +1,17 @@
-import { FETCH_USER_LIST } from '../../constants/actionTypes'
+import {
+    LOG_USER_OUT,
+    LOGIN_USER
+} from '../../constants/actionTypes'
 
-export const fetchUserList = () => ({
-    type: FETCH_USER_LIST,
-  });
+export const processLoginForm = (user) => ({
+    type: LOGIN_USER,
+    user,
+});
+
+export const logOut = () => ({
+    type: LOG_USER_OUT
+});
+
 
 
 

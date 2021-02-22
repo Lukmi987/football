@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
@@ -17,14 +17,31 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
+import {processLoginForm} from "../actions";
 
 const useStyles = makeStyles(styles);
 
-export default function SectionLogin({lukas, fetchUserList}) {
- 
+export default function SectionLogin({lukas, processLoginForm}) {
+  const [email, setEmail] = useState('');
+  const [pwd, setPwd] = useState('');
+  const [validated, setValidated] = useState(false);
+  const [isSignup, setIsSignup] = useState(true);
+
   useEffect(()=>{
-    console.log('my props',fetchUserList());
+    console.log('hello from ................')
+    const data = {
+      email: 'komprs.l@gmail.com',
+      pwd: 'testtest'
+    }
+    processLoginForm(data);
   })
+
+  const composeFormData = () => ({
+    email,
+    pwd,
+    isSignup,
+  });
+
   const classes = useStyles();
   return (
     <div className={classes.section}>
