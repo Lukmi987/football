@@ -30,7 +30,7 @@ export default function SectionLogin({lukas, processLoginForm}) {
   useEffect(()=>{
     console.log('hello from ................')
     const data = {
-      email: 'komprs.l@gmail.com',
+      email: 'humus@gmail.com',
       pwd: 'testtest'
     }
     processLoginForm(data);
@@ -86,26 +86,12 @@ export default function SectionLogin({lukas, processLoginForm}) {
                     </Button>
                   </div>
                 </CardHeader>
-                <p className={classes.divider}>Or Be Classical</p>
+                <p className={classes.divider}>Or Be Classicalllllllllll</p>
                 <CardBody>
-                  <CustomInput
-                    labelText="First Name..."
-                    id="first"
-                    formControlProps={{
-                      fullWidth: true
-                    }}
-                    inputProps={{
-                      type: "text",
-                      endAdornment: (
-                        <InputAdornment position="end">
-                          <People className={classes.inputIconsColor} />
-                        </InputAdornment>
-                      )
-                    }}
-                  />
                   <CustomInput
                     labelText="Email..."
                     id="email"
+                    handle = {() => console.log('jo v loginu kkk')}
                     formControlProps={{
                       fullWidth: true
                     }}

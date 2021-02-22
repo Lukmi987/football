@@ -14,12 +14,13 @@ export function* loginUser(action) {
     try {
         const response = yield axios.post(url,preparedData);
         console.log('v login user', response);
-        // const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
+        const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
         //new Date without args give us current date,
-        // localStorage.setItem('token', response.data.idToken);
+         localStorage.setItem('token', response.data.idToken);
         // yield put({type: SET_AUTH_INFO, loginAuthInfo});
         //yield put({type: });
     } catch (e) {
+        //if error execute authFail func
         console.log(e);
         // yield put({type: SET_AUTH_INFO, errorObject});
     }
