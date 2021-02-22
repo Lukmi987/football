@@ -17,7 +17,7 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
-import {processLoginForm} from "../actions";
+import image from "assets/img/pitchfromabove.jpg";
 
 const useStyles = makeStyles(styles);
 
@@ -44,7 +44,16 @@ export default function SectionLogin({lukas, processLoginForm}) {
 
   const classes = useStyles();
   return (
+    
     <div className={classes.section}>
+            <div
+        className={classes.pageHeader}
+        style={{
+          backgroundImage: "url(" + image + ")",
+          backgroundSize: "cover",
+          backgroundPosition: "top center"
+        }}
+            >
       <div className={classes.container}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={4}>
@@ -132,6 +141,7 @@ export default function SectionLogin({lukas, processLoginForm}) {
             </Card>
           </GridItem>
         </GridContainer>
+      </div>
       </div>
     </div>
   );
