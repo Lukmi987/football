@@ -20,6 +20,7 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/login
 import image from "assets/img/pitchfromabove.jpg";
 import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 const useStyles = makeStyles(styles);
 

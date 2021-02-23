@@ -1,6 +1,7 @@
 import { put, select } from 'redux-saga/effects';
 import axios from 'axios';
 import {SET_AUTH_INFO} from "../../constants/actionTypes";
+import { Router, Route, Switch } from "react-router-dom";
 
 export function* loginUser(action) {
     const { email, pwd, isSignup } = action.user;
@@ -17,6 +18,7 @@ export function* loginUser(action) {
         //new Date without args give us current date,
          localStorage.setItem('token', response.data.idToken);
          yield put({type: SET_AUTH_INFO, loginAuthInfo});
+
         //yield put({type: });
     } catch (e) {
         //if error execute authFail func

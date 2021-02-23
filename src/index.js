@@ -4,7 +4,7 @@ import { Provider } from 'react-redux';
 import store from './configureStore';
 import registerServiceWorker from './registerServiceWorker';
 import { createBrowserHistory } from "history";
-import { Router, Route, Switch } from "react-router-dom";
+import { Router, Route, Switch, Redirect } from "react-router-dom";
 
 import "assets/scss/material-kit-react.scss?v=1.9.0";
 
@@ -15,12 +15,19 @@ import ProfilePage from "views/ProfilePage/ProfilePage.js";
 //import LoginPage from "views/LoginPage/LoginPage.js";
 import Login from "app/login/containers/SectionLogin";
 
-var hist = createBrowserHistory();
+const token = localStorage.token;
+const hist = createBrowserHistory();
 
 ReactDOM.render(
   <Provider store={store}>
   <Router history={hist}>
     <Switch>
+      {token &&  <Redirect 
+        to={{ 
+        pathname: "http://localhost"
+      }}
+      />
+    }
       {/* <Route path="/landing-page" component={LandingPage} /> */}
       {/* <Route path="/profile-page" component={ProfilePage} /> */}
       <Route path="/login-page" component={Login} />
