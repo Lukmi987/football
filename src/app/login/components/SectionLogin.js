@@ -72,7 +72,7 @@ export default function SectionLogin({lukas, processLoginForm}) {
             <Card>
               <form className={classes.form}>
                 <CardHeader color="primary" className={classes.cardHeader}>
-                  <h4>Login</h4>
+                  {isSignup ? (<h4>Registrace</h4>) : (<h4>Prihlaseni</h4>)}
                   <div className={classes.socialLine}>
                     <Button
                       justIcon

@@ -38,7 +38,7 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Material Kit React"
+        brand="Material Kit Reactf sssssssssssssssssssssss"
         rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
@@ -64,7 +64,7 @@ export default function Components(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        <SectionBasics />
+        {/* <SectionBasics />
         <SectionNavbars />
         <SectionTabs />
         <SectionPills />
@@ -73,7 +73,7 @@ export default function Components(props) {
         <SectionJavascript />
         <SectionCarousel />
         <SectionCompletedExamples />
-        <SectionLogin />
+        <SectionLogin /> */}
         <GridItem md={12} className={classes.textCenter}>
           <Link to={"/login-page"} className={classes.link}>
             <Button color="primary" size="lg" simple>

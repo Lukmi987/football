@@ -120,7 +120,7 @@ export default function HeaderLinks(props) {
         <Button 
           color="transparent"
           className={classes.navLink}
-        >Login</Button>
+        >Přihlášní/Registrace</Button>
         </Link>
       </ListItem>
     </List>

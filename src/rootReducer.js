@@ -1,14 +1,15 @@
 import { combineReducers } from 'redux';
-import userList from "./app/users/reducers/userList";
+// import userList from "./app/users/reducers/userList";
+import login from "./app/login/reducers/login";
 
 //define how the store is going to look like
 
-const users = combineReducers({
-    userList
+const loginn = combineReducers({
+    login
 });
 
 const rootReducer = combineReducers({
-    users
+    loginn
 });
 
 export default rootReducer;
