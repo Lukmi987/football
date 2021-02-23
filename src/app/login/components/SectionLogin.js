@@ -18,6 +18,8 @@ import CustomInput from "components/CustomInput/CustomInput.js";
 
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
 import image from "assets/img/pitchfromabove.jpg";
+import Header from "../../../components/Header/Header";
+import HeaderLinks from "../../../components/Header/HeaderLinks";
 
 const useStyles = makeStyles(styles);
 
@@ -56,16 +58,14 @@ export default function SectionLogin({lukas, processLoginForm}) {
 
   const classes = useStyles();
   return (
-    
+<div>
+  <Header
+      brand="Login Page"
+      rightLinks={<HeaderLinks />}
+      fixed
+      color="white"
+  />
     <div className={classes.section}>
-            <div
-        className={classes.pageHeader}
-        style={{
-          backgroundImage: "url(" + image + ")",
-          backgroundSize: "cover",
-          backgroundPosition: "top center"
-        }}
-            >
       <div className={classes.container}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={4}>
@@ -144,12 +144,11 @@ export default function SectionLogin({lukas, processLoginForm}) {
                       autoComplete: "off"
                     }}
                   />
-                  <Button simple color="secondary" size="lg" onClick={switchAuthTypeHandler}>
-                    Prejdi na {isSignup ? 'Prihlasit se' : 'Registracaaaaaaaa'}
-                  </Button>
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
-
+                  <Button simple color="primary" size="medium" onClick={switchAuthTypeHandler}>
+                    Prejdi na {isSignup ? 'Prihlasit se' : 'Registraci'}
+                  </Button>
                   <Button simple color="primary" size="lg" onClick={handleSubmit}>
                     Submit
                   </Button>
@@ -159,7 +158,7 @@ export default function SectionLogin({lukas, processLoginForm}) {
           </GridItem>
         </GridContainer>
       </div>
-      </div>
     </div>
+</div>
   );
 }
