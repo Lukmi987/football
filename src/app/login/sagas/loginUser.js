@@ -3,14 +3,13 @@ import axios from 'axios';
 import {SET_AUTH_INFO} from "../../constants/actionTypes";
 
 export function* loginUser(action) {
-    const { email, pwd } = action.user;
+    const { email, pwd, isSignup } = action.user;
     const preparedData = {email, password: pwd, returnSecureToken: true };
 
-    // let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyDHgyJbZWnZHfyECzhyd8ncmPNWevtSDJg';
     let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAhtYO-ciJ2yxU2tnpznx5fXYtZPcZiOxg';
-    // if (!isSignup) {
-    //     url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyDHgyJbZWnZHfyECzhyd8ncmPNWevtSDJg';
-    // }
+    if (!isSignup) {
+        url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAhtYO-ciJ2yxU2tnpznx5fXYtZPcZiOxg';
+    }
     try {
         const response = yield axios.post(url,preparedData);
         console.log('v login user', response);

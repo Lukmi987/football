@@ -19,7 +19,7 @@ export default function CustomInput(props) {
     formControlProps,
     labelText,
     id,
-    handle,
+    handleInputChange,
     labelProps,
     inputProps,
     error,
@@ -73,7 +73,7 @@ export default function CustomInput(props) {
           underline: underlineClasses
         }}
         id={id}
-        onChange={handle}
+        onChange={handleInputChange}
         {...inputProps}
       />
     </FormControl>

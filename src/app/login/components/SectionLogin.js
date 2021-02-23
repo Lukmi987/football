@@ -33,7 +33,7 @@ export default function SectionLogin({lukas, processLoginForm}) {
       email: 'humus@gmail.com',
       pwd: 'testtest'
     }
-    processLoginForm(data);
+    // processLoginForm(data);
   })
 
   const composeFormData = () => ({
@@ -41,6 +41,18 @@ export default function SectionLogin({lukas, processLoginForm}) {
     pwd,
     isSignup,
   });
+
+  const handleInputChange = e => {
+    const id = e.target.id;
+    const value = e.target.value;
+    if(id === 'email') setEmail(value);
+    if(id === 'pwd') setPwd(value);
+  }
+  const handleSubmit = () => {
+    processLoginForm(composeFormData());
+  }
+
+  const switchAuthTypeHandler = () => isSignup ? setIsSignup(false) : setIsSignup(true);
 
   const classes = useStyles();
   return (
@@ -95,12 +107,12 @@ export default function SectionLogin({lukas, processLoginForm}) {
                     </Button>
                   </div>
                 </CardHeader>
-                <p className={classes.divider}>Or Be Classicalllllllllll</p>
+                <p className={classes.divider}>Or Be Classical</p>
                 <CardBody>
                   <CustomInput
                     labelText="Email..."
                     id="email"
-                    handle = {() => console.log('jo v loginu kkk')}
+                    handleInputChange = {handleInputChange}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -115,7 +127,8 @@ export default function SectionLogin({lukas, processLoginForm}) {
                   />
                   <CustomInput
                     labelText="Password"
-                    id="pass"
+                    id="pwd"
+                    handleInputChange = {handleInputChange}
                     formControlProps={{
                       fullWidth: true
                     }}
@@ -131,10 +144,14 @@ export default function SectionLogin({lukas, processLoginForm}) {
                       autoComplete: "off"
                     }}
                   />
+                  <Button simple color="secondary" size="lg" onClick={switchAuthTypeHandler}>
+                    Prejdi na {isSignup ? 'Prihlasit se' : 'Registracaaaaaaaa'}
+                  </Button>
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
-                  <Button simple color="primary" size="lg">
-                    Get started
+
+                  <Button simple color="primary" size="lg" onClick={handleSubmit}>
+                    Submit
                   </Button>
                 </CardFooter>
               </form>
