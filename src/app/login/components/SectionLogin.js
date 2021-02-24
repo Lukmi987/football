@@ -3,6 +3,7 @@ import React, {useEffect, useState} from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
+import Check from "@material-ui/icons/Check";
 // @material-ui/icons
 import People from "@material-ui/icons/People";
 import Email from "@material-ui/icons/Email";
@@ -15,31 +16,32 @@ import CardBody from "components/Card/CardBody.js";
 import CardFooter from "components/Card/CardFooter.js";
 import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
-
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
 import image from "assets/img/pitchfromabove.jpg";
 import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
-import { Router, Route, Switch, Redirect } from "react-router-dom";
 import Components from "../../../views/Components/Components";
 
 const useStyles = makeStyles(styles);
 
-export default function SectionLogin({ idToken, processLoginForm, history}) {
+export default function SectionLogin({ idToken, processLoginForm, history, errorMsg}) {
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
   const [validated, setValidated] = useState(false);
   const [isSignup, setIsSignup] = useState(true);
+  const [isPwdMinLength, setPwdMinLegth] = useState(false);
+  const [errorAlert, setErrorAlert] = useState(null);
 
   useEffect(()=>{
-        console.log('jo history',);
-        history.push('/','successLogin');
+        console.log('jo muj erorr',errorMsg,idToken);
+        setErrorAlert(errorMsg);
+        // history.push('/','successLogin');
   if(idToken) {
     history.push('/');
     console.log('jo existuje id token');
   }
-    }
-  )
+    },[errorMsg,idToken])
 
   const composeFormData = () => ({
     email,
@@ -51,10 +53,23 @@ export default function SectionLogin({ idToken, processLoginForm, history}) {
     const id = e.target.id;
     const value = e.target.value;
     if(id === 'email') setEmail(value);
-    if(id === 'pwd') setPwd(value);
+    if(id === 'pwd') {
+      if(value.length >= 6){
+      setPwd(value);
+      setPwdMinLegth(true);
+      } else {
+        setPwdMinLegth(false);
+      }
+    } 
   }
+
   const handleSubmit = () => {
-    processLoginForm(composeFormData());
+    if(isPwdMinLength){
+      processLoginForm(composeFormData())
+      setErrorAlert(null);
+    }else {
+      setErrorAlert('MIn lenght neni kurva6');
+    }
   }
 
   const switchAuthTypeHandler = () => isSignup ? setIsSignup(false) : setIsSignup(true);
@@ -72,6 +87,17 @@ export default function SectionLogin({ idToken, processLoginForm, history}) {
       <div className={classes.container}>
         <GridContainer justify="center">
           <GridItem xs={12} sm={12} md={4}>
+          <SnackbarContent
+        message={
+          <span>
+            <b>Warning Alert:</b> You{"'"}ve got some friends nearby, stop
+            looking at your phone and find them...
+          </span>
+        }
+        close
+        color="warning"
+       icon={Check}
+      />
             <Card>
               <form className={classes.form}>
                 <CardHeader color="primary" className={classes.cardHeader}>
@@ -149,6 +175,7 @@ export default function SectionLogin({ idToken, processLoginForm, history}) {
                   />
                 </CardBody>
                 <CardFooter className={classes.cardFooter}>
+                  {errorAlert && <h2>{errorAlert}</h2>}
                   <Button simple color="primary" size="medium" onClick={switchAuthTypeHandler}>
                     Prejdi na {isSignup ? 'Prihlasit se' : 'Registraci'}
                   </Button>
