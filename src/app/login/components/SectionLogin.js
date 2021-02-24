@@ -21,23 +21,24 @@ import image from "assets/img/pitchfromabove.jpg";
 import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
 import { Router, Route, Switch, Redirect } from "react-router-dom";
+import Components from "../../../views/Components/Components";
 
 const useStyles = makeStyles(styles);
 
-export default function SectionLogin({lukas, processLoginForm}) {
+export default function SectionLogin({ idToken, processLoginForm, history}) {
   const [email, setEmail] = useState('');
   const [pwd, setPwd] = useState('');
   const [validated, setValidated] = useState(false);
   const [isSignup, setIsSignup] = useState(true);
 
   useEffect(()=>{
-    console.log('hello from ................')
-    const data = {
-      email: 'humus@gmail.com',
-      pwd: 'testtest'
+        console.log('jo history',);
+  if(idToken) {
+    history.goBack();
+    console.log('jo existuje id token');
+  }
     }
-    // processLoginForm(data);
-  })
+  )
 
   const composeFormData = () => ({
     email,

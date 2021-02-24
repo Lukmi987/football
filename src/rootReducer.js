@@ -9,7 +9,7 @@ const loginn = combineReducers({
 });
 
 const rootReducer = combineReducers({
-    loginn
+    login
 });
 
 export default rootReducer;

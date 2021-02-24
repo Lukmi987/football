@@ -17,17 +17,17 @@ import Login from "app/login/containers/SectionLogin";
 
 const token = localStorage.token;
 const hist = createBrowserHistory();
-
+console.log('v index page brudy');
 ReactDOM.render(
   <Provider store={store}>
   <Router history={hist}>
     <Switch>
-      {token &&  <Redirect 
-        to={{ 
-        pathname: "http://localhost"
-      }}
-      />
-    }
+    {/*  {token &&  <Redirect */}
+    {/*    to={{ */}
+    {/*    pathname: "/"*/}
+    {/*  }}*/}
+    {/*  />*/}
+    {/*}*/}
       {/* <Route path="/landing-page" component={LandingPage} /> */}
       {/* <Route path="/profile-page" component={ProfilePage} /> */}
       <Route path="/login-page" component={Login} />
