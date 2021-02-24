@@ -33,8 +33,9 @@ export default function SectionLogin({ idToken, processLoginForm, history}) {
 
   useEffect(()=>{
         console.log('jo history',);
+        history.push('/','successLogin');
   if(idToken) {
-    history.goBack();
+    history.push('/');
     console.log('jo existuje id token');
   }
     }

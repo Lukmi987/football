@@ -17,7 +17,8 @@ import Login from "app/login/containers/SectionLogin";
 
 const token = localStorage.token;
 const hist = createBrowserHistory();
-console.log('v index page brudy');
+const isSuccessLogin = hist.location.state;
+
 ReactDOM.render(
   <Provider store={store}>
   <Router history={hist}>
@@ -31,7 +32,7 @@ ReactDOM.render(
       {/* <Route path="/landing-page" component={LandingPage} /> */}
       {/* <Route path="/profile-page" component={ProfilePage} /> */}
       <Route path="/login-page" component={Login} />
-      <Route path="" component={Components} />
+      <Route path="/" component={Components} />
       {/* <Route path="*" component={Login} /> */}
     </Switch>
   </Router>

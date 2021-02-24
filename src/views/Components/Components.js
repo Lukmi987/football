@@ -38,7 +38,7 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Material Kit Reactf sssssssssssssssssssssss"
+        brand="Chelsea FC"
         rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
@@ -68,12 +68,13 @@ export default function Components(props) {
         <SectionNavbars />
         <SectionTabs />
         <SectionPills />
-        <SectionNotifications />
+
         <SectionTypography />
         <SectionJavascript />
         <SectionCarousel />
         <SectionCompletedExamples />
         <SectionLogin /> */}
+          <SectionNotifications />
         <GridItem md={12} className={classes.textCenter}>
           <Link to={"/login-page"} className={classes.link}>
             <Button color="primary" size="lg" simple>
