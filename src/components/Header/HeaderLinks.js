@@ -22,10 +22,10 @@ import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js
 
 const useStyles = makeStyles(styles);
 
-export default function HeaderLinks(props) {
+export default function HeaderLinks() {
   const classes = useStyles();
   const isUserLoggedIn = localStorage.token;
-  console.log('',isUserLoggedIn);
+  console.log('v header links why ?');
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>

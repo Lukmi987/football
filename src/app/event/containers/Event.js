@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
-import {logOut, processLoginForm} from '../actions';
+import Event from '../components/Event.js'
 import { getUseridToken, getFirebaseErrMsg } from '../../../selectors/loginSelectors';
-import SectionLogin from '../components/SectionLogin';
+
 
 const mapStateToProps = state => ({
     idToken: getUseridToken(state),
@@ -10,8 +10,6 @@ const mapStateToProps = state => ({
 
 //my redux actions
 const mapDispatchToProps = {
-    processLoginForm,
-    logOut
   };
 
-  export default connect(mapStateToProps, mapDispatchToProps)(SectionLogin);
+  export default connect(mapStateToProps, mapDispatchToProps)(Event);

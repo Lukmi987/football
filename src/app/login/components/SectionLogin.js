@@ -38,7 +38,7 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
         setErrorAlert(errorMsg);
         // history.push('/','successLogin');
   if(idToken) {
-    history.push('/','successLogin');
+    // history.push('/','successLogin');
     console.log('jo existuje id token');
   }
     },[errorMsg,idToken])

@@ -25,6 +25,7 @@ import SectionJavascript from "./Sections/SectionJavascript.js";
 import SectionCarousel from "./Sections/SectionCarousel.js";
 import SectionCompletedExamples from "./Sections/SectionCompletedExamples.js";
 import SectionLogin from "../../app/login/containers/SectionLogin.js";
+import Event from "../../app/event/containers/Event.js";
 import SectionExamples from "./Sections/SectionExamples.js";
 import SectionDownload from "./Sections/SectionDownload.js";
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
@@ -69,7 +70,8 @@ export default function Components(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-         <SectionBasics />
+        {/* <Event/> */}
+         {/* <SectionBasics />
         <SectionNavbars />
         <SectionTabs />
         <SectionPills />
@@ -78,7 +80,7 @@ export default function Components(props) {
         <SectionJavascript />
         <SectionCarousel />
         <SectionCompletedExamples />
-        <SectionLogin />
+        <SectionLogin /> */}
 
 
         <GridItem md={12} className={classes.textCenter}>
@@ -99,6 +101,7 @@ export default function Components(props) {
               View Login Page
             </Button>
           </Link>
+          <Event />
         </GridItem>
         <SectionExamples />
         <SectionDownload />
