@@ -24,6 +24,8 @@ const useStyles = makeStyles(styles);
 
 export default function HeaderLinks(props) {
   const classes = useStyles();
+  const isUserLoggedIn = localStorage.token;
+  console.log('',isUserLoggedIn);
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
@@ -116,13 +118,25 @@ export default function HeaderLinks(props) {
         </Tooltip>
       </ListItem>
       <ListItem className={classes.listItem}>
-        <Link to={"/login-page"} className={classes.link}>
+        {!isUserLoggedIn ?
+        <Link to={"/login-page"}  >
         <Button 
           color="transparent"
           className={classes.navLink}
         >Přihlášní/Registrace</Button>
         </Link>
+        :
+        <Link to={"/"} className={classes.listItem}>
+          <Button
+            color="transparent"
+            className={classes.navLink}
+            >
+              Odhlasit se
+            </Button>
+        </Link>
+        }
       </ListItem>
     </List>
   );
 }
+

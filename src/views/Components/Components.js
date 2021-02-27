@@ -27,12 +27,17 @@ import SectionCompletedExamples from "./Sections/SectionCompletedExamples.js";
 import SectionLogin from "../../app/login/containers/SectionLogin.js";
 import SectionExamples from "./Sections/SectionExamples.js";
 import SectionDownload from "./Sections/SectionDownload.js";
+import SnackbarContent from "components/Snackbar/SnackbarContent.js";
+import Check from "@material-ui/icons/Check";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 
 const useStyles = makeStyles(styles);
 
 export default function Components(props) {
+  const { history } = props;
+  const isUserLoggedIn = history.location.state;
+  console.log('v componente history', history);
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -64,7 +69,7 @@ export default function Components(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        {/* <SectionBasics />
+         <SectionBasics />
         <SectionNavbars />
         <SectionTabs />
         <SectionPills />
@@ -73,9 +78,22 @@ export default function Components(props) {
         <SectionJavascript />
         <SectionCarousel />
         <SectionCompletedExamples />
-        <SectionLogin /> */}
-          <SectionNotifications />
+        <SectionLogin />
+
+
         <GridItem md={12} className={classes.textCenter}>
+        {isUserLoggedIn && 
+              <SnackbarContent
+                message={
+                  <span>
+                    <b>Autententizace probehla v poradku!!</b>
+                  </span>
+                }
+                close
+                color="success"
+                icon={Check}
+              />
+            }
           <Link to={"/login-page"} className={classes.link}>
             <Button color="primary" size="lg" simple>
               View Login Page
