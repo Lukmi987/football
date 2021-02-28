@@ -57,7 +57,10 @@ const selectStyles = makeStyles((theme) => ({
   const [eventType, setEventType] = useState('');
   const [openEventType, setOpenEventType] = useState(false);
   const [openEventCount, setOpenEventCount] = useState(false);
-  const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+  const [selectedStartDate, setSelectedStartDate] = useState(new Date('2014-08-18T21:11:54'));
+  const [selectedEndDate, setSelectedEndDate] = useState(new Date('2015-08-18T21:11:54'));
+  const [selectedStartTime, setSelectedStartTime] = useState(new Date('2015-08-18T21:11:54'));
+  const [selectedEndTime, setSelectedEndTime] = useState(new Date('2015-08-18T21:11:54'));
   
   const [count, setCount] = useState("");
   const [openCount, setOpenCount] = useState(false);
@@ -65,9 +68,23 @@ const selectStyles = makeStyles((theme) => ({
   const [openType, setOpenType] = useState(false);
   const [type, setType] = useState("");
 
+const dateListener = (id) => (ev) => handleDateChange(id,ev); 
 
-  const handleDateChange = (date) => {
-    setSelectedDate(date);
+  const handleDateChange = (id,ev) => {
+    switch (id) {
+      case 'startDate':
+        setSelectedStartDate(ev);
+            break;
+      case 'endDate':
+        setSelectedEndDate(ev);
+            break;
+      case 'startTime':
+          setSelectedEndTime(ev);
+            break;
+      case 'endTime':
+            setSelectedEndTime(ev);
+            break;
+    }
   };
 
   // const handleChange = (e) => {
@@ -189,8 +206,8 @@ return (
           id="date-picker-dialog"
           label="Date picker dialog"
           format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={selectedStartDate}
+          onChange={dateListener('startDate')}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
@@ -200,8 +217,8 @@ return (
           margin="normal"
           id="time-picker"
           label="Time picker"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={selectedStartTime}
+          onChange={dateListener('startTime')}
           KeyboardButtonProps={{
             'aria-label': 'change time',
           }}
@@ -212,8 +229,8 @@ return (
           id="date-picker-dialog"
           label="Date picker dialog"
           format="MM/dd/yyyy"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={selectedEndDate}
+          onChange={dateListener('endDate')}
           KeyboardButtonProps={{
             'aria-label': 'change date',
           }}
@@ -223,8 +240,8 @@ return (
           margin="normal"
           id="time-picker"
           label="Time picker"
-          value={selectedDate}
-          onChange={handleDateChange}
+          value={selectedEndTime}
+          onChange={dateListener('endTime')}
           KeyboardButtonProps={{
             'aria-label': 'change time',
           }}
