@@ -53,25 +53,75 @@ const selectStyles = makeStyles((theme) => ({
  const Event = () => {   
   const classes = useStyles();
   const selectClasses = selectStyles();
-  const [event, setEvent] = useState('');
-  const [open, setOpen] = useState(false);
+  const [eventCount, setEventCount] = useState('');
+  const [eventType, setEventType] = useState('');
+  const [openEventType, setOpenEventType] = useState(false);
+  const [openEventCount, setOpenEventCount] = useState(false);
   const [selectedDate, setSelectedDate] = useState(new Date('2014-08-18T21:11:54'));
+  
+  const [count, setCount] = useState("");
+  const [openCount, setOpenCount] = useState(false);
+  
+  const [openType, setOpenType] = useState(false);
+  const [type, setType] = useState("");
+
 
   const handleDateChange = (date) => {
     setSelectedDate(date);
   };
 
-  const handleChange = (e) => {
-    setEvent(e.target.value);
-    console.log('value',e.target.value);
+  // const handleChange = (e) => {
+  //   const value = e.target.value;
+  //   console.log('v change',e.target);
+  //   e.target.id === 'event-repeat-select' ? setEventCount(value) : setEventType(value);
+  //   console.log('v change my value',e.target.value);
+  //   // setEvent(e.target.value);
+  //   // console.log('value',e.target.value);
+  // };
+
+  // const handleClose = (ee) => {
+  //   console.log(ee.target);
+  //   // ee.target.id === 'event-repeat-select' ? setOpenEventCount(false) : setOpenEventType(false);
+  //   setOpenEventCount(false);
+  //   // setOpenEventType(false);
+
+  //   // setOpen(false);
+  // };
+
+  // const handleOpen = (e) => {
+  //   // console.log('jojojoj',e.target);
+  //    e.target.id === 'event-repeat-select' ? setOpenEventCount(true) : setOpenEventType(true);
+  //   // if(e.target.id === 'event-repeat-select'){
+  //   //   setOpenEventCount(true);
+  //   // }else {
+  //   //   setOpenEventType;
+  //   // } 
+    
+  // };
+
+
+  const handleChange = (ev) => {
+    // console.log(ev.target);
+    ev.target.name === 'countme' ? setCount(ev.target.value) : setType(ev.target.value);
+ 
+    
   };
 
-  const handleClose = () => {
-    setOpen(false);
-  };
+  const handleClose = (ev) => {
+    
+  ev.preventDefault();
+  ev.stopPropagation();
+    console.log('.........v close target',ev.target);
 
-  const handleOpen = () => {
-    setOpen(true);
+    // ev.target.id === 'countme' ? setOpenCount(false) : setOpenType(false);
+    setOpenCount(false);
+    setOpenType(false);
+  }
+
+  const handleOpen = (ev) => {
+    
+    ev.target.id === 'countme' ? setOpenCount(true) : setOpenType(true);
+    // console.log(openCount,openType,ev.target.name,ev.target.id);
   };
 
 return (
@@ -110,15 +160,15 @@ return (
               </GridItem>
               
               <GridItem>
-              <FormControl className={selectClasses.formControl}>
+              {/* <FormControl className={selectClasses.formControl}>
                 <InputLabel id="event-type">Typ Udalosti</InputLabel>
                 <Select
                   labelId="event-type"
                   id="event-type-select"
-                  open={open}
+                  open={openEventType}
                   onClose={handleClose}
                   onOpen={handleOpen}
-                  value={event}
+                  value={eventType}
                   onChange={handleChange}
                 >
                   <MenuItem value="">
@@ -129,11 +179,11 @@ return (
                   <MenuItem value={3}>Ukoncena</MenuItem>
                   <MenuItem value={4}>Chlastacka</MenuItem>
                 </Select>
-              </FormControl>
+              </FormControl> */}
             
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
       <Grid container justify="space-around">
-
+      <h3>Vyber datum zacatku</h3>
         <KeyboardDatePicker
           margin="normal"
           id="date-picker-dialog"
@@ -145,6 +195,30 @@ return (
             'aria-label': 'change date',
           }}
         />
+        <h3>Vyber cas konani</h3>
+        <KeyboardTimePicker
+          margin="normal"
+          id="time-picker"
+          label="Time picker"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change time',
+          }}
+        />
+              <h3>Vyber Datum Konce</h3>
+        <KeyboardDatePicker
+          margin="normal"
+          id="date-picker-dialog"
+          label="Date picker dialog"
+          format="MM/dd/yyyy"
+          value={selectedDate}
+          onChange={handleDateChange}
+          KeyboardButtonProps={{
+            'aria-label': 'change date',
+          }}
+        />
+        <h3>Cas ukonceni</h3>
         <KeyboardTimePicker
           margin="normal"
           id="time-picker"
@@ -157,6 +231,67 @@ return (
         />
       </Grid>
     </MuiPickersUtilsProvider>
+
+    {/* <FormControl className={selectClasses.formControl}>
+                <InputLabel id="event-repeat">Opakovat</InputLabel>
+                <Select
+                  labelId="event-repeat"
+                  id="event-repeat-select"
+                  open={openEventCount}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={eventCount}
+                  onChange={handleChange}
+                >
+                  <MenuItem value="">
+                    <em>Nikdy</em>
+                  </MenuItem>
+                  <MenuItem value='everyDay'>Kazdy den</MenuItem>
+                  <MenuItem value='everyWeek'>Kazdy tyden</MenuItem>
+                  <MenuItem value='every2weeks'>Kazde 2 tydny</MenuItem>
+                </Select>
+              </FormControl> */}
+              <FormControl className={selectClasses.formControl}>
+                     <InputLabel id="count-select">Count</InputLabel>
+        <Select
+          labelId="count-select"
+          id="countme"
+          open={openCount}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={count}
+          onChange={handleChange}
+          name="countme"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value='ten'>Ten</MenuItem>
+          <MenuItem value='twen'>Twenty</MenuItem>
+          <MenuItem value='thirty'>Thirty</MenuItem>
+        </Select>
+      </FormControl>
+
+      <FormControl className={selectClasses.formControl}>
+                     <InputLabel id="demo-controlled-open-select-label">type</InputLabel>
+        <Select
+          labelId="demo-controlled-open-select-label"
+          id="type"
+          open={openType}
+          onClose={handleClose}
+          onOpen={handleOpen}
+          value={type}
+          onChange={handleChange}
+          name="type"
+        >
+          <MenuItem value="">
+            <em>None</em>
+          </MenuItem>
+          <MenuItem value='kkt'>kkt</MenuItem>
+          <MenuItem value='pic'>pic</MenuItem>
+          <MenuItem value='flus'>flujs</MenuItem>
+        </Select>
+      </FormControl>
           </GridItem>
         </GridContainer>
       </div>
