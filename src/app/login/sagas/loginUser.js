@@ -1,7 +1,6 @@
 import { put, select } from 'redux-saga/effects';
 import axios from 'axios';
 import {SET_AUTH_INFO} from "../../constants/actionTypes";
-import { Router, Route, Switch } from "react-router-dom";
 
 export function* loginUser(action) {
     const { email, pwd, isSignup } = action.user;

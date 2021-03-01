@@ -1,16 +1,12 @@
 import {
-    LOG_USER_OUT,
-    LOGIN_USER
+    PROCESS_EVENT,
 } from '../../constants/actionTypes'
 
-export const processLoginForm = (user) => ({
-    type: LOGIN_USER,
-    user,
-});
+export const processEvent =  (sportEvent) => ({
+    type: PROCESS_EVENT,
+    sportEvent,
+})
 
-export const logOut = () => ({
-    type: LOG_USER_OUT
-});
 
 
 

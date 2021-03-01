@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
-import Event from '../components/Event.js'
+import Event from '../components/Event.js';
+import { processEvent } from '../actions';
 import { getUseridToken, getFirebaseErrMsg } from '../../../selectors/loginSelectors';
 
 
@@ -8,8 +9,8 @@ const mapStateToProps = state => ({
     errorMsg: getFirebaseErrMsg(state),
 });
 
-//my redux actions
 const mapDispatchToProps = {
+  processEvent
   };
 
   export default connect(mapStateToProps, mapDispatchToProps)(Event);
