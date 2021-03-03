@@ -1,10 +1,11 @@
-import { takeLatest } from 'redux-saga/effects';
-import { LOGIN_USER } from "../../constants/actionTypes";
-import { loginUser } from "./loginUser";
+import { takeLatest } from "redux-saga/effects";
+import { PROCESS_EVENT, FETCH_EVENTS } from "../../constants/actionTypes";
+import { processEvent } from "./processEvent";
+import { fetchEvents } from "./fetchEvents";
 
+const eventSagas = [
+  takeLatest(PROCESS_EVENT, processEvent),
+  takeLatest(FETCH_EVENTS, fetchEvents),
+];
 
-const loginSagas = [
-    takeLatest(LOGIN_USER, loginUser),
-  ];
-
-export default loginSagas;
+export default eventSagas;

@@ -1,6 +1,7 @@
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
+
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import Check from "@material-ui/icons/Check";
@@ -24,24 +25,23 @@ import Components from "../../../views/Components/Components";
 import FormControlLabel from "@material-ui/core/FormControlLabel";
 import Checkbox from "@material-ui/core/Checkbox";
 import Select from "@material-ui/core/Select";
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import FormControl from '@material-ui/core/FormControl';
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
 import styles from "assets/jss/material-kit-react/views/componentsSections/basicsStyle.js";
-import 'date-fns';
-import Grid from '@material-ui/core/Grid';
-
-import DateFnsUtils from '@date-io/date-fns';
+import "date-fns";
+import Grid from "@material-ui/core/Grid";
+import DateFnsUtils from "@date-io/date-fns";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
-} from '@material-ui/pickers';
+} from "@material-ui/pickers";
 
 const useStyles = makeStyles();
 const selectStyles = makeStyles((theme) => ({
   button: {
-    display: 'block',
+    display: "block",
     marginTop: theme.spacing(2),
   },
   formControl: {
@@ -50,48 +50,55 @@ const selectStyles = makeStyles((theme) => ({
   },
 }));
 
- const Event = ({ processEvent }) => {
+const Event = ({ processEvent, fetchEvents }) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
-  const [startDate, setStartDate] = useState(new Date('2014-08-18T21:11:54'));
-  const [endDate, setEndDate] = useState(new Date('2015-08-18T21:11:54'));
-  const [startTime, setStartTime] = useState(new Date('2015-08-18T21:11:54'));
-  const [endTime, setEndTime] = useState(new Date('2015-08-18T21:11:54'));
+  const [startDate, setStartDate] = useState(new Date("2014-08-18T21:11:54"));
+  const [endDate, setEndDate] = useState(new Date("2015-08-18T21:11:54"));
+  const [startTime, setStartTime] = useState(new Date("2015-08-18T21:11:54"));
+  const [endTime, setEndTime] = useState(new Date("2015-08-18T21:11:54"));
   const [eventCount, setEventCount] = useState("");
   const [openEventCount, setOpenEventCount] = useState(false);
   const [openEventType, setOpenEventType] = useState(false);
   const [eventType, setEventType] = useState("");
 
-  const dateListener = (id) => (ev) => handleDateChange(id,ev);
+  useEffect(() => {
+    fetchEvents();
+  });
+  const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
-  const handleDateChange = (id,ev) => {
+  const handleDateChange = (id, ev) => {
     switch (id) {
-      case 'startDate':
+      case "startDate":
         setStartDate(ev);
-            break;
-      case 'endDate':
+        break;
+      case "endDate":
         setEndDate(ev);
-            break;
-      case 'startTime':
-          setStartTime(ev);
-            break;
-      case 'endTime':
-            setEndTime(ev);
-            break;
+        break;
+      case "startTime":
+        setStartTime(ev);
+        break;
+      case "endTime":
+        setEndTime(ev);
+        break;
     }
   };
 
   const handleChange = (ev) => {
-    ev.target.name === 'event-repeat-select' ? setEventCount(ev.target.value) : setEventType(ev.target.value);
+    ev.target.name === "event-repeat-select"
+      ? setEventCount(ev.target.value)
+      : setEventType(ev.target.value);
   };
 
   const handleClose = (ev) => {
     setOpenEventCount(false);
     setOpenEventType(false);
-  }
+  };
 
   const handleOpen = (ev) => {
-    ev.target.id === 'event-repeat-select' ? setOpenEventCount(true) : setOpenEventType(true);
+    ev.target.id === "event-repeat-select"
+      ? setOpenEventCount(true)
+      : setOpenEventType(true);
   };
 
   const composeEventData = () => ({
@@ -101,127 +108,132 @@ const selectStyles = makeStyles((theme) => ({
     startTime,
     endTime,
     eventCount,
-  })
+  });
 
   const handleSubmitEvent = () => {
     processEvent(composeEventData());
-  }
+  };
 
-return (
-<div>
-    <div className={classes.section}>
-      <div className={classes.container}>
-        <GridContainer justify="center">
-          <GridItem xs={12} sm={12} md={4}>
+  return (
+    <div>
+      <div className={classes.section}>
+        <div className={classes.container}>
+          <GridContainer justify="center">
+            <GridItem xs={12} sm={12} md={4}>
               <div className={classes.title}>
                 <h3>Vytvor Udalost</h3>
               </div>
-              </GridItem>
-              
-              <GridItem>
-                <FormControl className={selectClasses.formControl}>
-                  <InputLabel id="event-type-select">Typ Udalosti</InputLabel>
-                  <Select
-                    labelId="event-type-select"
-                    id="event-type"
-                    open={openEventType}
-                    onClose={handleClose}
-                    onOpen={handleOpen}
-                    value={eventType}
-                    onChange={handleChange}
-                    name="type"
-                  >
-                    <MenuItem value="">
-                      <em>None</em>
-                    </MenuItem>
-                    <MenuItem value={1}>Trening</MenuItem>
-                    <MenuItem value={2}>Zapas</MenuItem>
-                    <MenuItem value={3}>Ukoncena</MenuItem>
-                    <MenuItem value={4}>Chlastacka</MenuItem>
-                  </Select>
-                </FormControl>
+            </GridItem>
+
+            <GridItem>
+              <FormControl className={selectClasses.formControl}>
+                <InputLabel id="event-type-select">Typ Udalosti</InputLabel>
+                <Select
+                  labelId="event-type-select"
+                  id="event-type"
+                  open={openEventType}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={eventType}
+                  onChange={handleChange}
+                  name="type"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value={1}>Trening</MenuItem>
+                  <MenuItem value={2}>Zapas</MenuItem>
+                  <MenuItem value={3}>Ukoncena</MenuItem>
+                  <MenuItem value={4}>Chlastacka</MenuItem>
+                </Select>
+              </FormControl>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <Grid container justify="space-around">
-      <h3>Vyber datum zacatku</h3>
-        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="Date picker dialog"
-          format="MM/dd/yyyy"
-          value={startDate}
-          onChange={dateListener('startDate')}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        <h3>Vyber cas konani</h3>
-        <KeyboardTimePicker
-          margin="normal"
-          id="time-picker"
-          label="Time picker"
-          value={startTime}
-          onChange={dateListener('startTime')}
-          KeyboardButtonProps={{
-            'aria-label': 'change time',
-          }}
-        />
-              <h3>Vyber Datum Konce</h3>
-        <KeyboardDatePicker
-          margin="normal"
-          id="date-picker-dialog"
-          label="Date picker dialog"
-          format="MM/dd/yyyy"
-          value={endDate}
-          onChange={dateListener('endDate')}
-          KeyboardButtonProps={{
-            'aria-label': 'change date',
-          }}
-        />
-        <h3>Cas ukonceni</h3>
-        <KeyboardTimePicker
-          margin="normal"
-          id="time-picker"
-          label="Time picker"
-          value={endTime}
-          onChange={dateListener('endTime')}
-          KeyboardButtonProps={{
-            'aria-label': 'change time',
-          }}
-        />
-      </Grid>
-    </MuiPickersUtilsProvider>
+                <Grid container justify="space-around">
+                  <h3>Vyber datum zacatku</h3>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Date picker dialog"
+                    format="MM/dd/yyyy"
+                    value={startDate}
+                    onChange={dateListener("startDate")}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                  <h3>Vyber cas konani</h3>
+                  <KeyboardTimePicker
+                    margin="normal"
+                    id="time-picker"
+                    label="Time picker"
+                    value={startTime}
+                    onChange={dateListener("startTime")}
+                    KeyboardButtonProps={{
+                      "aria-label": "change time",
+                    }}
+                  />
+                  <h3>Vyber Datum Konce</h3>
+                  <KeyboardDatePicker
+                    margin="normal"
+                    id="date-picker-dialog"
+                    label="Date picker dialog"
+                    format="MM/dd/yyyy"
+                    value={endDate}
+                    onChange={dateListener("endDate")}
+                    KeyboardButtonProps={{
+                      "aria-label": "change date",
+                    }}
+                  />
+                  <h3>Cas ukonceni</h3>
+                  <KeyboardTimePicker
+                    margin="normal"
+                    id="time-picker"
+                    label="Time picker"
+                    value={endTime}
+                    onChange={dateListener("endTime")}
+                    KeyboardButtonProps={{
+                      "aria-label": "change time",
+                    }}
+                  />
+                </Grid>
+              </MuiPickersUtilsProvider>
 
               <FormControl className={selectClasses.formControl}>
-                     <InputLabel id="event-repeat">Cetnost</InputLabel>
-        <Select
-          labelId="event-repeat"
-          id="event-repeat-select"
-          open={openEventCount}
-          onClose={handleClose}
-          onOpen={handleOpen}
-          value={eventCount}
-          onChange={handleChange}
-          name="event-repeat-select"
-        >
-          <MenuItem value="">
-            <em>None</em>
-          </MenuItem>
-          <MenuItem value='everyDay'>Kazdy den</MenuItem>
-          <MenuItem value='everyWeek'>Kazdy tyden</MenuItem>
-          <MenuItem value='every2weeks'>Kazde 2 tydny</MenuItem>
-        </Select>
-      </FormControl>
-          </GridItem>
-          <GridItem>
-            <Button simple color="primary" size="lg" onClick={handleSubmitEvent}>
-              Submit
-            </Button>
-          </GridItem>
-        </GridContainer>
+                <InputLabel id="event-repeat">Cetnost</InputLabel>
+                <Select
+                  labelId="event-repeat"
+                  id="event-repeat-select"
+                  open={openEventCount}
+                  onClose={handleClose}
+                  onOpen={handleOpen}
+                  value={eventCount}
+                  onChange={handleChange}
+                  name="event-repeat-select"
+                >
+                  <MenuItem value="">
+                    <em>None</em>
+                  </MenuItem>
+                  <MenuItem value="everyDay">Kazdy den</MenuItem>
+                  <MenuItem value="everyWeek">Kazdy tyden</MenuItem>
+                  <MenuItem value="every2weeks">Kazde 2 tydny</MenuItem>
+                </Select>
+              </FormControl>
+            </GridItem>
+            <GridItem>
+              <Button
+                simple
+                color="primary"
+                size="lg"
+                onClick={handleSubmitEvent}
+              >
+                Submit
+              </Button>
+            </GridItem>
+          </GridContainer>
+        </div>
       </div>
     </div>
-</div>
   );
-}
+};
 
 export default Event;
