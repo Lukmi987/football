@@ -1,6 +1,6 @@
 import { put, select } from "redux-saga/effects";
 import axios from "../../axios-football";
-import { SET_AUTH_INFO } from "../../constants/actionTypes";
+import { SET_EVENT } from "../../constants/actionTypes";
 
 export function* fetchEvents() {
   try {
@@ -9,7 +9,8 @@ export function* fetchEvents() {
     console.log("v event  fetch response", response);
     //   // const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
     //   // localStorage.setItem('token', response.data.idToken);
-    //   // yield put({type: SET_AUTH_INFO, data: loginAuthInfo});
+
+    yield put({ type: SET_EVENT, data: response.data });
   } catch (e) {
     console.log(e);
   }

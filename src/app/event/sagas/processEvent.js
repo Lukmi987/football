@@ -4,18 +4,16 @@ import { SET_AUTH_INFO } from "../../constants/actionTypes";
 
 export function* processEvent(action) {
   const eventData = action.sportEvent;
-  const x = "lukas";
-  const data = {
-    x,
-    player2: "madar",
-    player3: "rum",
+  eventData.users = {
+    lukas: "lukas",
+    tomas: "tomas,",
   };
-  // let url = 'https://identitytoolkit.googleapis.com/v1/accounts:signUp?key=AIzaSyAhtYO-ciJ2yxU2tnpznx5fXYtZPcZiOxg';
-  // if (!isSignup) {
-  //   url = 'https://identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=AIzaSyAhtYO-ciJ2yxU2tnpznx5fXYtZPcZiOxg';
-  // }
+  const userToken = localStorage.token;
   try {
-    const response = yield axios.post("/events.json", eventData);
+    const response = yield axios.post(
+      `events.json?auth=${userToken}`,
+      eventData
+    );
     console.log("v event response", response);
     //   // const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
     //   // localStorage.setItem('token', response.data.idToken);

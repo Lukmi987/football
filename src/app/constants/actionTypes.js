@@ -1,3 +1,4 @@
+export const SET_EVENT = "SET_EVENT";
 export const FETCH_EVENTS = "FETCH_EVENTS";
 export const PROCESS_EVENT = "PROCESS_EVENT";
 export const FETCH_USER_LIST = "FETCH_USER_LIST";

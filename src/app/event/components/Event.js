@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useSelector } from "react-redux";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -37,6 +38,8 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
+import { getEvent } from "../../../selectors/loginSelectors";
+import Table from "react-bootstrap/Table";
 
 const useStyles = makeStyles();
 const selectStyles = makeStyles((theme) => ({
@@ -50,7 +53,7 @@ const selectStyles = makeStyles((theme) => ({
   },
 }));
 
-const Event = ({ processEvent, fetchEvents }) => {
+const Event = ({ processEvent, fetchEvents, event }) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
   const [startDate, setStartDate] = useState(new Date("2014-08-18T21:11:54"));
@@ -62,9 +65,31 @@ const Event = ({ processEvent, fetchEvents }) => {
   const [openEventType, setOpenEventType] = useState(false);
   const [eventType, setEventType] = useState("");
 
+  let myEntries = null;
+  const load = (result, entry) => {
+    const composed = {
+      id: entry[0],
+      eventData: entry[1],
+    };
+
+    result.push(composed);
+    console.log("v reduce", result);
+    return result;
+  };
+
+  const getEntries = (entries) => {
+    return entries.reduce(load, []);
+  };
+  if (event) {
+    const entries = Object.entries(event);
+
+    myEntries = getEntries(entries);
+  }
+
+  console.log("merci bugu", myEntries);
   useEffect(() => {
     fetchEvents();
-  });
+  }, [localStorage.token]);
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
   const handleDateChange = (id, ev) => {
@@ -228,6 +253,24 @@ const Event = ({ processEvent, fetchEvents }) => {
               >
                 Submit
               </Button>
+            </GridItem>
+            <GridItem>
+              <Table striped bordered hover>
+                <thead>
+                  <tr>
+                    <th>Id eventy</th>
+                    <th>event start date</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {myEntries &&
+                    myEntries.map((item) => (
+                      <tr key={item.id}>
+                        <td>{item.eventData.startDate}</td>
+                      </tr>
+                    ))}
+                </tbody>
+              </Table>
             </GridItem>
           </GridContainer>
         </div>
