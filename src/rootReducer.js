@@ -1,5 +1,5 @@
 import { combineReducers } from "redux";
-import event from "./app/event/reducers/event";
+import events from "./app/event/reducers/events";
 import login from "./app/login/reducers/login";
 
 //define how the store is going to look like
@@ -10,7 +10,7 @@ const loginn = combineReducers({
 
 const rootReducer = combineReducers({
   login,
-  event,
+  events,
 });
 
 export default rootReducer;

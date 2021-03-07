@@ -4,10 +4,9 @@ import { SET_AUTH_INFO } from "../../constants/actionTypes";
 
 export function* processEvent(action) {
   const eventData = action.sportEvent;
-  eventData.users = {
-    lukas: "lukas",
-    tomas: "tomas,",
-  };
+
+  eventData.users = ["Apple", "Banana"];
+
   const userToken = localStorage.token;
   try {
     const response = yield axios.post(

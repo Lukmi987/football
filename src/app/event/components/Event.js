@@ -38,7 +38,6 @@ import {
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
-import { getEvent } from "../../../selectors/loginSelectors";
 import Table from "react-bootstrap/Table";
 
 const useStyles = makeStyles();
@@ -53,7 +52,7 @@ const selectStyles = makeStyles((theme) => ({
   },
 }));
 
-const Event = ({ processEvent, fetchEvents, event }) => {
+const Event = ({ processEvent, fetchEvents, eventsList }) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
   const [startDate, setStartDate] = useState(new Date("2014-08-18T21:11:54"));
@@ -65,31 +64,10 @@ const Event = ({ processEvent, fetchEvents, event }) => {
   const [openEventType, setOpenEventType] = useState(false);
   const [eventType, setEventType] = useState("");
 
-  let myEntries = null;
-  const load = (result, entry) => {
-    const composed = {
-      id: entry[0],
-      eventData: entry[1],
-    };
-
-    result.push(composed);
-    console.log("v reduce", result);
-    return result;
-  };
-
-  const getEntries = (entries) => {
-    return entries.reduce(load, []);
-  };
-  if (event) {
-    const entries = Object.entries(event);
-
-    myEntries = getEntries(entries);
-  }
-
-  console.log("merci bugu", myEntries);
   useEffect(() => {
     fetchEvents();
   }, [localStorage.token]);
+
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
   const handleDateChange = (id, ev) => {
@@ -134,7 +112,7 @@ const Event = ({ processEvent, fetchEvents, event }) => {
     endTime,
     eventCount,
   });
-
+  console.log("jjjjjjjjjjjjjjjj", eventsList);
   const handleSubmitEvent = () => {
     processEvent(composeEventData());
   };
@@ -258,17 +236,24 @@ const Event = ({ processEvent, fetchEvents, event }) => {
               <Table striped bordered hover>
                 <thead>
                   <tr>
-                    <th>Id eventy</th>
+                    <th>StartTime</th>
                     <th>event start date</th>
+                    <th>Ucast</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {myEntries &&
-                    myEntries.map((item) => (
-                      <tr key={item.id}>
-                        <td>{item.eventData.startDate}</td>
-                      </tr>
-                    ))}
+                  {eventsList.map((event) => (
+                    <tr key={event.id}>
+                      <td>{event.eventData.startTime}</td>
+                      <td>{event.eventData.endTime}</td>
+                      <td>
+                        {event.eventData.users &&
+                          Object.values(event.eventData?.users).map((user) => (
+                            <li>{user}</li>
+                          ))}
+                      </td>
+                    </tr>
+                  ))}
                 </tbody>
               </Table>
             </GridItem>
