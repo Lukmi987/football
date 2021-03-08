@@ -5,7 +5,7 @@ import { SET_AUTH_INFO } from "../../constants/actionTypes";
 export function* processEvent(action) {
   const eventData = action.sportEvent;
 
-  eventData.users = ["Apple", "Banana"];
+  eventData.attendance = ["Ronaldo", "Messi", "Drogba"];
 
   const userToken = localStorage.token;
   try {
