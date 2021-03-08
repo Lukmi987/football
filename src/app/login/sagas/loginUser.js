@@ -19,6 +19,7 @@ export function* loginUser(action) {
     } catch (e) {
         const errorMsg = {
             idToken: null,
+            userId: null,
             errorMsg: e.response?.data?.error?.message
         };
         yield put({type: SET_AUTH_INFO, data: errorMsg});

@@ -8,7 +8,7 @@ export function* fetchEvents() {
     const userToken = localStorage.token;
     // const response = yield axios.get(`/events.json?auth=${userToken}`);
     const response = yield axios.get(
-      `/events/-MVDLFYUuzmQCGKssVk1.json?auth=${userToken}`
+      `/events.json?auth=${userToken}`
     );
     console.log("jjjjjjjjjjjjjjjjjjjjjjjjsssssssss", response);
     debugger;

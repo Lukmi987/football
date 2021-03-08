@@ -52,7 +52,7 @@ const selectStyles = makeStyles((theme) => ({
   },
 }));
 
-const Event = ({ processEvent, fetchEvents, eventsList }) => {
+const Event = ({ processEvent, processEventAttendance, fetchEvents, eventsList, userId }) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
   const [startDate, setStartDate] = useState(new Date("2014-08-18T21:11:54"));
@@ -63,11 +63,12 @@ const Event = ({ processEvent, fetchEvents, eventsList }) => {
   const [openEventCount, setOpenEventCount] = useState(false);
   const [openEventType, setOpenEventType] = useState(false);
   const [eventType, setEventType] = useState("");
+  const [eventAttendance, setEventAttendance] = useState(false);
 
   useEffect(() => {
     fetchEvents();
   }, [localStorage.token]);
-
+console.log('nahore 1',eventAttendance);
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
   const handleDateChange = (id, ev) => {
@@ -112,10 +113,16 @@ const Event = ({ processEvent, fetchEvents, eventsList }) => {
     endTime,
     eventCount,
   });
-  console.log("jjjjjjjjjjjjjjjj", eventsList);
+
   const handleSubmitEvent = () => {
     processEvent(composeEventData());
   };
+
+  const handleAttendance = (participate,ev) => {
+    const eventId = ev.target.id;
+    participate ? setEventAttendance(true) : setEventAttendance(false);
+    processEventAttendance(participate, eventId);
+  }
 
   return (
     <div>
@@ -239,6 +246,8 @@ const Event = ({ processEvent, fetchEvents, eventsList }) => {
                     <th>StartTime</th>
                     <th>event start date</th>
                     <th>Ucast</th>
+                    <th>Moje ucast</th>
+                    <th>Pujdu na trening ?</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -248,9 +257,17 @@ const Event = ({ processEvent, fetchEvents, eventsList }) => {
                       <td>{event.eventData.endTime}</td>
                       <td>
                         {event.eventData.users &&
-                          Object.values(event.eventData?.users).map((user) => (
-                            <li>{user}</li>
+                          Object.values(event.eventData?.users).map((user,index) => (
+                            <li key={index}>{user}</li>
                           ))}
+                      </td>
+                      {eventAttendance ? (<td>Zucastnim se</td>
+                      ) : (
+                          <td>Nejdu</td>
+                      )}
+                      <td>
+                        <Button id={event.id} onClick={(ev) => handleAttendance(true,ev)}>Ano</Button>
+                        <Button id={event.id} onClick={(ev) => handleAttendance(false,ev)}>Ne</Button>
                       </td>
                     </tr>
                   ))}
