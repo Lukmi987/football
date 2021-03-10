@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
-
+import "./Event.scss";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import Check from "@material-ui/icons/Check";
@@ -52,7 +52,13 @@ const selectStyles = makeStyles((theme) => ({
   },
 }));
 
-const Event = ({ processEvent, processEventAttendance, fetchEvents, eventsList, userId }) => {
+const Event = ({
+  processEvent,
+  processEventAttendance,
+  fetchEvents,
+  eventsList,
+  userId,
+}) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
   const [startDate, setStartDate] = useState(new Date("2014-08-18T21:11:54"));
@@ -68,7 +74,7 @@ const Event = ({ processEvent, processEventAttendance, fetchEvents, eventsList, 
   useEffect(() => {
     fetchEvents();
   }, [localStorage.token]);
-console.log('nahore 1',eventAttendance);
+  console.log("nahore 1", eventAttendance);
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
   const handleDateChange = (id, ev) => {
@@ -118,17 +124,38 @@ console.log('nahore 1',eventAttendance);
     processEvent(composeEventData());
   };
 
-  const handleAttendance = (participate,ev) => {
+  const handleAttendance = (participate, ev) => {
     const eventId = ev.target.id;
     participate ? setEventAttendance(true) : setEventAttendance(false);
     processEventAttendance(participate, eventId);
-  }
+  };
 
   return (
     <div>
+      <div className="card-player">
+        <div className="card__side card__side--front">
+          <div className="card__picture card__picture--1">&nbsp;</div>
+          <h4 className="card__heading">The sea explorer</h4>
+          <div className="card__details">Details</div>
+        </div>
+        <div className="card__side card__side--back card__side--back-1">
+          Back
+        </div>
+      </div>
+
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer justify="center">
+            <GridItem xs={12} sm={12} md={4}>
+              <div>
+                <h3>Dalsi trening ucast</h3>
+              </div>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+              <div>
+                <h3>Dalsi trening ucast</h3>
+              </div>
+            </GridItem>
             <GridItem xs={12} sm={12} md={4}>
               <div className={classes.title}>
                 <h3>Vytvor Udalost</h3>
@@ -257,17 +284,24 @@ console.log('nahore 1',eventAttendance);
                       <td>{event.eventData.endTime}</td>
                       <td>
                         {event.eventData.users &&
-                          Object.values(event.eventData?.users).map((user,index) => (
-                            <li key={index}>{user}</li>
-                          ))}
+                          Object.values(
+                            event.eventData?.users
+                          ).map((user, index) => <li key={index}>{user}</li>)}
                       </td>
-                      {eventAttendance ? (<td>Zucastnim se</td>
-                      ) : (
-                          <td>Nejdu</td>
-                      )}
+                      {eventAttendance ? <td>Zucastnim se</td> : <td>Nejdu</td>}
                       <td>
-                        <Button id={event.id} onClick={(ev) => handleAttendance(true,ev)}>Ano</Button>
-                        <Button id={event.id} onClick={(ev) => handleAttendance(false,ev)}>Ne</Button>
+                        <Button
+                          id={event.id}
+                          onClick={(ev) => handleAttendance(true, ev)}
+                        >
+                          Ano
+                        </Button>
+                        <Button
+                          id={event.id}
+                          onClick={(ev) => handleAttendance(false, ev)}
+                        >
+                          Ne
+                        </Button>
                       </td>
                     </tr>
                   ))}
