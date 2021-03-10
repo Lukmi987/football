@@ -11,7 +11,7 @@ export function* fetchEvents() {
     const entries = Object.entries(response.data);
     console.log("2 entries", entries);
     const events = entries.reduce(loadEvents, []);
-    yield put({ type: SET_EVENT, data: response.data });
+    yield put({ type: SET_EVENT, data: events });
   } catch (e) {
     console.log(e);
   }

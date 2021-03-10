@@ -1,9 +1,10 @@
 import { useSelector } from "react-redux";
 import { put, select } from "redux-saga/effects";
 import axios from "../../axios-football";
-import { SET_EVENT } from "../../constants/actionTypes";
+import { FETCH_EVENTS, SET_EVENT } from "../../constants/actionTypes";
 import { loadEvents } from "../../helpers/eventHelpers";
 import { getUserId } from "../../../selectors/loginSelectors";
+import { fetchEvents } from "./fetchEvents";
 
 export function* processEventAttendance(action) {
   const { eventId, participate } = action;
@@ -20,7 +21,7 @@ export function* processEventAttendance(action) {
       `/events/${eventId}/attendance.json?auth=${userToken}`,
       prepareData
     );
-    console.log("make some noise", response);
+    yield put({ type: FETCH_EVENTS });
   } catch (e) {
     console.log(e);
   }
