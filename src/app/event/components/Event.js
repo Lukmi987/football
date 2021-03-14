@@ -61,15 +61,16 @@ const Event = ({
 }) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
-  const [startDate, setStartDate] = useState(new Date("2014-08-18T21:11:54"));
+  const [startDate, setStartDate] = useState(new Date("2018-08-28:11:00"));
   const [endDate, setEndDate] = useState(new Date("2015-08-18T21:11:54"));
   const [startTime, setStartTime] = useState(new Date("2015-08-18T21:11:54"));
   const [endTime, setEndTime] = useState(new Date("2015-08-18T21:11:54"));
-  const [eventCount, setEventCount] = useState("");
+  const [eventCount, setEventCount] = useState(1);
   const [openEventCount, setOpenEventCount] = useState(false);
   const [openEventType, setOpenEventType] = useState(false);
   const [eventType, setEventType] = useState("");
   const [eventAttendance, setEventAttendance] = useState(false);
+  const [repeatEvent, setRepeatEvent] = useState(false);
 
   useEffect(() => {
     fetchEvents();
@@ -83,12 +84,23 @@ const Event = ({
         setStartDate(ev);
         break;
       case "endDate":
+        console.log(
+          "end date format",
+          ev.getFullYear(),
+          ev.getMonth(),
+          ev.getDate()
+        );
+        //new Date("2015 2 3 15:36")
+        //const v = new Date("2015 2 3 15:36")
+        //v.setDate('3'); will added days
+        //const c = v.setDate('38'); it returns timestamp
         setEndDate(ev);
         break;
       case "startTime":
         setStartTime(ev);
         break;
       case "endTime":
+        console.log("end tune", ev.getHours(), ev.getMinutes());
         setEndTime(ev);
         break;
     }
@@ -117,17 +129,20 @@ const Event = ({
     endDate,
     startTime,
     endTime,
-    eventCount,
   });
 
   const handleSubmitEvent = () => {
-    processEvent(composeEventData());
+    processEvent(composeEventData(), eventCount);
   };
 
   const handleAttendance = (participate, ev) => {
     const eventId = ev.target.id;
     participate ? setEventAttendance(true) : setEventAttendance(false);
     processEventAttendance(participate, eventId);
+  };
+
+  const handleRepeatCheckbox = (ev) => {
+    setRepeatEvent(ev.target.checked);
   };
 
   return (
@@ -235,26 +250,61 @@ const Event = ({
                 </Grid>
               </MuiPickersUtilsProvider>
 
-              <FormControl className={selectClasses.formControl}>
-                <InputLabel id="event-repeat">Cetnost</InputLabel>
-                <Select
-                  labelId="event-repeat"
-                  id="event-repeat-select"
-                  open={openEventCount}
-                  onClose={handleClose}
-                  onOpen={handleOpen}
-                  value={eventCount}
-                  onChange={handleChange}
-                  name="event-repeat-select"
-                >
-                  <MenuItem value="">
-                    <em>None</em>
-                  </MenuItem>
-                  <MenuItem value="everyDay">Kazdy den</MenuItem>
-                  <MenuItem value="everyWeek">Kazdy tyden</MenuItem>
-                  <MenuItem value="every2weeks">Kazde 2 tydny</MenuItem>
-                </Select>
-              </FormControl>
+              <FormControlLabel
+                control={
+                  <Checkbox
+                    checked={repeatEvent}
+                    onChange={handleRepeatCheckbox}
+                    color="primary"
+                  />
+                }
+                label="Chceš opakovat událost týdně ?"
+              />
+              {repeatEvent && (
+                <FormControl className={selectClasses.formControl}>
+                  <InputLabel id="event-repeat">Počet opakování</InputLabel>
+                  <Select
+                    labelId="event-repeat"
+                    id="event-repeat-select"
+                    open={openEventCount}
+                    onClose={handleClose}
+                    onOpen={handleOpen}
+                    value={eventCount}
+                    onChange={handleChange}
+                    name="event-repeat-select"
+                  >
+                    <MenuItem value="">
+                      <em>None</em>
+                    </MenuItem>
+                    <MenuItem value={1}>1</MenuItem>
+                    <MenuItem value={2}>2</MenuItem>
+                    <MenuItem value={3}>3</MenuItem>
+                    <MenuItem value={4}>4</MenuItem>
+                    <MenuItem value={5}>5</MenuItem>
+                    <MenuItem value={6}>6</MenuItem>
+                    <MenuItem value={7}>7</MenuItem>
+                    <MenuItem value={8}>8</MenuItem>
+                    <MenuItem value={9}>9</MenuItem>
+                    <MenuItem value={10}>10</MenuItem>
+                    <MenuItem value={11}>11</MenuItem>
+                    <MenuItem value={12}>12</MenuItem>
+                    <MenuItem value={13}>13</MenuItem>
+                    <MenuItem value={14}>14</MenuItem>
+                    <MenuItem value={15}>15</MenuItem>
+                    <MenuItem value={16}>16</MenuItem>
+                    <MenuItem value={16}>16</MenuItem>
+                    <MenuItem value={17}>17</MenuItem>
+                    <MenuItem value={18}>18</MenuItem>
+                    <MenuItem value={19}>19</MenuItem>
+                    <MenuItem value={20}>20</MenuItem>
+                    <MenuItem value={21}>21</MenuItem>
+                    <MenuItem value={22}>22</MenuItem>
+                    <MenuItem value={23}>23</MenuItem>
+                    <MenuItem value={24}>24</MenuItem>
+                    <MenuItem value={25}>25</MenuItem>
+                  </Select>
+                </FormControl>
+              )}
             </GridItem>
             <GridItem>
               <Button
