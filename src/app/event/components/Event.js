@@ -61,10 +61,10 @@ const Event = ({
 }) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
-  const [startDate, setStartDate] = useState(new Date("2018-08-28:11:00"));
-  const [endDate, setEndDate] = useState(new Date("2015-08-18T21:11:54"));
-  const [startTime, setStartTime] = useState(new Date("2015-08-18T21:11:54"));
-  const [endTime, setEndTime] = useState(new Date("2015-08-18T21:11:54"));
+  const [startDate, setStartDate] = useState(new Date());
+  const [endDate, setEndDate] = useState(new Date());
+  const [startTime, setStartTime] = useState(new Date());
+  const [endTime, setEndTime] = useState(new Date());
   const [eventCount, setEventCount] = useState(1);
   const [openEventCount, setOpenEventCount] = useState(false);
   const [openEventType, setOpenEventType] = useState(false);
@@ -97,15 +97,15 @@ const Event = ({
         setEndDate(ev);
         break;
       case "startTime":
+        // const time = `${ev.getHours()}:${ev.getMinutes()}`;
         setStartTime(ev);
         break;
       case "endTime":
-        console.log("end tune", ev.getHours(), ev.getMinutes());
         setEndTime(ev);
         break;
     }
   };
-
+  console.log("end time is ", endTime);
   const handleChange = (ev) => {
     ev.target.name === "event-repeat-select"
       ? setEventCount(ev.target.value)

@@ -6,9 +6,18 @@ export function* processEvent(action) {
   const eventData = action.sportEvent;
   const eventCount = action.eventCount;
   const startDate = action.sportEvent.startDate;
+  const startTime = action.sportEvent.startTime;
 
-  console.log("action", action);
+  const defaultStartTime = new Date(
+    `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
+  );
+  const oneWeek = defaultStartTime.setDate(7);
+  const twoWeek = defaultStartTime.setDate(14);
+  console.log("default", defaultStartTime);
 
+  console.log("oneWeek", defaultStartTime.setDate(7), defaultStartTime);
+  console.log("twoWeek", defaultStartTime.setDate(14), defaultStartTime);
+  debugger;
   const userToken = localStorage.token;
   try {
     const response = yield axios.post(
