@@ -11,24 +11,18 @@ export function* processEvent(action) {
   const defaultStartTime = new Date(
     `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
   );
-  const oneWeek = defaultStartTime.setDate(7);
-  const twoWeek = defaultStartTime.setDate(14);
-  console.log("default", defaultStartTime);
-
-  console.log("oneWeek", defaultStartTime.setDate(7), defaultStartTime);
-  console.log("twoWeek", defaultStartTime.setDate(14), defaultStartTime);
-  debugger;
+  console.log("time 1", defaultStartTime);
   const userToken = localStorage.token;
   try {
     const response = yield axios.post(
       `events.json?auth=${userToken}`,
       eventData
     );
-    debugger;
+
     if (response) {
       if (eventCount > 1) {
         const eventId = response.data.name;
-        // yield processOcurrences(eventCount, eventId, startDate);
+        yield processOccurrences(eventCount, eventId, defaultStartTime);
       }
     }
     console.log("v event response", response);
@@ -40,26 +34,27 @@ export function* processEvent(action) {
   }
 }
 
-// function* processOccurrences(eventCount, eventId, startDate) {
-//   console.log(
-//     "moje response v process Ocurrences",
-//     eventCount,
-//     eventId,
-//     startDate
-//   );
-//   debugger;
-//
-//   const createOccurences = (eventCount, eventId, startDate) => {
-//     const occurrences = [];
-//     for (let i = 0; i < eventCount; i++) {
-//       const increaseWeeks = i * 7;
-//       const occurrence = {
-//         startDate: {
-//           eventId,
-//           attendance: [],
-//         },
-//       };
-//       occurrences.push(occurrence);
-//     }
-//   };
-// }
+function* processOccurrences(eventCount, eventId, defaultStartTime) {
+  const occurrences = createOccurrences(eventCount, eventId, defaultStartTime);
+  console.log("my occurences", occurrences);
+}
+
+const createOccurrences = (eventCount, eventId, defaultStartTime) => {
+  const occurrences = [];
+  const occurrence = {};
+  console.log("time 2", defaultStartTime);
+  for (let i = 0; i < eventCount; i++) {
+    let increaseWeeks = i * 7;
+    let time = defaultStartTime.getTime();
+    if (increaseWeeks) {
+      time = defaultStartTime.setDate(increaseWeeks);
+    }
+    console.log("this is my song", time);
+    occurrences[time] = {
+      eventId,
+      attendance: [],
+    };
+    // occurrences.push(occurrence);
+  }
+  return occurrences;
+};
