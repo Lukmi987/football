@@ -56,6 +56,7 @@ const Event = ({
   processEvent,
   processEventAttendance,
   fetchEvents,
+  fetchOccurrences,
   eventsList,
   userId,
 }) => {
@@ -74,6 +75,7 @@ const Event = ({
 
   useEffect(() => {
     fetchEvents();
+    fetchOccurrences();
   }, [localStorage.token]);
   console.log("nahore 1", eventAttendance);
   const dateListener = (id) => (ev) => handleDateChange(id, ev);

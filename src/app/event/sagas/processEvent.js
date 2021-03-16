@@ -1,6 +1,7 @@
 import { put, select } from "redux-saga/effects";
 import axios from "../../axios-football";
-import { SET_AUTH_INFO } from "../../constants/actionTypes";
+import { SET_AUTH_INFO, SET_OCCURRENCES } from "../../constants/actionTypes";
+import { createOccurrences } from "../../helpers/eventHelpers";
 
 export function* processEvent(action) {
   const eventData = action.sportEvent;
@@ -11,7 +12,6 @@ export function* processEvent(action) {
   const defaultStartTime = new Date(
     `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
   );
-  console.log("time 1", defaultStartTime);
   const userToken = localStorage.token;
   try {
     const response = yield axios.post(
@@ -25,36 +25,26 @@ export function* processEvent(action) {
         yield processOccurrences(eventCount, eventId, defaultStartTime);
       }
     }
-    console.log("v event response", response);
-    //   // const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
-    //   // localStorage.setItem('token', response.data.idToken);
-    //   // yield put({type: SET_AUTH_INFO, data: loginAuthInfo});
   } catch (e) {
     console.log(e);
   }
 }
 
 function* processOccurrences(eventCount, eventId, defaultStartTime) {
-  const occurrences = createOccurrences(eventCount, eventId, defaultStartTime);
-  console.log("my occurences", occurrences);
-}
-
-const createOccurrences = (eventCount, eventId, defaultStartTime) => {
-  const occurrences = [];
-  const occurrence = {};
-  console.log("time 2", defaultStartTime);
-  for (let i = 0; i < eventCount; i++) {
-    let increaseWeeks = i * 7;
-    let time = defaultStartTime.getTime();
-    if (increaseWeeks) {
-      time = defaultStartTime.setDate(increaseWeeks);
-    }
-    console.log("this is my song", time);
-    occurrences[time] = {
+  try {
+    const userToken = localStorage.token;
+    const occurrences = createOccurrences(
+      eventCount,
       eventId,
-      attendance: [],
-    };
-    // occurrences.push(occurrence);
+      defaultStartTime
+    );
+
+    const res = yield axios.post(
+      `occurrences.json?auth=${userToken}`,
+      occurrences
+    );
+    yield put({ type: SET_OCCURRENCES, data: occurrences });
+  } catch (err) {
+    console.log(err);
   }
-  return occurrences;
-};
+}

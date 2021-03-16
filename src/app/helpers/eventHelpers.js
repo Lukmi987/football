@@ -6,3 +6,21 @@ export const loadEvents = (result, event) => {
   result.push(composedEvent);
   return result;
 };
+
+export const createOccurrences = (eventCount, eventId, defaultStartTime) => {
+  const occurrences = [];
+  for (let i = 0; i < eventCount; i++) {
+    let increaseWeeks = i * 7;
+    let time = defaultStartTime.getTime();
+    if (increaseWeeks) {
+      time = defaultStartTime.setDate(increaseWeeks);
+    }
+    const occurrence = {
+      creationTime: time,
+      eventId,
+      attendance: ["luk", "nervy", "trpelivost"],
+    };
+    occurrences.push(occurrence);
+  }
+  return occurrences;
+};

@@ -1,5 +1,6 @@
 import {
   FETCH_EVENTS,
+  FETCH_OCCURRENCES,
   PROCESS_EVENT,
   PROCESS_EVENT_ATTENDANCE,
 } from "../../constants/actionTypes";
@@ -18,4 +19,7 @@ export const processEvent = (sportEvent, eventCount) => ({
 
 export const fetchEvents = () => ({
   type: FETCH_EVENTS,
+});
+export const fetchOccurrences = () => ({
+  type: FETCH_OCCURRENCES,
 });
