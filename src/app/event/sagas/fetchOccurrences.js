@@ -7,8 +7,12 @@ export function* fetchOccurrences() {
   try {
     const userToken = localStorage.token;
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
-    const entr = Object.entries(response.data);
 
+    const entr = Object.entries(response.data);
+    console.log("pred flat", entr);
+    const flat = entr.flatMap((obj) => obj[1]);
+    console.log("shit", flat);
+    debugger;
     const occ = entr.reduce(loadOccurrences, []);
     console.log("entr", occ);
     const data = response.data;
@@ -23,13 +27,8 @@ export function* fetchOccurrences() {
   }
 }
 const loadOccurrences = (result, occurrence) => {
-  // const compose = [];
-  // compose[occurrence[0]] = {
-  //   lus: "lus",
-  // };
-  // result.push(compose);
-  // return result;
-  return (result["sfasfdf"] = { fafd: "sfdf" });
+  const resultCopy = { ...result };
+  // resultCopy[]
 };
 
 // 5: {fasdfaf: "afdfafaf"}
