@@ -10,7 +10,7 @@ export function* fetchOccurrences() {
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
 
     const entr = Object.entries(response.data);
-    //console.log("pred flat entries", entr);
+    console.log("pred flat entries", entr);
     const copyEnter = _.cloneDeep(entr)
     const acumm = []
     const some = (array) => {
@@ -36,7 +36,7 @@ export function* fetchOccurrences() {
 
     }
     some(copyEnter)
-    console.log(acumm, '.....test.....')
+    console.log(acumm, '.....test.....');
 
     const flat = copyEnter.flatMap((el) => {
      let len = el[1].length
@@ -46,7 +46,14 @@ export function* fetchOccurrences() {
      }
       return obj
     } ); //({...obj[1], id: obj[0]})
-    console.log("flat data...........", flat.flatMap((el) => el.cities));
+
+
+    const flatten = Object.keys(flat).reduce((res, item) =>{
+      return res.concat(flat[item]);
+    }, []);
+
+    console.log('muj keys flat',flat);
+
 
 
      debugger;

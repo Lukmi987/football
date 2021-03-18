@@ -12,13 +12,14 @@ export function* processEvent(action) {
   const defaultStartTime = new Date(
     `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
   );
+
+  const testData = {MwfsC: {creatingTime: '4545', attendance: ['lukas', 'tomas']}}
   const userToken = localStorage.token;
   try {
     const response = yield axios.post(
       `events.json?auth=${userToken}`,
-      eventData
+        eventData
     );
-
     if (response) {
       if (eventCount > 1) {
         const eventId = response.data.name;
