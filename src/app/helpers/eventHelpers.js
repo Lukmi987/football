@@ -15,9 +15,8 @@ export const createOccurrences = (eventCount, eventId, defaultStartTime) => {
     if (increaseWeeks) {
       time = defaultStartTime.setDate(increaseWeeks);
     }
-     occurrences[time] = {
-      creationTime: time,
-       eventId: eventId,
+    occurrences[time] = {
+      eventId: eventId,
       attendance: ["luk", "nervy", "trpelivost"],
     };
   }

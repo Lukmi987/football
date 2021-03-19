@@ -8,18 +8,19 @@ export function* processEvent(action) {
   const eventCount = action.eventCount;
   const startDate = action.sportEvent.startDate;
   const startTime = action.sportEvent.startTime;
-
   const defaultStartTime = new Date(
     `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
   );
 
-  const testData = {MwfsC: {creatingTime: '4545', attendance: ['lukas', 'tomas']}}
+  const arr = [];
+  const x = { 989898788: { nickname: "jfkjf", age: 77 } };
+  arr.push(x);
+  const testData = {
+    MwfsC: { creatingTime: "4545", attendance: ["lukas", "tomas"] },
+  };
   const userToken = localStorage.token;
   try {
-    const response = yield axios.post(
-      `events.json?auth=${userToken}`,
-        eventData
-    );
+    const response = yield axios.post(`players.json?auth=${userToken}`, arr);
     if (response) {
       if (eventCount > 1) {
         const eventId = response.data.name;
