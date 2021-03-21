@@ -12,15 +12,14 @@ export function* processEvent(action) {
     `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
   );
 
-  const arr = [];
-  const x = { 989898788: { nickname: "jfkjf", age: 77 } };
-  arr.push(x);
+  const arr = [{userID: "5wiVxV3Ag7S5K2bcmFVHLgvBrA12", nickname: 'lukmi', age: 77}, {userID: "8zY5hPIex7YS6huWb7X0K6KCE1A2", age: 77, nickname: 'cristiano' }];
+
   const testData = {
     MwfsC: { creatingTime: "4545", attendance: ["lukas", "tomas"] },
   };
   const userToken = localStorage.token;
   try {
-    const response = yield axios.post(`players.json?auth=${userToken}`, arr);
+    const response = yield axios.post(`users/players.json?auth=${userToken}`, arr);
     if (response) {
       if (eventCount > 1) {
         const eventId = response.data.name;

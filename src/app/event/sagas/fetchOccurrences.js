@@ -8,55 +8,76 @@ export function* fetchOccurrences() {
   try {
     const userToken = localStorage.token;
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
+    const responseUsers = yield axios.get(`/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`);
 
+    console.log('user response',responseUsers);
     const entr = Object.entries(response.data);
     console.log("pred flat entries", entr);
 
     const mojeCopy = _.cloneDeep(entr);
 
     const copyEnter = _.cloneDeep(entr);
+// mapNodeIdAndUsersToEachEvent() => {
 
-    const acumm = [];
-    const some = (array) => {
+
+
+    const mapNodeIdAndUsersToEachEvent = (array) => {
+      const acumm = [];
+      const occurrencesArray = 1;
+      const nodeId = 0;
       for (let i = 0; i < array.length; i++) {
-        let firstLevel = {};
-        let objectWithNodeId;
+        let node = {};
         for (let j = 0; j < array[i].length; j++) {
-          const t = j === 0 ? "id" : "neco";
-          let f = array[i][j];
-          if (j === 0) {
-            firstLevel.id = array[i][j];
-            console.log("firstLevel.id j==0", firstLevel.id);
-          } else if (j === 1) {
-            console.log("j se rovna 1 takze merim index 1", Object.values(f));
-            let occurrence = Object.values(f);
-            for (let k = 0; k < occurrence.length; k++) {
-              objectWithNodeId = { ...firstLevel, ...occurrence[k] };
-              acumm.push(objectWithNodeId);
+          let occurrences = array[i][j];
+          if (j === nodeId) {
+            node.id = array[i][j];
+          } else if (j === occurrencesArray) {
+            let occurrencesValues = Object.values(occurrences);
+            for (let k = 0; k < occurrencesValues.length; k++) {
+             const attendance = mapUsers(occurrencesValues, k, responseUsers);
+              occurrencesValues[k].attendance = attendance;
+              let result = { ...node, ...occurrencesValues[k] };
+              acumm.push(result);
             }
           }
         }
       }
+      return acumm;
     };
-    some(copyEnter);
-    console.log(acumm, ".....test.....");
+  mapNodeIdAndUsersToEachEvent(copyEnter);
+     console.log(mapNodeIdAndUsersToEachEvent(copyEnter), ".....test.....");
+  function mapUsers( occurrencesValues, index,responseUsers) {
+   return occurrencesValues[index].attendance.map(id => {
+      const user = responseUsers.data.filter( user => user.userID === id);
+      return user[0];
+    })}
+    //v kazdem itemu obsahuje attendance array s id hracu kteri jdou na trening
 
-    const flat = copyEnter.flatMap((el) => {
-      let len = el[1].length;
-      const obj = { ...el[1] };
-      for (let i = 0; i < len; i++) {
-        obj[i].id = el[0];
-      }
-      return obj;
-    }); //({...obj[1], id: obj[0]})
+    //namapovat ke kazdumu id  objekt s daty usera co potrebuji vypsat
+    // v loope attendance.map(item.attendance => {
+    // user.id  asi filter method method() vrati me cely objekt playera
+    //retun userOjbekt,
+    // })
 
-    const flatten = Object.keys(flat).reduce((res, item) => {
-      return res.concat(flat[item]);
-    }, []);
+    // a celou array potom ulozim do attendance kazdeho occurence
 
-    console.log("muj keys flat", flat);
 
-    debugger;
+    // const flat = copyEnter.flatMap((el) => {
+    //   let len = el[1].length;
+    //   const obj = { ...el[1] };
+    //   for (let i = 0; i < len; i++) {
+    //     obj[i].id = el[0];
+    //   }
+    //   return obj;
+    // }); //({...obj[1], id: obj[0]})
+    //
+    // const flatten = Object.keys(flat).reduce((res, item) => {
+    //   return res.concat(flat[item]);
+    // }, []);
+
+    // console.log("muj keys flat", flat);
+
+    // debugger;
     // const occ = entr.reduce(loadOccurrences, []);
     // console.log("entr", occ);
     // const data = response.data;
