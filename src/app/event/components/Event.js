@@ -33,6 +33,9 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/basic
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
+// import Uploady from "@rpldy/uploady";
+// import UploadButton from "@rpldy/upload-button";
+// import UploadPreview from "@rpldy/upload-preview";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -72,6 +75,7 @@ const Event = ({
   const [eventType, setEventType] = useState("");
   const [eventAttendance, setEventAttendance] = useState(false);
   const [repeatEvent, setRepeatEvent] = useState(false);
+  const [selectedFile, setSelectedFile] = useState();
 
   useEffect(() => {
     fetchEvents();
@@ -79,6 +83,18 @@ const Event = ({
   }, [localStorage.token]);
   console.log("nahore 1", eventAttendance);
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
+
+  const filterBySize = (file) => {
+    //filter out images larger than 5MB
+    return file.size <= 5242880;
+  };
+
+  const fileSelectedHandler = (ev) => {
+    setSelectedFile(ev.target.files);
+  }
+
+// const fileUploadHandler = () {
+//   }
 
   const handleDateChange = (id, ev) => {
     switch (id) {
@@ -164,6 +180,15 @@ const Event = ({
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
+              {/*<Uploady*/}
+              {/*    destination={{ url: "my-server.com/upload" }}*/}
+              {/*    fileFilter={filterBySize}*/}
+              {/*    accept="image/*"*/}
+              {/*>*/}
+              {/*  <UploadButton />*/}
+              {/*  <UploadPreview />*/}
+              {/*</Uploady>*/}
+              {/*<input type="file" onChange={fileSelectedHandler}>*/}
               <div>
                 <h3>Dalsi trening ucast</h3>
               </div>
