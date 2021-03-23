@@ -33,15 +33,19 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/basic
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
-// import Uploady from "@rpldy/uploady";
-// import UploadButton from "@rpldy/upload-button";
-// import UploadPreview from "@rpldy/upload-preview";
+const functions = require("firebase-functions");
+// const gcs = require('@google-cloud/storage')();
+const os = require('os');
+const path = require('path');
+const spawn = require('child-process-promise').spawn;
+
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
   KeyboardDatePicker,
 } from "@material-ui/pickers";
 import Table from "react-bootstrap/Table";
+import axios from "axios";
 
 const useStyles = makeStyles();
 const selectStyles = makeStyles((theme) => ({
@@ -76,6 +80,7 @@ const Event = ({
   const [eventAttendance, setEventAttendance] = useState(false);
   const [repeatEvent, setRepeatEvent] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
+  const [fileInput, setFileInput] = useState();
 
   useEffect(() => {
     fetchEvents();
@@ -93,8 +98,18 @@ const Event = ({
     setSelectedFile(ev.target.files);
   }
 
-// const fileUploadHandler = () {
-//   }
+const fileUploadHandler = () => {
+    const fd = new FormData();
+    fd.append('image', selectedFile, selectedFile.name);
+    axios.post('', fd, {
+      onUploadProgress: progressEvent => {
+        console.log('Upload Prgress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
+      }
+    }
+).then(res => {
+    console.log('our respond', res);
+    })
+};
 
   const handleDateChange = (id, ev) => {
     switch (id) {
@@ -163,6 +178,13 @@ const Event = ({
     setRepeatEvent(ev.target.checked);
   };
 
+  //once it is deployed we get exact url
+  exports.uploadFile = functions.https.onRequest((req, res) => {
+    res.status(200).json({
+      message: 'It worked!'
+    });
+  })
+
   return (
     <div>
       <div className="card-player">
@@ -180,15 +202,9 @@ const Event = ({
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
-              {/*<Uploady*/}
-              {/*    destination={{ url: "my-server.com/upload" }}*/}
-              {/*    fileFilter={filterBySize}*/}
-              {/*    accept="image/*"*/}
-              {/*>*/}
-              {/*  <UploadButton />*/}
-              {/*  <UploadPreview />*/}
-              {/*</Uploady>*/}
-              {/*<input type="file" onChange={fileSelectedHandler}>*/}
+              <input  type="file" onChange={fileSelectedHandler} ref={fileInput => setFileInput(fileInput)} />
+                <button OnClick={()=> fileInput.click()}>Pick File</button>
+                <button onClick={fileUploadHandler}>Upload</button>
               <div>
                 <h3>Dalsi trening ucast</h3>
               </div>
