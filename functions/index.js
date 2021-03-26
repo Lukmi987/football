@@ -4,10 +4,12 @@ const gcconfig = {
   projectId: "football-25167",
   keyFilename: "football-25167-firebase-adminsdk-qkkdm-d19ee3910f.json",
 };
-const gcloud = require("@google-cloud");
-gcloud.storage();
+// const gcloud = require("@google-cloud");
+
+// const gcs = gcloud.storage(gcconfig);
+
 const { Storage } = require("@google-cloud/storage");
-const storage = new Storage();
+const storage = new Storage(gcconfig);
 
 const os = require("os");
 const path = require("path");
@@ -70,7 +72,7 @@ exports.uploadFile = functions.https.onRequest((req, res) => {
     });
 
     busboy.on("finish", () => {
-      const bucket = gcs.bucket("football-25167.appspot.com");
+      const bucket = storage.bucket("football-25167.appspot.com");
       bucket
         .upload(uploadData.file, {
           uploadType: "media",
