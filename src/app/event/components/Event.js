@@ -33,12 +33,6 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/basic
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
-const functions = require("firebase-functions");
-// const gcs = require('@google-cloud/storage')();
-const os = require('os');
-const path = require('path');
-const spawn = require('child-process-promise').spawn;
-
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -46,6 +40,12 @@ import {
 } from "@material-ui/pickers";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
+
+// const functions = require("firebase-functions");
+// const gcs = require('@google-cloud/storage')();
+// const os = require("os");
+// const path = require("path");
+// const spawn = require("child-process-promise").spawn;
 
 const useStyles = makeStyles();
 const selectStyles = makeStyles((theme) => ({
@@ -95,21 +95,31 @@ const Event = ({
   };
 
   const fileSelectedHandler = (ev) => {
-    setSelectedFile(ev.target.files);
-  }
+    console.log(ev.target.files);
+    setSelectedFile(ev.target.files[0]);
+  };
 
-const fileUploadHandler = () => {
+  const fileUploadHandler = () => {
     const fd = new FormData();
-    fd.append('image', selectedFile, selectedFile.name);
-    axios.post('', fd, {
-      onUploadProgress: progressEvent => {
-        console.log('Upload Prgress: ' + Math.round(progressEvent.loaded / progressEvent.total * 100) + '%');
-      }
-    }
-).then(res => {
-    console.log('our respond', res);
-    })
-};
+    fd.append("image", selectedFile, selectedFile.name);
+    axios
+      .post(
+        "https://us-central1-football-25167.cloudfunctions.net/uploadFile",
+        fd,
+        {
+          onUploadProgress: (progressEvent) => {
+            console.log(
+              "Upload Prgress: " +
+                Math.round((progressEvent.loaded / progressEvent.total) * 100) +
+                "%"
+            );
+          },
+        }
+      )
+      .then((res) => {
+        console.log("our respond", res);
+      });
+  };
 
   const handleDateChange = (id, ev) => {
     switch (id) {
@@ -179,11 +189,11 @@ const fileUploadHandler = () => {
   };
 
   //once it is deployed we get exact url
-  exports.uploadFile = functions.https.onRequest((req, res) => {
-    res.status(200).json({
-      message: 'It worked!'
-    });
-  })
+  // exports.uploadFile = functions.https.onRequest((req, res) => {
+  //   res.status(200).json({
+  //     message: "It worked!",
+  //   });
+  // });
 
   return (
     <div>
@@ -202,9 +212,13 @@ const fileUploadHandler = () => {
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
-              <input  type="file" onChange={fileSelectedHandler} ref={fileInput => setFileInput(fileInput)} />
-                <button OnClick={()=> fileInput.click()}>Pick File</button>
-                <button onClick={fileUploadHandler}>Upload</button>
+              <input
+                type="file"
+                onChange={fileSelectedHandler}
+                ref={(fileInput) => setFileInput(fileInput)}
+              />
+              {/*<button OnClick={() => fileInput.click()}>Pick File</button>*/}
+              <button onClick={fileUploadHandler}>Upload</button>
               <div>
                 <h3>Dalsi trening ucast</h3>
               </div>
