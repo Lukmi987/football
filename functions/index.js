@@ -2,15 +2,18 @@ const functions = require("firebase-functions");
 
 const gcconfig = {
   projectId: "football-25167",
-  keyFilename: "football-25167-firebase-adminsdk-qkkdm-d19ee3910f.json"
+  keyFilename: "football-25167-firebase-adminsdk-qkkdm-d19ee3910f.json",
 };
-const {Storage} = require("@google-cloud/storage");
+const gcloud = require("@google-cloud");
+gcloud.storage();
+const { Storage } = require("@google-cloud/storage");
 const storage = new Storage();
+
 const os = require("os");
 const path = require("path");
 const spawn = require("child_process").spawn;
-const cors = require("cors")({origin: true});
-const Busboy = require('busboy');
+const cors = require("cors")({ origin: true });
+const Busboy = require("busboy");
 const fs = require("fs");
 
 // // Create and Deploy Your First Cloud Functions
@@ -18,7 +21,7 @@ const fs = require("fs");
 
 //  reacts on storage events
 
-exports.onFileChange = functions.storage.object().onFinalize( (event) => {
+exports.onFileChange = functions.storage.object().onFinalize((event) => {
   console.log(event);
   const bucket = event.bucket;
   const contentType = event.contentType;
@@ -32,18 +35,22 @@ exports.onFileChange = functions.storage.object().onFinalize( (event) => {
 
   const destBucket = storage.bucket(bucket);
   const tmpFilePath = path.join(os.tmpdir(), path.basename(filePath));
-  const metadata = {contentType};
+  const metadata = { contentType };
 
-  return destBucket.file(filePath).download({
-    destination: tmpFilePath,
-  }).then(() => {
-    return spawn("convert",
-        [tmpFilePath, "-resize", "500x500", tmpFilePath]);
-  }).then( () => {
-    return destBucket.upload(tmpFilePath,
-        {destination: "resized-" + path.basename(filePath),
-          metadata: metadata});
-  });
+  return destBucket
+    .file(filePath)
+    .download({
+      destination: tmpFilePath,
+    })
+    .then(() => {
+      return spawn("convert", [tmpFilePath, "-resize", "500x500", tmpFilePath]);
+    })
+    .then(() => {
+      return destBucket.upload(tmpFilePath, {
+        destination: "resized-" + path.basename(filePath),
+        metadata: metadata,
+      });
+    });
 });
 
 exports.uploadFile = functions.https.onRequest((req, res) => {
@@ -54,35 +61,38 @@ exports.uploadFile = functions.https.onRequest((req, res) => {
       });
     }
 
-    const busboy = new Busboy({headers: req.headers});
+    const busboy = new Busboy({ headers: req.headers });
     let uploadData = null;
     busboy.on("file", (fieldname, file, filename, encoding, mimetype) => {
       const filepath = path.join(os.tmpdir(), filename);
-      uploadData = {file: filepath, type: mimetype};
+      uploadData = { file: filepath, type: mimetype };
       file.pipe(fs.createWriteStream(filepath));
     });
 
-    busboy.on('finish', (event) => {
-      const bucket = event.bucket("football-25167.appspot.com");
-      bucket.upload(uploadData.file, {
-        uploadType: "media",
-        metadata: {
+    busboy.on("finish", () => {
+      const bucket = gcs.bucket("football-25167.appspot.com");
+      bucket
+        .upload(uploadData.file, {
+          uploadType: "media",
           metadata: {
-            contentType: uploadData.type,
+            metadata: {
+              contentType: uploadData.type,
+            },
+          },
+        })
+        .then(() => {
+          res.status(200).json({
+            message: "It worked!!!",
+          });
+        })
+        .catch((err) => {
+          if (err) {
+            return res.status(500).json({
+              error: err,
+            });
           }
-        }
-      }).then(() => {
-        res.status(200).json({
-          message: "It worked!!!",
         });
-      }).catch(err => {
-        if (err) {
-          return res.status(500).json({
-            error: err,
-          })
-        }
-      });
     });
-  })
-  busboy.end(req.rawBody);
+    busboy.end(req.rawBody);
+  });
 });
