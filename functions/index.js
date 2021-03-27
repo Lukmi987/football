@@ -2,7 +2,7 @@ const functions = require("firebase-functions");
 
 const gcconfig = {
   projectId: "football-25167",
-  keyFilename: "football-25167-firebase-adminsdk-qkkdm-d19ee3910f.json",
+  keyFilename: "football-25167-firebase-adminsdk-qkkdm-11a4d268ad.json",
 };
 // const gcloud = require("@google-cloud");
 
@@ -88,6 +88,7 @@ exports.uploadFile = functions.https.onRequest((req, res) => {
           });
         })
         .catch((err) => {
+          console.log("........... jo",err);
           if (err) {
             return res.status(500).json({
               error: err,
