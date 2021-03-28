@@ -10,7 +10,7 @@ export function* fetchOccurrences() {
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
     const responseUsers = yield axios.get(`/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`);
 
-    console.log('user response',responseUsers);
+    console.log('userAccount response',responseUsers);
     const entr = Object.entries(response.data);
     console.log("pred flat entries", entr);
 
@@ -55,7 +55,7 @@ export function* fetchOccurrences() {
 
     //namapovat ke kazdumu id  objekt s daty usera co potrebuji vypsat
     // v loope attendance.map(item.attendance => {
-    // user.id  asi filter method method() vrati me cely objekt playera
+    // userAccount.id  asi filter method method() vrati me cely objekt playera
     //retun userOjbekt,
     // })
 

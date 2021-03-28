@@ -1,3 +1,5 @@
+//userAccount
+export const STORE_PROFILE_IMG_URL = "STORE_PROFILE_IMG_URL";
 //events
 export const SET_OCCURRENCES = "SET_OCCURRENCES";
 export const FETCH_OCCURRENCES = "FETCH_OCCURRENCES";

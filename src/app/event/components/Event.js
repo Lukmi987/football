@@ -83,6 +83,7 @@ const Event = ({
   const [repeatEvent, setRepeatEvent] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
   const [error, setError] = useState(null);
+  const [fileSize, setFileSize] = useState();
   const [fileInput, setFileInput] = useState();
   const types = ['image/png', 'image/jpeg'];
   useEffect(() => {
@@ -94,18 +95,26 @@ const Event = ({
 
   const filterBySize = (file) => {
     //filter out images larger than 5MB
-    return file.size <= 5242880;
+    return file.size <= 3332880 ;
   };
 
   const fileSelectedHandler = (ev) => {
   let selected = ev.target.files[0];
+    setFileSize('');
+
+  if(!filterBySize(selected)){
+    setFileSize('Obrazek musi byt mensi jak 3 MB!!!');
+    return
+  } else {
+    setFileSize('');
+  }
   if(selected && types.includes(selected.type)){
     setSelectedFile(selected);
     setError('');
     } else {
     setSelectedFile(null);
     setError('Please vyber obrazek ve formatu (png nebo jpeg)');
-  }
+   }
   }
 
 
@@ -143,10 +152,6 @@ const Event = ({
           ev.getMonth(),
           ev.getDate()
         );
-        //new Date("2015 2 3 15:36")
-        //const v = new Date("2015 2 3 15:36")
-        //v.setDate('3'); will added days
-        //const c = v.setDate('38'); it returns timestamp
         setEndDate(ev);
         break;
       case "startTime":
@@ -232,6 +237,7 @@ const Event = ({
 {/*  {error && <div className="error">{error}</div>}*/}
 {/*</div>*/}
               <div>
+                {fileSize && <div>{fileSize}</div>}
                 {error && <div className="error">{error}</div>}
                 {selectedFile && <div>{selectedFile.name}</div>}
                 {selectedFile && <ProgressBar file={selectedFile} setFile={setSelectedFile}/>}

@@ -12,7 +12,7 @@ export function* loginUser(action) {
     }
     try {
         const response = yield axios.post(url,preparedData);
-        console.log('v login user', response);
+        console.log('v login userAccount', response);
         const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
          localStorage.setItem('token', response.data.idToken);
           yield put({type: SET_AUTH_INFO, data: loginAuthInfo});

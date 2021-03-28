@@ -136,6 +136,18 @@ export default function HeaderLinks() {
         </Link>
         }
       </ListItem>
+        {isUserLoggedIn || true &&
+        <ListItem className={classes.listItem}>
+            <Link to={"/userAccount-page"}>
+                <Button
+                color="transparent"
+                className={classes.navLink}
+                >
+                    UserNameImage
+                </Button>
+            </Link>
+        </ListItem>
+        }
     </List>
   );
 }
