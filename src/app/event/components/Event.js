@@ -40,6 +40,8 @@ import {
 } from "@material-ui/pickers";
 import Table from "react-bootstrap/Table";
 import axios from "axios";
+import ProgressBar from "../../../ProgressBar";
+import ImageGrid from "../../../imageGrid";
 
 // const functions = require("firebase-functions");
 // const gcs = require('@google-cloud/storage')();
@@ -80,8 +82,9 @@ const Event = ({
   const [eventAttendance, setEventAttendance] = useState(false);
   const [repeatEvent, setRepeatEvent] = useState(false);
   const [selectedFile, setSelectedFile] = useState();
+  const [error, setError] = useState(null);
   const [fileInput, setFileInput] = useState();
-
+  const types = ['image/png', 'image/jpeg'];
   useEffect(() => {
     fetchEvents();
     fetchOccurrences();
@@ -95,9 +98,16 @@ const Event = ({
   };
 
   const fileSelectedHandler = (ev) => {
-    console.log(ev.target.files);
-    setSelectedFile(ev.target.files[0]);
-  };
+  let selected = ev.target.files[0];
+  if(selected && types.includes(selected.type)){
+    setSelectedFile(selected);
+    setError('');
+    } else {
+    setSelectedFile(null);
+    setError('Please vyber obrazek ve formatu (png nebo jpeg)');
+  }
+  }
+
 
   const fileUploadHandler = () => {
     const fd = new FormData();
@@ -218,10 +228,23 @@ const Event = ({
                 ref={(fileInput) => setFileInput(fileInput)}
               />
               {/*<button OnClick={() => fileInput.click()}>Pick File</button>*/}
-              <button onClick={fileUploadHandler}>Upload</button>
+{/*<div className="output">*/}
+{/*  {error && <div className="error">{error}</div>}*/}
+{/*</div>*/}
+              <div>
+                {error && <div className="error">{error}</div>}
+                {selectedFile && <div>{selectedFile.name}</div>}
+                {selectedFile && <ProgressBar file={selectedFile} setFile={setSelectedFile}/>}
+              </div>
+
+              {/*<button onClick={fileUploadHandler}>Upload</button>*/}
+
               <div>
                 <h3>Dalsi trening ucast</h3>
               </div>
+            </GridItem>
+            <GridItem xs={12} sm={12} md={4}>
+            <ImageGrid />
             </GridItem>
             <GridItem xs={12} sm={12} md={4}>
               <div>
