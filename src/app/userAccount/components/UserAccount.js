@@ -14,9 +14,9 @@ import CustomInput from "../../../components/CustomInput/CustomInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
 
-// const useStyles = makeStyles(styles);
+const useStyles = makeStyles(styles);
 
-export default function UserAccount() {
+export default function UserAccount({storeProfileImg}) {
     const classes = useStyles();
     const [selectedFile, setSelectedFile] = useState();
     const [error, setError] = useState(null);
@@ -29,12 +29,13 @@ export default function UserAccount() {
         return file.size <= 3332880 ;
     };
 
-    // useEffect(()=>{
-    //     if(profileImgUrl){
-    //         storeProfileImg(profileImgUrl);
-    //     }
-    //     console.log('profile Img url', profileImgUrl);
-    // },[profileImgUrl])
+    useEffect(()=>{
+        storeProfileImg('urls');
+        if(profileImgUrl){
+            storeProfileImg(profileImgUrl);
+        }
+        console.log('profile Img url', profileImgUrl);
+    },[profileImgUrl])
 
     const fileSelectedHandler = (ev) => {
         let selected = ev.target.files[0];
@@ -58,78 +59,78 @@ export default function UserAccount() {
     return (
         <div className={classes.section}>
             <div className={classes.container}>
-                {/*<GridContainer className={classes.textCenter} justify="center">*/}
-                {/*    <GridItem xs={12} sm={12} md={8}>*/}
-                {/*        <h2>Vypln zakladni udaje o sobe</h2>*/}
+                <GridContainer className={classes.textCenter} justify="center">
+                    <GridItem xs={12} sm={12} md={8}>
+                        <h2>Vypln zakladni udaje o sobe</h2>
 
-                {/*    </GridItem>*/}
-                {/*    <GridItem xs={12} sm={8} md={6}>*/}
-                {/*        <h4>Nahraj profilovou fotku</h4>*/}
-                {/*        <input*/}
-                {/*            type="file"*/}
-                {/*            onChange={fileSelectedHandler}*/}
-                {/*            ref={(fileInput) => setFileInput(fileInput)}*/}
-                {/*        />*/}
-                {/*        <div>*/}
-                {/*            {fileSize && <div>{fileSize}</div>}*/}
-                {/*            {error && <div className="error">{error}</div>}*/}
-                {/*            {selectedFile && <div>{selectedFile.name}</div>}*/}
-                {/*            {selectedFile && <ProgressBar file={selectedFile} collection='profile-images' setUrl={setProfileImgUrl} setFile={setSelectedFile}/>}*/}
-                {/*        </div>*/}
-                {/*    </GridItem>*/}
-                {/*    <GridItem xs={12} sm={12} md={8}>*/}
-                {/*        <CardBody>*/}
-                {/*            <CustomInput*/}
-                {/*                labelText="Přezdívka..."*/}
-                {/*                id="nickname"*/}
-                {/*                handleInputChange = {()=> null}*/}
-                {/*                formControlProps={{*/}
-                {/*                    fullWidth: true*/}
-                {/*                }}*/}
-                {/*                inputProps={{*/}
-                {/*                    type: "nickname",*/}
-                {/*                    endAdornment: (*/}
-                {/*                        <InputAdornment position="end">*/}
-                {/*                            <Email className={classes.inputIconsColor} />*/}
-                {/*                        </InputAdornment>*/}
-                {/*                    )*/}
-                {/*                }}*/}
-                {/*            />*/}
-                {/*            <CustomInput*/}
-                {/*                labelText="Rok narození..."*/}
-                {/*                id="bDay"*/}
-                {/*                handleInputChange = {()=> null}*/}
-                {/*                formControlProps={{*/}
-                {/*                    fullWidth: true*/}
-                {/*                }}*/}
-                {/*                inputProps={{*/}
-                {/*                    type: "bDay",*/}
-                {/*                    endAdornment: (*/}
-                {/*                        <InputAdornment position="end">*/}
-                {/*                            <Email className={classes.inputIconsColor} />*/}
-                {/*                        </InputAdornment>*/}
-                {/*                    )*/}
-                {/*                }}*/}
-                {/*            />*/}
-                {/*            <CustomInput*/}
-                {/*                labelText="About me..."*/}
-                {/*                id="AboutMe"*/}
-                {/*                handleInputChange = {()=> null}*/}
-                {/*                formControlProps={{*/}
-                {/*                    fullWidth: true*/}
-                {/*                }}*/}
-                {/*                inputProps={{*/}
-                {/*                    type: "AboutMe",*/}
-                {/*                    endAdornment: (*/}
-                {/*                        <InputAdornment position="end">*/}
-                {/*                            <Email className={classes.inputIconsColor} />*/}
-                {/*                        </InputAdornment>*/}
-                {/*                    )*/}
-                {/*                }}*/}
-                {/*            />*/}
-                {/*            </ CardBody>*/}
-                {/*    </GridItem>*/}
-                {/*</GridContainer>*/}
+                    </GridItem>
+                    <GridItem xs={12} sm={8} md={6}>
+                        <h4>Nahraj profilovou fotku</h4>
+                        <input
+                            type="file"
+                            onChange={fileSelectedHandler}
+                            ref={(fileInput) => setFileInput(fileInput)}
+                        />
+                        <div>
+                            {fileSize && <div>{fileSize}</div>}
+                            {error && <div className="error">{error}</div>}
+                            {selectedFile && <div>{selectedFile.name}</div>}
+                            {selectedFile && <ProgressBar file={selectedFile} collection='profile-images' setUrl={setProfileImgUrl} setFile={setSelectedFile}/>}
+                        </div>
+                    </GridItem>
+                    <GridItem xs={12} sm={12} md={8}>
+                        <CardBody>
+                            <CustomInput
+                                labelText="Přezdívka..."
+                                id="nickname"
+                                handleInputChange = {()=> null}
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    type: "nickname",
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Email className={classes.inputIconsColor} />
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                            <CustomInput
+                                labelText="Rok narození..."
+                                id="bDay"
+                                handleInputChange = {()=> null}
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    type: "bDay",
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Email className={classes.inputIconsColor} />
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                            <CustomInput
+                                labelText="About me..."
+                                id="AboutMe"
+                                handleInputChange = {()=> null}
+                                formControlProps={{
+                                    fullWidth: true
+                                }}
+                                inputProps={{
+                                    type: "AboutMe",
+                                    endAdornment: (
+                                        <InputAdornment position="end">
+                                            <Email className={classes.inputIconsColor} />
+                                        </InputAdornment>
+                                    )
+                                }}
+                            />
+                            </ CardBody>
+                    </GridItem>
+                </GridContainer>
                 <br />
                 <br />
                 {/*<GridContainer className={classes.textCenter} justify="center">*/}

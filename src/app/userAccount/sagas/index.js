@@ -4,8 +4,8 @@ import {storeProfileImg} from "./storeProfileImg";
 // const storeProfileImg = () => {1};
 
 //listen for CHANGE_COUNTER
-const counterSagas = [
+const userAccountSagas = [
     takeLatest('STORE_PROFILE_IMG_URL', storeProfileImg),
   ];
 
-export default counterSagas;
+export default userAccountSagas;
