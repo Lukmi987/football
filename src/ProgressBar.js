@@ -4,10 +4,10 @@ import useStorage from "./hooks/useStorage";
 
 const ProgressBar = ({file, setFile, setUrl, collection}) => {
     const {url, progress} = useStorage(file,collection);
-    setUrl(url);
     useEffect(() =>{
         if(url){
             setFile(null);
+            setUrl(url);
         }
 
     }, [url,setFile])

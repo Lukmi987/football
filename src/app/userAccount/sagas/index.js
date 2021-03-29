@@ -5,7 +5,7 @@ import {storeProfileImg} from "./storeProfileImg";
 
 //listen for CHANGE_COUNTER
 const userAccountSagas = [
-    takeLatest('STORE_PROFILE_IMG_URL', storeProfileImg),
+    takeLatest('STORE_PROFILE_IMG_URL_SAGA', storeProfileImg),
   ];
 
 export default userAccountSagas;

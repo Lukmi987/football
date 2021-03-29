@@ -136,14 +136,14 @@ export default function HeaderLinks() {
         </Link>
         }
       </ListItem>
-        {isUserLoggedIn || true &&
+        {isUserLoggedIn &&
         <ListItem className={classes.listItem}>
             <Link to={"/userAccount-page"}>
                 <Button
                 color="transparent"
                 className={classes.navLink}
                 >
-                    UserNameImage
+                    Account
                 </Button>
             </Link>
         </ListItem>

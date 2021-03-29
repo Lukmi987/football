@@ -13,10 +13,11 @@ import CardBody from "../../../components/Card/CardBody";
 import CustomInput from "../../../components/CustomInput/CustomInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
+import {storeProfileImgSaga} from "../actions";
 
 const useStyles = makeStyles(styles);
 
-export default function UserAccount({storeProfileImg}) {
+export default function UserAccount({storeProfileImgSaga}) {
     const classes = useStyles();
     const [selectedFile, setSelectedFile] = useState();
     const [error, setError] = useState(null);
@@ -30,13 +31,13 @@ export default function UserAccount({storeProfileImg}) {
     };
 
     useEffect(()=>{
-        storeProfileImg('urls');
+        // storeProfileImg('urls');
         if(profileImgUrl){
-            storeProfileImg(profileImgUrl);
+            storeProfileImgSaga(profileImgUrl);
         }
         console.log('profile Img url', profileImgUrl);
     },[profileImgUrl])
-
+console.log('set file', selectedFile);
     const fileSelectedHandler = (ev) => {
         let selected = ev.target.files[0];
         setFileSize('');
@@ -71,6 +72,11 @@ export default function UserAccount({storeProfileImg}) {
                             onChange={fileSelectedHandler}
                             ref={(fileInput) => setFileInput(fileInput)}
                         />
+                        {profileImgUrl &&
+                        <div className="profileUrl">
+                            <img width='230' height='280' src={profileImgUrl}/>
+                        </div>
+                        }
                         <div>
                             {fileSize && <div>{fileSize}</div>}
                             {error && <div className="error">{error}</div>}
