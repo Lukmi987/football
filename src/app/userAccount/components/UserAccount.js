@@ -38,6 +38,7 @@ export default function UserAccount({storeProfileImgSaga}) {
         console.log('profile Img url', profileImgUrl);
     },[profileImgUrl])
 console.log('set file', selectedFile);
+
     const fileSelectedHandler = (ev) => {
         let selected = ev.target.files[0];
         setFileSize('');
@@ -70,7 +71,6 @@ console.log('set file', selectedFile);
                         <input
                             type="file"
                             onChange={fileSelectedHandler}
-                            ref={(fileInput) => setFileInput(fileInput)}
                         />
                         {profileImgUrl &&
                         <div className="profileUrl">

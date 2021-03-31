@@ -3,11 +3,8 @@ import axios from "../../axios-football";
 import {SET_EVENT, STORE_PROFILE_IMG_URL} from "../../constants/actionTypes";
 
 export function* storeProfileImg(action) {
-    console.log('hello ....................................111');
     const { profileUrl } = action;
     const userToken = localStorage.token;
-
-    console.log('hello ....................................');
     try {
         const userId = yield select(state => state.login.userId);
         const responseUsers = yield axios.get(`/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`);

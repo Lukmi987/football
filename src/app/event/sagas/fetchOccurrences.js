@@ -12,45 +12,49 @@ export function* fetchOccurrences() {
 
     console.log('userAccount response',responseUsers);
     const entr = Object.entries(response.data);
-    console.log("pred flat entries", entr);
+    console.log("pred flat entries...................", entr);
+    console.log(".........users",responseUsers);
 
-    const mojeCopy = _.cloneDeep(entr);
+console.log('stack overfl', JSON.parse(JSON.stringify(entr)));
 
-    const copyEnter = _.cloneDeep(entr);
-// mapNodeIdAndUsersToEachEvent() => {
+      const kkt = JSON.parse(JSON.stringify(entr));
+    console.log('my clone', kkt);
 
-
-
-    const mapNodeIdAndUsersToEachEvent = (array) => {
-      const acumm = [];
-      const occurrencesArray = 1;
-      const nodeId = 0;
-      for (let i = 0; i < array.length; i++) {
-        let node = {};
-        for (let j = 0; j < array[i].length; j++) {
-          let occurrences = array[i][j];
-          if (j === nodeId) {
-            node.id = array[i][j];
-          } else if (j === occurrencesArray) {
-            let occurrencesValues = Object.values(occurrences);
-            for (let k = 0; k < occurrencesValues.length; k++) {
-             const attendance = mapUsers(occurrencesValues, k, responseUsers);
-              occurrencesValues[k].attendance = attendance;
-              let result = { ...node, ...occurrencesValues[k] };
-              acumm.push(result);
-            }
+      const mapNodeIdAndUsersToEachEvent = (array) => {
+          const acumm = [];
+          const occurrencesArray = 1;
+          const nodeId = 0;
+          for (let i = 0; i < array.length; i++) {
+              let node = {};
+              for (let j = 0; j < array[i].length; j++) {
+                  let occurrences = array[i][j];
+                  console.log('................ahhhh 11111111111', occurrences);
+                  if (j === nodeId) {
+                      node.id = array[i][j];
+                  } else if (j === occurrencesArray) {
+                      let occurrencesValues = Object.values(occurrences);
+                      console.log('................ahhhh', occurrencesValues);
+                      for (let k = 0; k < occurrencesValues.length; k++) {
+                          const attendance = mapUsers(occurrencesValues, k, responseUsers);
+                          occurrencesValues[k].attendance = attendance;
+                          let result = { ...node, ...occurrencesValues[k] };
+                          acumm.push(result);
+                      }
+                  }
+              }
           }
-        }
-      }
-      return acumm;
-    };
-  mapNodeIdAndUsersToEachEvent(copyEnter);
-     console.log(mapNodeIdAndUsersToEachEvent(copyEnter), ".....test.....");
-  function mapUsers( occurrencesValues, index,responseUsers) {
-   return occurrencesValues[index].attendance.map(id => {
-      const user = responseUsers.data.filter( user => user.userID === id);
-      return user[0];
-    })}
+          return acumm;
+      };
+   const haluz = mapNodeIdAndUsersToEachEvent(kkt);
+   console.log('pochop to', haluz);
+      // console.log(mapNodeIdAndUsersToEachEvent(copyEnter), ".....test.....");
+      function mapUsers( occurrencesValues, index,responseUsers) {
+          console.log('occurrencesValues 2',occurrencesValues);
+          return occurrencesValues[index].attendance.map(id => {
+              const user = responseUsers.data.filter( user => user.userID === id);
+              console.log('3 user',user);
+              return user[0];
+          })}
     //v kazdem itemu obsahuje attendance array s id hracu kteri jdou na trening
 
     //namapovat ke kazdumu id  objekt s daty usera co potrebuji vypsat
