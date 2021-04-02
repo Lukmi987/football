@@ -1,17 +1,18 @@
 import { connect } from "react-redux";
 import {
-    storeProfileImg, storeProfileImgSaga
+    storeUser, storeProfileImgSaga
 } from "../actions";
-import { getUserId } from "../../../selectors/loginSelectors";
+import { getUserId, getUser } from "../../../selectors/loginSelectors";
 import UserAccount from "../components/UserAccount";
 
 const mapStateToProps = (state) => ({
     userId: getUserId(state),
+    user: getUser(state),
 });
 
 const mapDispatchToProps = {
-    storeProfileImg,
     storeProfileImgSaga,
+    storeUser
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(UserAccount);

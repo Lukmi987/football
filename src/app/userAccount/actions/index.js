@@ -1,8 +1,8 @@
-import {STORE_PROFILE_IMG_URL, STORE_PROFILE_IMG_URL_SAGA} from '../../constants/actionTypes'
+import {STORE_USER_SAGA, STORE_PROFILE_IMG_URL_SAGA} from '../../constants/actionTypes'
 
-export const storeProfileImg = (profileUrl) => ({
-    type: STORE_PROFILE_IMG_URL,
-    profileUrl
+export const storeUser = (user) => ({
+    type: STORE_USER_SAGA,
+    user
   });
 
 export const storeProfileImgSaga = (profileUrl) => ({

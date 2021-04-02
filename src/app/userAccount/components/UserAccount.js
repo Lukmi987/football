@@ -13,18 +13,25 @@ import CardBody from "../../../components/Card/CardBody";
 import CustomInput from "../../../components/CustomInput/CustomInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
-import {storeProfileImgSaga} from "../actions";
+import {storeProfileImgSaga, storeUser} from "../actions";
+import CardFooter from "../../../components/Card/CardFooter";
+import SnackbarContent from "../../../components/Snackbar/SnackbarContent";
+import Check from "@material-ui/icons/Check";
 
 const useStyles = makeStyles(styles);
 
-export default function UserAccount({storeProfileImgSaga}) {
+export default function UserAccount({storeProfileImgSaga, storeUser, user}) {
     const classes = useStyles();
     const [selectedFile, setSelectedFile] = useState();
     const [error, setError] = useState(null);
     const [fileSize, setFileSize] = useState();
-    const [fileInput, setFileInput] = useState();
     const [profileImgUrl, setProfileImgUrl] = useState();
+    const [bday, setBday] = useState('');
+    const [nickname, setNickname] = useState('');
+    const [aboutMe, setAboutMe] = useState('');
     const types = ['image/png', 'image/jpeg'];
+
+
     const filterBySize = (file) => {
         //filter out images larger than 5MB
         return file.size <= 3332880 ;
@@ -37,7 +44,32 @@ export default function UserAccount({storeProfileImgSaga}) {
         }
         console.log('profile Img url', profileImgUrl);
     },[profileImgUrl])
-console.log('set file', selectedFile);
+
+    const handleAccountInput = (e) => {
+        const inputId = e.target.id;
+        switch (inputId) {
+            case 'nickname':
+                setNickname(e.target.value);
+                break;
+            case 'bDay':
+                setBday(e.target.value)
+                break;
+            case 'aboutMe':
+                setAboutMe(e.target.value)
+                break;
+        }
+    }
+
+    const composeUserObj = () => ({
+        nickname,
+        bday,
+        aboutMe
+    })
+
+
+    const handleSubmit = () => {
+        storeUser(composeUserObj());
+    }
 
     const fileSelectedHandler = (ev) => {
         let selected = ev.target.files[0];
@@ -62,6 +94,22 @@ console.log('set file', selectedFile);
         <div className={classes.section}>
             <div className={classes.container}>
                 <GridContainer className={classes.textCenter} justify="center">
+
+                    {user &&
+                    <GridItem xs={12} sm={12} md={4}>
+
+                        <SnackbarContent
+                            message={
+                                <span>
+                                <b>Uspech:</b> Data usepesne ulozena !!
+                              </span>
+                            }
+                            close
+                            color="success"
+                            icon={Check}
+                        />
+                    </GridItem>
+                    }
                     <GridItem xs={12} sm={12} md={8}>
                         <h2>Vypln zakladni udaje o sobe</h2>
 
@@ -89,7 +137,7 @@ console.log('set file', selectedFile);
                             <CustomInput
                                 labelText="Přezdívka..."
                                 id="nickname"
-                                handleInputChange = {()=> null}
+                                handleInputChange = {handleAccountInput}
                                 formControlProps={{
                                     fullWidth: true
                                 }}
@@ -105,7 +153,7 @@ console.log('set file', selectedFile);
                             <CustomInput
                                 labelText="Rok narození..."
                                 id="bDay"
-                                handleInputChange = {()=> null}
+                                handleInputChange = {handleAccountInput}
                                 formControlProps={{
                                     fullWidth: true
                                 }}
@@ -120,8 +168,8 @@ console.log('set file', selectedFile);
                             />
                             <CustomInput
                                 labelText="About me..."
-                                id="AboutMe"
-                                handleInputChange = {()=> null}
+                                id="aboutMe"
+                                handleInputChange = {handleAccountInput}
                                 formControlProps={{
                                     fullWidth: true
                                 }}
@@ -134,6 +182,11 @@ console.log('set file', selectedFile);
                                     )
                                 }}
                             />
+                        <br/>
+                            <br/>
+                            <Button simple color="primary" size="lg" onClick={handleSubmit}>
+                                Submit
+                            </Button>
                             </ CardBody>
                     </GridItem>
                 </GridContainer>

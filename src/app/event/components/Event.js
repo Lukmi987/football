@@ -33,6 +33,7 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/basic
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
+import CollapsibleTable from "./eventsTable"
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -68,6 +69,7 @@ const Event = ({
   fetchOccurrences,
   eventsList,
   userId,
+  occurrencesList,
 }) => {
   const classes = useStyles();
   const selectClasses = selectStyles();
@@ -87,7 +89,7 @@ const Event = ({
   const [fileInput, setFileInput] = useState();
   const types = ['image/png', 'image/jpeg'];
   useEffect(() => {
-    fetchEvents();
+    //fetchEvents();
     fetchOccurrences();
   }, [localStorage.token]);
   console.log("nahore 1", eventAttendance);
@@ -232,10 +234,7 @@ const Event = ({
                 onChange={fileSelectedHandler}
                 ref={(fileInput) => setFileInput(fileInput)}
               />
-              {/*<button OnClick={() => fileInput.click()}>Pick File</button>*/}
-{/*<div className="output">*/}
-{/*  {error && <div className="error">{error}</div>}*/}
-{/*</div>*/}
+
               <div>
                 {fileSize && <div>{fileSize}</div>}
                 {error && <div className="error">{error}</div>}
@@ -402,48 +401,49 @@ const Event = ({
                 Submit
               </Button>
             </GridItem>
-            <GridItem>
-              <Table striped bordered hover>
-                <thead>
-                  <tr>
-                    <th>StartTime</th>
-                    <th>event start date</th>
-                    <th>Ucast</th>
-                    <th>Moje ucast</th>
-                    <th>Pujdu na trening ?</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {eventsList.map((event) => (
-                    <tr key={event.id}>
-                      <td>{event.eventData.startTime}</td>
-                      <td>{event.eventData.endTime}</td>
-                      <td>
-                        {event.eventData.users &&
-                          Object.values(
-                            event.eventData?.users
-                          ).map((user, index) => <li key={index}>{user}</li>)}
-                      </td>
-                      {eventAttendance ? <td>Zucastnim se</td> : <td>Nejdu</td>}
-                      <td>
-                        <Button
-                          id={event.id}
-                          onClick={(ev) => handleAttendance(true, ev)}
-                        >
-                          Ano
-                        </Button>
-                        <Button
-                          id={event.id}
-                          onClick={(ev) => handleAttendance(false, ev)}
-                        >
-                          Ne
-                        </Button>
-                      </td>
-                    </tr>
-                  ))}
-                </tbody>
-              </Table>
-            </GridItem>
+
+              {/*<Table striped bordered hover>*/}
+              {/*  <thead>*/}
+              {/*    <tr>*/}
+              {/*      <th>StartTime</th>*/}
+              {/*      <th>event start date</th>*/}
+              {/*      <th>Ucast</th>*/}
+              {/*      <th>Moje ucast</th>*/}
+              {/*      <th>Pujdu na trening ?</th>*/}
+              {/*    </tr>*/}
+              {/*  </thead>*/}
+              {/*  <tbody>*/}
+              {/*    {eventsList.map((event) => (*/}
+              {/*      <tr key={event.id}>*/}
+              {/*        <td>{event.eventData.startTime}</td>*/}
+              {/*        <td>{event.eventData.endTime}</td>*/}
+              {/*        <td>*/}
+              {/*          {event.eventData.users &&*/}
+              {/*            Object.values(*/}
+              {/*              event.eventData?.users*/}
+              {/*            ).map((user, index) => <li key={index}>{user}</li>)}*/}
+              {/*        </td>*/}
+              {/*        {eventAttendance ? <td>Zucastnim se</td> : <td>Nejdu</td>}*/}
+              {/*        <td>*/}
+              {/*          <Button*/}
+              {/*            id={event.id}*/}
+              {/*            onClick={(ev) => handleAttendance(true, ev)}*/}
+              {/*          >*/}
+              {/*            Ano*/}
+              {/*          </Button>*/}
+              {/*          <Button*/}
+              {/*            id={event.id}*/}
+              {/*            onClick={(ev) => handleAttendance(false, ev)}*/}
+              {/*          >*/}
+              {/*            Ne*/}
+              {/*          </Button>*/}
+              {/*        </td>*/}
+              {/*      </tr>*/}
+              {/*    ))}*/}
+              {/*  </tbody>*/}
+              {/*</Table>*/}
+              {occurrencesList && <CollapsibleTable radek={occurrencesList}/>}
+
           </GridContainer>
         </div>
       </div>

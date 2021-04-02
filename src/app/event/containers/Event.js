@@ -5,13 +5,17 @@ import {
   processEvent,
   processEventAttendance,
 } from "../actions";
+import { getOccurrences } from "../../../selectors/eventsSelectors";
 import { getEvents } from "../../../selectors/eventsSelectors";
 import { getUserId } from "../../../selectors/loginSelectors";
+import { getUser } from "../../../selectors/loginSelectors";
 import { fetchEvents } from "../actions";
 
 const mapStateToProps = (state) => ({
   eventsList: getEvents(state),
   userId: getUserId(state),
+  user: getUser(state),
+  occurrencesList: getOccurrences(state),
 });
 
 const mapDispatchToProps = {
