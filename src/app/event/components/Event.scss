@@ -36,3 +36,16 @@
   clip-path: polygon(0 0, 100% 0, 100% 85%, 0 100%); }
 .card__picture--1 {
   background-image: linear-gradient(to right bottom, #ffb900, #ff7730), url(../../../assets/img/faces/avatar.jpg); }
+
+.MuiPaper-root.MuiTableContainer-root.MuiPaper-elevation1.MuiPaper-rounded {
+  width: 55%;
+}
+
+#table-attendance {
+  display: flex;
+}
+
+#table-attendance > li {
+  margin: 0 1rem 0 1rem;
+  list-style-type: none;
+}

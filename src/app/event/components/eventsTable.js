@@ -14,14 +14,22 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
+import {Avatar} from "@material-ui/core";
 
 const useRowStyles = makeStyles({
     root: {
         '& > *': {
             borderBottom: 'unset',
         },
+        width: '55%',
+        padding: '0 30px',
     },
 });
+
+const timeStampToData = (timeStamp) => {
+ const date =  new Date(timeStamp);
+ return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+}
 
 function createData(name, calories, fat, carbs, protein, price) {
     return {
@@ -46,52 +54,45 @@ function Row(props) {
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
-                {/*<TableCell>*/}
-                {/*    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>*/}
-                {/*        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}*/}
-                {/*    </IconButton>*/}
-                {/*</TableCell>*/}
-
+                <TableCell>
+                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
+                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+                    </IconButton>
+                </TableCell>
                 <TableCell align="right">{row.eventId}</TableCell>
-                <TableCell align="right">{row.creationTime}</TableCell>
-                {/*<TableCell align="right">{row.attendance}</TableCell>*/}
-
+                <TableCell align="right">{timeStampToData(row.creationTime)}</TableCell>
             </TableRow>
-            {/*<TableRow>*/}
-            {/*    <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>*/}
-            {/*        <Collapse in={open} timeout="auto" unmountOnExit>*/}
-            {/*            <Box margin={1}>*/}
-            {/*                <Typography variant="h6" gutterBottom component="div">*/}
-            {/*                    History*/}
-            {/*                </Typography>*/}
-            {/*                <Table size="small" aria-label="purchases">*/}
-            {/*                    <TableHead>*/}
-            {/*                        <TableRow>*/}
-            {/*                            <TableCell>Date</TableCell>*/}
-            {/*                            <TableCell>Customer</TableCell>*/}
-            {/*                            <TableCell align="right">Amount</TableCell>*/}
-            {/*                            <TableCell align="right">Total price ($)</TableCell>*/}
-            {/*                        </TableRow>*/}
-            {/*                    </TableHead>*/}
-            {/*                    <TableBody>*/}
-            {/*                        {row.history.map((historyRow) => (*/}
-            {/*                            <TableRow key={historyRow.date}>*/}
-            {/*                                <TableCell component="th" scope="row">*/}
-            {/*                                    {historyRow.date}*/}
-            {/*                                </TableCell>*/}
-            {/*                                <TableCell>{historyRow.customerId}</TableCell>*/}
-            {/*                                <TableCell align="right">{historyRow.amount}</TableCell>*/}
-            {/*                                <TableCell align="right">*/}
-            {/*                                    {Math.round(historyRow.amount * row.price * 100) / 100}*/}
-            {/*                                </TableCell>*/}
-            {/*                            </TableRow>*/}
-            {/*                        ))}*/}
-            {/*                    </TableBody>*/}
-            {/*                </Table>*/}
-            {/*            </Box>*/}
-            {/*        </Collapse>*/}
-            {/*    </TableCell>*/}
-            {/*</TableRow>*/}
+            <TableRow>
+                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+                    <Collapse in={open} timeout="auto" unmountOnExit>
+                        <Box margin={1}>
+                            <Typography variant="h6" gutterBottom component="div">
+                                Players
+                            </Typography>
+                            <Table size="small" aria-label="purchases">
+                                {/*<TableHead>*/}
+                                {/*    <TableRow>*/}
+                                {/*        <TableCell>Date</TableCell>*/}
+                                {/*        <TableCell>Customer</TableCell>*/}
+                                {/*        <TableCell align="right">Amount</TableCell>*/}
+                                {/*        <TableCell align="right">Total price ($)</TableCell>*/}
+                                {/*    </TableRow>*/}
+                                {/*</TableHead>*/}
+                                <TableBody>
+                                    <ul id="table-attendance">
+                                    {row.attendance.map((user) => (
+                                        <li key={1*66 +7}>
+                                                {user?.nickname}
+                                            <Avatar alt="Remy Sharp" src={user?.profileUrl} className={classes.large} />
+                                        </li>
+                                     ))}
+                                    </ul>
+                                </TableBody>
+                            </Table>
+                        </Box>
+                    </Collapse>
+                </TableCell>
+            </TableRow>
         </React.Fragment>
     );
 }
@@ -129,6 +130,7 @@ const  CollapsibleTable = ({radek}) => {
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
+                        <TableCell align="left">Ucast</TableCell>
                         <TableCell align="right">Event Id</TableCell>
                         <TableCell align="right">Zacatek</TableCell>
                         {/*<TableCell align="right">Jdu na trening ?</TableCell>*/}
