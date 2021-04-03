@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -15,6 +15,8 @@ import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {Avatar} from "@material-ui/core";
+import GridContainer from "../../../components/Grid/GridContainer";
+import Button from "../../../components/CustomButtons/Button";
 
 const useRowStyles = makeStyles({
     root: {
@@ -26,10 +28,9 @@ const useRowStyles = makeStyles({
     },
 });
 
-const timeStampToData = (timeStamp) => {
- const date =  new Date(timeStamp);
- return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-}
+
+
+
 
 function createData(name, calories, fat, carbs, protein, price) {
     return {
@@ -47,9 +48,16 @@ function createData(name, calories, fat, carbs, protein, price) {
 }
 
 function Row(props) {
-    const { row } = props;
+    const { row, handleAttendance } = props;
+    const cr = row.creationTime;
+    console.log('dopice', cr);
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
+
+    const timeStampToData = (timeStamp) => {
+        const date =  new Date(timeStamp);
+        return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    }
 
     return (
         <React.Fragment>
@@ -61,6 +69,23 @@ function Row(props) {
                 </TableCell>
                 <TableCell align="right">{row.eventId}</TableCell>
                 <TableCell align="right">{timeStampToData(row.creationTime)}</TableCell>
+                <TableCell>
+                    <Button
+                        id={row.id}
+                        onClick={(ev) => handleAttendance(true, ev, cr)}
+                    >
+                        Ano
+                    </Button>
+                </TableCell>
+                <TableCell>
+                    <Button
+                        id={row.id}
+                        onClick={(ev) => handleAttendance(false, ev, cr)}
+                    >
+                        Ne
+                    </Button>
+                </TableCell>
+
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -82,7 +107,6 @@ function Row(props) {
                                     <ul id="table-attendance">
                                     {row.attendance.map((user) => (
                                         <li key={1*66 +7}>
-                                                {user?.nickname}
                                             <Avatar alt="Remy Sharp" src={user?.profileUrl} className={classes.large} />
                                         </li>
                                      ))}
@@ -123,7 +147,7 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
 ];
 
-const  CollapsibleTable = ({radek}) => {
+const  CollapsibleTable = ({radek, handleAttendance}) => {
     console.log('jjjjjjjj',radek);
     return (
         <TableContainer component={Paper}>
@@ -133,12 +157,12 @@ const  CollapsibleTable = ({radek}) => {
                         <TableCell align="left">Ucast</TableCell>
                         <TableCell align="right">Event Id</TableCell>
                         <TableCell align="right">Zacatek</TableCell>
-                        {/*<TableCell align="right">Jdu na trening ?</TableCell>*/}
+                        <TableCell align="right">Jdu na trening ?</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {radek.map((row) => (
-                        <Row key={row.creationTime} row={row} />
+                        <Row key={row.creationTime} row={ row } handleAttendance={handleAttendance} />
                     ))}
                 </TableBody>
             </Table>

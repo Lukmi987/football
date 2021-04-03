@@ -5,10 +5,11 @@ import {
   PROCESS_EVENT_ATTENDANCE,
 } from "../../constants/actionTypes";
 
-export const processEventAttendance = (participate, eventId) => ({
+export const processEventAttendance = (participate, occurrenceId, creationTime) => ({
   type: PROCESS_EVENT_ATTENDANCE,
-  participate: participate,
-  eventId: eventId,
+  participate,
+  occurrenceId,
+  creationTime
 });
 
 export const processEvent = (sportEvent, eventCount) => ({

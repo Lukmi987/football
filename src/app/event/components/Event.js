@@ -195,10 +195,11 @@ const Event = ({
     processEvent(composeEventData(), eventCount);
   };
 
-  const handleAttendance = (participate, ev) => {
-    const eventId = ev.target.id;
+  const handleAttendance = (participate, ev, creationTime) => {
+    console.log('click',creationTime);
+    const occurrenceId = ev.target.id;
     participate ? setEventAttendance(true) : setEventAttendance(false);
-    processEventAttendance(participate, eventId);
+    processEventAttendance(participate, occurrenceId, creationTime);
   };
 
   const handleRepeatCheckbox = (ev) => {
@@ -442,7 +443,7 @@ const Event = ({
               {/*    ))}*/}
               {/*  </tbody>*/}
               {/*</Table>*/}
-              {occurrencesList && <CollapsibleTable radek={occurrencesList}/>}
+              {occurrencesList && <CollapsibleTable radek={occurrencesList} handleAttendance={handleAttendance}/>}
 
           </GridContainer>
         </div>
