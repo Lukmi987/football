@@ -87,11 +87,23 @@ const Event = ({
   const [error, setError] = useState(null);
   const [fileSize, setFileSize] = useState();
   const [fileInput, setFileInput] = useState();
+  const [nearestEvents, setNearestEvents] = useState();
   const types = ['image/png', 'image/jpeg'];
   useEffect(() => {
-    //fetchEvents();
     fetchOccurrences();
+    if(occurrencesList) {
+        // console.log('hmnm sultana i love', filterNearestEvents(occurrencesList));
+        // setNearestEvents(filterNearestEvents());
+    }
   }, [localStorage.token]);
+
+  useEffect(() => {
+      if(occurrencesList) {
+          console.log('hmnm sultana i love', filterNearestEvents(occurrencesList));
+          setNearestEvents(filterNearestEvents(occurrencesList));
+      }
+  },[occurrencesList])
+
   console.log("nahore 1", eventAttendance);
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
@@ -119,6 +131,10 @@ const Event = ({
    }
   }
 
+  function filterNearestEvents(occurrencesList){
+      console.log('do not make me sad', occurrencesList);
+      return occurrencesList.filter((event) => event.creationTime < Date.now());
+  }
 
   const fileUploadHandler = () => {
     const fd = new FormData();
@@ -215,16 +231,24 @@ const Event = ({
 
   return (
     <div>
-      <div className="card-player">
-        <div className="card__side card__side--front">
-          <div className="card__picture card__picture--1">&nbsp;</div>
-          <h4 className="card__heading">The sea explorer</h4>
-          <div className="card__details">Details</div>
-        </div>
-        <div className="card__side card__side--back card__side--back-1">
-          Back
-        </div>
-      </div>
+        {nearestEvents && (
+        <ul className="card-player">
+            { nearestEvents[0]?.attendance.map((event) =>(
+            <li key={event?.creationTime}>
+                <div>co to kurva</div>
+            <div className="card__side card__side--front">
+                <div className="card__picture card__picture--1"><img src={event?.profileUrl}/></div>
+                <h4 className="card__heading">The sea explorer</h4>
+                <div className="card__details">Details</div>
+            </div>
+            <div className="card__side card__side--back card__side--back-1">
+                Back
+            </div>
+            </li>
+            ))}
+        </ul>
+        )
+        }
 
       <div className={classes.section}>
         <div className={classes.container}>
