@@ -232,12 +232,11 @@ const Event = ({
   return (
     <div>
         {nearestEvents && (
-        <ul className="card-player">
+        <ul className="card-players">
             { nearestEvents[0]?.attendance.map((event) =>(
-            <li key={event?.creationTime}>
-                <div>co to kurva</div>
+            <li key={event?.creationTime} className="card-player">
             <div className="card__side card__side--front">
-                <div className="card__picture card__picture--1"><img src={event?.profileUrl}/></div>
+                <div className="card__picture card__picture--1"><img  className="card-player-img"src={event?.profileUrl}/></div>
                 <h4 className="card__heading">The sea explorer</h4>
                 <div className="card__details">Details</div>
             </div>
@@ -249,7 +248,28 @@ const Event = ({
         </ul>
         )
         }
-
+        {/*<div>*/}
+        {/*<div className="card-player">*/}
+        {/*<div className="card__side card__side--front">*/}
+        {/*    <div className="card__picture card__picture--1"></div>*/}
+        {/*    <h4 className="card__heading">The sea explorer</h4>*/}
+        {/*    <div className="card__details">Details</div>*/}
+        {/*</div>*/}
+        {/*<div className="card__side card__side--back card__side--back-1">*/}
+        {/*    Back*/}
+        {/*</div>*/}
+        {/*</div>*/}
+        {/*<div className="card-player">*/}
+        {/*<div className="card__side card__side--front">*/}
+        {/*    <div className="card__picture card__picture--1"></div>*/}
+        {/*    <h4 className="card__heading">The sea explorer</h4>*/}
+        {/*    <div className="card__details">Details</div>*/}
+        {/*</div>*/}
+        {/*<div className="card__side card__side--back card__side--back-1">*/}
+        {/*    Back*/}
+        {/*</div>*/}
+        {/*</div>*/}
+        {/*</div>*/}
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer justify="center">

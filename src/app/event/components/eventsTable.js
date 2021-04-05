@@ -106,7 +106,7 @@ function Row(props) {
                                 <TableBody>
                                     <ul id="table-attendance">
                                     {row.attendance.map((user) => (
-                                        <li key={1*66 +7}>
+                                        <li key={user?.userId}>
                                             <Avatar alt="Remy Sharp" src={user?.profileUrl} className={classes.large} />
                                         </li>
                                      ))}

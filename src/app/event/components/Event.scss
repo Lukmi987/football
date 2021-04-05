@@ -1,9 +1,20 @@
+.card-players {
+  display: flex;
+  list-style: none;
+}
 .card-player {
   width: 226px;
   perspective: 150rem;
   -moz-perspective: 150rem;
   position: relative;
-  height: 300px; }
+  height: 300px;
+  margin-left: 20px;
+
+  &-img{
+    height: 200px;
+    width: 230px;
+  }
+}
 
 .card__side {
   color: salmon;
