@@ -10,7 +10,7 @@ import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
 import Card from "components/Card/Card.js";
 
-import image1 from "assets/img/bg.jpg";
+import image1 from "app/event/components/bg.jpg";
 import image2 from "assets/img/bg2.jpg";
 import image3 from "assets/img/bg3.jpg";
 

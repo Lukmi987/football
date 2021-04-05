@@ -20,6 +20,7 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import image from "assets/img/pitchfromabove.jpg";
+import bg from "./bg.jpg";
 import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
 import Components from "../../../views/Components/Components";
@@ -43,15 +44,37 @@ import Table from "react-bootstrap/Table";
 import axios from "axios";
 import ProgressBar from "../../../ProgressBar";
 import ImageGrid from "../../../imageGrid";
-
+// import Carousel from "react-material-ui-carousel";
+// import {Paper} from "@material-ui/core";
 // const functions = require("firebase-functions");
 // const gcs = require('@google-cloud/storage')();
 // const os = require("os");
 // const path = require("path");
 // const spawn = require("child-process-promise").spawn;
+import Carousel from "react-multi-carousel";
+import "react-multi-carousel/lib/styles.css";
 
 const useStyles = makeStyles();
 
+const responsive = {
+  superLargeDesktop: {
+    // the naming can be any, depends on you.
+    breakpoint: { max: 4000, min: 3000 },
+    items: 5
+  },
+  desktop: {
+    breakpoint: { max: 3000, min: 1024 },
+    items: 3
+  },
+  tablet: {
+    breakpoint: { max: 1024, min: 464 },
+    items: 2
+  },
+  mobile: {
+    breakpoint: { max: 464, min: 0 },
+    items: 1
+  }
+};
 
 const Event = ({
   processEvent,
@@ -142,13 +165,6 @@ const Event = ({
       });
   };
 
-
-
-
-
-
-
-
   const handleAttendance = (participate, ev, creationTime) => {
     console.log('click',creationTime);
     const occurrenceId = ev.target.id;
@@ -156,10 +172,51 @@ const Event = ({
     processEventAttendance(participate, occurrenceId, creationTime);
   };
 
-
+  // function Example()
+  // {
+  //   var items = [
+  //     {
+  //       name: "Random Name #1",
+  //       description: "Probably the most random thing you have ever seen!"
+  //     },
+  //     {
+  //       name: "Random Name #2",
+  //       description: "Hello World!"
+  //     }
+  //   ]
+  //
+  //   return (
+  //       <Carousel>
+  //         {
+  //           items.map( (item, i) => <Item key={i} item={item} /> )
+  //         }
+  //       </Carousel>
+  //   )
+  // }
+  //
+  // function Item(props)
+  // {
+  //   return (
+  //       <Paper>
+  //         <h2>{props.item.name}</h2>
+  //         <p>{props.item.description}</p>
+  //
+  //         <Button className="CheckButton">
+  //           Check it out!
+  //         </Button>
+  //       </Paper>
+  //   )
+  // }
 
   return (
     <div>
+      <Carousel responsive={responsive}>
+        <div><img src={bg} /></div>
+        <div><img src={bg} /></div>
+        <div><img src={bg} /></div>
+        <div><img src={bg} /></div>
+      </Carousel>
+
         {nearestEvents && (
         <ul className="card-players">
             { nearestEvents[0]?.attendance.map((event) =>(

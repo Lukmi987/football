@@ -124,6 +124,7 @@ export default function EventForm({processEvent}) {
                 color="white"
             />
         <div className={classes.section}>
+            <div>  <img src="./bg.jpg" alt="Girl in a jacket" width="500" height="600" /></div>
             <div className={classes.container}>
                 <GridContainer className={classes.textCenter} justify="center">
                 <GridItem xs={12} sm={12} md={4}>
