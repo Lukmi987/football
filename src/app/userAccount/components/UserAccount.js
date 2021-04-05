@@ -17,6 +17,8 @@ import {storeProfileImgSaga, storeUser} from "../actions";
 import CardFooter from "../../../components/Card/CardFooter";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent";
 import Check from "@material-ui/icons/Check";
+import Header from "../../../components/Header/Header";
+import HeaderLinks from "../../../components/Header/HeaderLinks";
 
 const useStyles = makeStyles(styles);
 
@@ -91,6 +93,13 @@ export default function UserAccount({storeProfileImgSaga, storeUser, user}) {
     }
 
     return (
+        <div>
+            <Header
+                brand="Domu"
+                rightLinks={<HeaderLinks />}
+                fixed
+                color="white"
+            />
         <div className={classes.section}>
             <div className={classes.container}>
                 <GridContainer className={classes.textCenter} justify="center">
@@ -246,6 +255,7 @@ export default function UserAccount({storeProfileImgSaga, storeUser, user}) {
                 {/*    </Button>*/}
                 {/*</div>*/}
             </div>
+        </div>
         </div>
     );
 }

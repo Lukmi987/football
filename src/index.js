@@ -16,6 +16,7 @@ import ProfilePage from "views/ProfilePage/ProfilePage.js";
 //import LoginPage from "views/LoginPage/LoginPage.js";
 import Login from "app/login/containers/SectionLogin";
 import UserAccount from "app/userAccount/containers/UserAccount";
+import EventForm from "app/event/containers/EventForm";
 
 const token = localStorage.token;
 const hist = createBrowserHistory();
@@ -34,6 +35,7 @@ ReactDOM.render(
         {/* <Route path="/landing-page" component={LandingPage} /> */}
         {/* <Route path="/profile-page" component={ProfilePage} /> */}
         <Route path="/login-page" component={Login} />
+          <Route path="/event-form-page" component={EventForm} />
         <Route path="/userAccount-page" component={UserAccount} />
         <Route path="/" component={Components} />
         {/* <Route path="*" component={Login} /> */}
