@@ -43,7 +43,7 @@ import {
 import Table from "react-bootstrap/Table";
 import axios from "axios";
 import ProgressBar from "../../../ProgressBar";
-import ImageGrid from "../../../imageGrid";
+import ImageGrid from "../../ImageGrid";
 // import Carousel from "react-material-ui-carousel";
 // import {Paper} from "@material-ui/core";
 // const functions = require("firebase-functions");
@@ -172,51 +172,61 @@ const Event = ({
     processEventAttendance(participate, occurrenceId, creationTime);
   };
 
-  // function Example()
-  // {
-  //   var items = [
-  //     {
-  //       name: "Random Name #1",
-  //       description: "Probably the most random thing you have ever seen!"
-  //     },
-  //     {
-  //       name: "Random Name #2",
-  //       description: "Hello World!"
-  //     }
-  //   ]
-  //
-  //   return (
-  //       <Carousel>
-  //         {
-  //           items.map( (item, i) => <Item key={i} item={item} /> )
-  //         }
-  //       </Carousel>
-  //   )
-  // }
-  //
-  // function Item(props)
-  // {
-  //   return (
-  //       <Paper>
-  //         <h2>{props.item.name}</h2>
-  //         <p>{props.item.description}</p>
-  //
-  //         <Button className="CheckButton">
-  //           Check it out!
-  //         </Button>
-  //       </Paper>
-  //   )
-  // }
+
+    const dataImg = [
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg',
+            cols: 1,
+            title: 'image',
+        },
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(72).jpg',
+            cols: 2,
+            title: 'image',
+        },
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(71).jpg',
+            cols: 1,
+            title: 'image',
+        },
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(74).jpg',
+            cols: 2,
+            title: 'image',
+        },
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(75).jpg',
+            cols: 2,
+            title: 'image',
+        },
+
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(78).jpg',
+            cols: 1,
+            title: 'image',
+        },
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(77).jpg',
+            cols: 2,
+            title: 'image',
+        },
+        {
+            img:
+                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(79).jpg',
+            cols: 1,
+            title: 'image',
+        }
+    ];
 
   return (
-    <div>
-      <Carousel responsive={responsive}>
-        <div><img src={bg} /></div>
-        <div><img src={bg} /></div>
-        <div><img src={bg} /></div>
-        <div><img src={bg} /></div>
-      </Carousel>
-
+     <div>
         {nearestEvents && (
         <ul className="card-players">
             { nearestEvents[0]?.attendance.map((event) =>(
@@ -250,19 +260,11 @@ const Event = ({
               {/*  {selectedFile && <div>{selectedFile.name}</div>}*/}
               {/*  {selectedFile && <ProgressBar file={selectedFile} setFile={setSelectedFile}/>}*/}
               {/*</div>*/}
-
               {/*<button onClick={fileUploadHandler}>Upload</button>*/}
-
               <div>
                 <h3>Dalsi trening ucast</h3>
               </div>
             </GridItem>
-            {/*gallery images from firestore !!!!!!!!*/}
-            {/*<GridItem xs={12} sm={12} md={4}>*/}
-            {/*<ImageGrid />*/}
-            {/*</GridItem>*/}
-
-
               {/*<Table striped bordered hover>*/}
               {/*  <thead>*/}
               {/*    <tr>*/}

@@ -17,6 +17,9 @@ import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import Login from "app/login/containers/SectionLogin";
 import UserAccount from "app/userAccount/containers/UserAccount";
 import EventForm from "app/event/containers/EventForm";
+import '@fortawesome/fontawesome-free/css/all.min.css'; import
+    'bootstrap-css-only/css/bootstrap.min.css'; import
+    'mdbreact/dist/css/mdb.css';
 
 const token = localStorage.token;
 const hist = createBrowserHistory();

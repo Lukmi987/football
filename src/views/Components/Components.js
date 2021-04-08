@@ -32,6 +32,7 @@ import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import Check from "@material-ui/icons/Check";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
+import ImageGrid from "../../app/ImageGrid";
 
 const useStyles = makeStyles(styles);
 
@@ -101,8 +102,14 @@ export default function Components(props) {
               View Login Page
             </Button>
           </Link>
-          <Event />
         </GridItem>
+          {/*gallery images from firestore !!!!!!!!*/}
+          <GridContainer justify="center">
+          <GridItem xs={12} sm={12} md={4}>
+              <ImageGrid />
+          </GridItem>
+          </GridContainer>
+          <Event />
         <SectionExamples />
         <SectionDownload />
       </div>

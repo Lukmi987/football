@@ -14,7 +14,7 @@ const useFirestore = (collection) => {
                 });
                 setDocs(documents);
             });
-      //unsubscribe from the collection when we no longer use it
+      //unsubscribe from the collection when we no longer use it, clean up function
       return () => unsub();
     },[collection])
     return {docs};
