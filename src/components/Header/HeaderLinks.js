@@ -116,6 +116,16 @@ export default function HeaderLinks() {
           </Button>
         </Tooltip>
       </ListItem>
+        <ListItem className={classes.listItem}>
+            <Link to={"/about-us"}>
+                <Button
+                    color="transparent"
+                    className={classes.navLink}
+                >
+                    O nás
+                </Button>
+            </Link>
+        </ListItem>
       <ListItem className={classes.listItem}>
         {!isUserLoggedIn ?
         <Link to={"/login-page"}  >

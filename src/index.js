@@ -17,6 +17,7 @@ import ProfilePage from "views/ProfilePage/ProfilePage.js";
 import Login from "app/login/containers/SectionLogin";
 import UserAccount from "app/userAccount/containers/UserAccount";
 import EventForm from "app/event/containers/EventForm";
+import AboutUs from "app/aboutUs/AboutUs"
 import '@fortawesome/fontawesome-free/css/all.min.css'; import
     'bootstrap-css-only/css/bootstrap.min.css'; import
     'mdbreact/dist/css/mdb.css';
@@ -38,6 +39,7 @@ ReactDOM.render(
         {/* <Route path="/landing-page" component={LandingPage} /> */}
         {/* <Route path="/profile-page" component={ProfilePage} /> */}
         <Route path="/login-page" component={Login} />
+        <Route path="/about-us" component={AboutUs} />
           <Route path="/event-form-page" component={EventForm} />
         <Route path="/userAccount-page" component={UserAccount} />
         <Route path="/" component={Components} />
