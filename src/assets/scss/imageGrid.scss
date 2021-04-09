@@ -10,7 +10,7 @@
   padding: 50% 0;
   /* padding controls height, will always be perfectly square regardless of width */
   position: relative;
-  opacity: 0.8;
+  opacity: 0.9;
 }
 .img-wrap img {
   min-width: 100%;
@@ -25,4 +25,22 @@
   height: 5px;
   background-color: #0d47a1;
   margin-top: 20px;
+}
+
+/* Modal */
+.backdrop {
+  position: fixed;
+  top: 0;
+  lef: 0;
+  width: 97%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+}
+.backdrop img {
+  display: block;
+  max-width: 60%;
+  max-height: 80%;
+  margin: 90px auto;
+  box-shadow: 3px 5px 7px rgba(0,0,0,0.5);
+  border: 3px solid white;
 }

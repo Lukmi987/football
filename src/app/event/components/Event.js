@@ -172,59 +172,6 @@ const Event = ({
     processEventAttendance(participate, occurrenceId, creationTime);
   };
 
-
-    const dataImg = [
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(73).jpg',
-            cols: 1,
-            title: 'image',
-        },
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(72).jpg',
-            cols: 2,
-            title: 'image',
-        },
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(71).jpg',
-            cols: 1,
-            title: 'image',
-        },
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(74).jpg',
-            cols: 2,
-            title: 'image',
-        },
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(75).jpg',
-            cols: 2,
-            title: 'image',
-        },
-
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(78).jpg',
-            cols: 1,
-            title: 'image',
-        },
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(77).jpg',
-            cols: 2,
-            title: 'image',
-        },
-        {
-            img:
-                'https://mdbootstrap.com/img/Photos/Horizontal/Nature/4-col/img%20(79).jpg',
-            cols: 1,
-            title: 'image',
-        }
-    ];
-
   return (
      <div>
         {nearestEvents && (

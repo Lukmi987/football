@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 // nodejs library that concatenates classes
 import classNames from "classnames";
 // react components for routing our app without refresh
@@ -33,13 +33,15 @@ import Check from "@material-ui/icons/Check";
 
 import styles from "assets/jss/material-kit-react/views/components.js";
 import ImageGrid from "../../app/ImageGrid";
+import Modal from "../../app/Modal";
 
 const useStyles = makeStyles(styles);
 
 export default function Components(props) {
   const { history } = props;
   const isUserLoggedIn = history.location.state;
-  console.log('v componente history', history);
+const [selectedImg, setSelectedImg] = useState(null);
+
   const classes = useStyles();
   const { ...rest } = props;
   return (
@@ -71,19 +73,6 @@ export default function Components(props) {
       </Parallax>
 
       <div className={classNames(classes.main, classes.mainRaised)}>
-        {/* <Event/> */}
-         {/* <SectionBasics />
-        <SectionNavbars />
-        <SectionTabs />
-        <SectionPills />
-
-        <SectionTypography />
-        <SectionJavascript />
-        <SectionCarousel />
-        <SectionCompletedExamples />
-        <SectionLogin /> */}
-
-
         <GridItem md={12} className={classes.textCenter}>
         {isUserLoggedIn && 
               <SnackbarContent
@@ -105,10 +94,14 @@ export default function Components(props) {
         </GridItem>
           {/*gallery images from firestore !!!!!!!!*/}
           <GridContainer justify="center">
-          <GridItem xs={12} sm={12} md={4}>
-              <ImageGrid />
+          <GridItem xs={12} sm={12} md={8}>
+              <ImageGrid  setSelectedImg={setSelectedImg}/>
           </GridItem>
+
           </GridContainer>
+          {selectedImg &&
+          <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg}/>
+          }
           <Event />
         <SectionExamples />
         <SectionDownload />
