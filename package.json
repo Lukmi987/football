@@ -28,7 +28,7 @@
     "prop-types": "15.7.2",
     "re-select": "^0.5.0",
     "react": "16.13.1",
-    "react-bootstrap": "^1.5.1",
+    "react-bootstrap": "^1.5.2",
     "react-datetime": "2.16.3",
     "react-dom": "16.13.1",
     "react-material-ui-carousel": "^2.2.2",
@@ -58,14 +58,17 @@
     "@babel/preset-env": "7.10.1",
     "@babel/preset-react": "7.10.1",
     "@google-cloud/storage": "^5.8.2",
+    "autoprefixer": "^10.2.5",
     "child-process-promise": "^2.2.1",
     "eslint": "^6.8.0",
     "eslint-plugin-react": "^7.23.1",
     "firebase-functions": "^3.13.2",
     "gulp": "4.0.2",
     "gulp-append-prepend": "1.0.8",
+    "postcss": "^8.2.9",
     "prettier": "2.0.5",
-    "react-multi-carousel": "^2.6.2"
+    "react-multi-carousel": "^2.6.2",
+    "tailwindcss": "^2.1.1"
   },
   "optionalDependencies": {
     "typescript": "3.9.3"
