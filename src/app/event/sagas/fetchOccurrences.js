@@ -6,6 +6,7 @@ import _ from "lodash";
 
 export function* fetchOccurrences() {
   try {
+    console.log('ale jooo fetchEvents');
     const userToken = localStorage.token;
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
     const responseUsers = yield axios.get(

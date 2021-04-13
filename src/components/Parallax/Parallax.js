@@ -56,7 +56,6 @@ export default function Parallax(props) {
     </div>
   );
 }
-
 Parallax.propTypes = {
   className: PropTypes.string,
   filter: PropTypes.bool,
