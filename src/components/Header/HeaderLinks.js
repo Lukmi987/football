@@ -135,7 +135,7 @@ export default function HeaderLinks() {
         >Přihlášní/Registrace</Button>
         </Link>
         :
-        <Link to={"/"} className={classes.listItem}>
+        <Link to={"/logout-page"} className={classes.listItem}>
           <Button
             color="transparent"
             className={classes.navLink}

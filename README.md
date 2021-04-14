@@ -176,7 +176,7 @@ material-kit-react
         │       ├── SectionDownload.js
         │       ├── SectionExamples.js
         │       ├── SectionJavascript.js
-        │       ├── SectionLogin.js
+        │       ├── LogOut.js
         │       ├── SectionNavbars.js
         │       ├── SectionNotifications.js
         │       ├── SectionPills.js

@@ -21,6 +21,7 @@ import AboutUs from "app/aboutUs/AboutUs"
 import '@fortawesome/fontawesome-free/css/all.min.css'; import
     'bootstrap-css-only/css/bootstrap.min.css'; import
     'mdbreact/dist/css/mdb.css';
+import LogOut from "./app/logOut/containers/LogOut";
 
 const token = localStorage.token;
 const hist = createBrowserHistory();
@@ -39,6 +40,7 @@ ReactDOM.render(
         {/* <Route path="/landing-page" component={LandingPage} /> */}
         {/* <Route path="/profile-page" component={ProfilePage} /> */}
         <Route path="/login-page" component={Login} />
+        <Route path="/logout-page" component={LogOut} />
         <Route path="/about-us" component={AboutUs} />
           <Route path="/event-form-page" component={EventForm} />
         <Route path="/userAccount-page" component={UserAccount} />

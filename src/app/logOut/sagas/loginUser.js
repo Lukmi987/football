@@ -26,7 +26,7 @@ export function* loginUser(action) {
         console.log('se');
           yield put({type: SET_AUTH_INFO, data: loginAuthInfo});
         // yield put({type: FETCH_OCCURRENCES}); it call action, depands on the type, if type defined in reducer it cal reducer
-        yield delay(response.data.expiresIn * 1000);
+        yield delay(2000);
         yield put({type: SET_AUTH_INFO, data:{idToken: null, userId: null}});
     } catch (e) {
         const errorMsg = {
