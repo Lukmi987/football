@@ -1,5 +1,5 @@
 import React from "react";
-// react component for creating beautiful carousel
+// react component for creating beautiful carouselSection
 import Carousel from "react-slick";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
