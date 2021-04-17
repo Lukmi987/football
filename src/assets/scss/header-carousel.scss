@@ -1,10 +1,14 @@
-.about-us {
-  margin-top: 150px;
-  background-color: blue;
-  //width: 70%;
-
-  &-card {
-    display: flex;
-    justify-content: center;
-  }
+.carousel .carousel-control-prev-icon, .carousel .carousel-control-next-icon {
+  width: 61px !important;
+  height: 100px !important;
 }
+
+.span.carousel-control-next-icon {
+  height: 40px;
+}
+
+.carousel .carousel-control-next-icon, .carousel .carousel-control-prev-icon {
+  //backgroun-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23fff' width='8' height='8' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5L3.75 4l-2.5 2.5L2.75 8l4-4-4-4z'/%3e%3c/svg%3e") !important;
+  background-size: 80px 90px;
+}
+
