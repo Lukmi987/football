@@ -28,7 +28,7 @@ export default function CarouselSection() {
                           Přejdi Do Fotogalerie
                       </h2>
                   </Link>
-                  <Carousel interval={1000000} >
+                  <Carousel interval={5000} >
                       <Carousel.Item className="carousel-styles" >
                           <img
                               className="d-block w-100"

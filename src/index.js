@@ -22,31 +22,40 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; import
     'bootstrap-css-only/css/bootstrap.min.css'; import
     'mdbreact/dist/css/mdb.css';
 import LogOut from "./app/logOut/containers/LogOut";
+import PhotoGallery from "./app/photoGallery/PhotoGallery";
 
 const token = localStorage.token;
 const hist = createBrowserHistory();
 const isSuccessLogin = hist.location.state;
 
+let routes;
+if(token){
+   routes = (
+       <Switch>
+    <Route path="/logout-page" component={LogOut} />
+    <Route path="/userAccount-page" component={UserAccount} />
+    <Route path="/about-us" component={AboutUs} />
+    <Route path="/photo-gallery" component={PhotoGallery} />
+    <Route path="/event-form-page" component={EventForm} />
+    <Route path="/" component={Components} />
+       </Switch>
+    );
+} else {
+    routes = (
+        <Switch>
+    <Route path="/login-page" component={Login} />
+    <Route path="/about-us" component={AboutUs} />
+    <Route path="/event-form-page" component={EventForm} />
+    <Route path="/photo-gallery" component={PhotoGallery} />
+    <Route path="/" component={Components} />
+        </Switch>
+    )
+}
+
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
-      <Switch>
-        {/*  {token &&  <Redirect */}
-        {/*    to={{ */}
-        {/*    pathname: "/"*/}
-        {/*  }}*/}
-        {/*  />*/}
-        {/*}*/}
-        {/* <Route path="/landing-page" component={LandingPage} /> */}
-        {/* <Route path="/profile-page" component={ProfilePage} /> */}
-        <Route path="/login-page" component={Login} />
-        <Route path="/logout-page" component={LogOut} />
-        <Route path="/about-us" component={AboutUs} />
-          <Route path="/event-form-page" component={EventForm} />
-        <Route path="/userAccount-page" component={UserAccount} />
-        <Route path="/" component={Components} />
-        {/* <Route path="*" component={Login} /> */}
-      </Switch>
+        {routes}
     </Router>
   </Provider>,
   document.getElementById("root")

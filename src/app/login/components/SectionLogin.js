@@ -5,7 +5,6 @@ import InputAdornment from "@material-ui/core/InputAdornment";
 import Icon from "@material-ui/core/Icon";
 import Check from "@material-ui/icons/Check";
 // @material-ui/icons
-import People from "@material-ui/icons/People";
 import Email from "@material-ui/icons/Email";
 // core components
 import GridContainer from "components/Grid/GridContainer.js";
@@ -18,10 +17,9 @@ import Button from "components/CustomButtons/Button.js";
 import CustomInput from "components/CustomInput/CustomInput.js";
 import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
-import image from "assets/img/pitchfromabove.jpg";
 import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
-import Components from "../../../views/Components/Components";
+
 
 const useStyles = makeStyles(styles);
 
@@ -36,9 +34,9 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
   useEffect(()=>{
         console.log('jo muj erorr',errorMsg,idToken);
         setErrorAlert(errorMsg);
-        // history.push('/','successLogin');
+        //history.push('/','successLogin');
   if(idToken) {
-    // history.push('/','successLogin');
+     history.push('/','successLogin');
     console.log('jo existuje id token');
   }
     },[errorMsg,idToken])

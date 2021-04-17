@@ -35,15 +35,20 @@ import styles from "assets/jss/material-kit-react/views/components.js";
 import ImageGrid from "../../app/ImageGrid";
 import Modal from "../../app/Modal";
 import {Carousel} from "react-bootstrap";
+import CarouselSection from "../../app/carouselSection/CarouselSection";
+import ParagraphSection from "../../app/paragraphSection/ParagraphSection";
 
 const useStyles = makeStyles(styles);
 
 export default function Components(props) {
   const { history } = props;
   const isUserLoggedIn = history.location.state;
-const [selectedImg, setSelectedImg] = useState(null);
+const aboutClub = ' Ve svých počátcích byl fotbalový oddíl SK Mikulov začleněn do slovácké fotbalové župy, kde hrával převážně s družstvy z Hodonínska okresní soutěž. Kromě SK Mikulov působily ve městě tři německé fotbalové kluby – ASK, Macabi a DSF, který byl nejsilnějším klubem na Mikulovsku a hrával v německém regionu divizi. Rozvoj české tělovýchovy v Mikulově byl přerušen rokem 1938. Po skončení 2. světové války byla obnovena činnost SK Mikulov a v roce 1949 byl klub přejmenován na Slavoj Mikulov. Jeho hlavním patronem se staly Vinařské závody Mikulov, které do něj investovaly nemalé finanční prostředky a jejichž podpora sehrála klíčovou úlohu při rozvoji organizovaného sportu v Mikulově. Fotbalový oddíl vinařů se díky svým výborným výsledkům dostal až do krajského přeboru. Počátkem 70. let došlo k přejmenování SK Mikulov na TJ Pálava Mikulov. Fotbalový oddíl společně s oddílem stolních tenistů, plavání a dalšími patřil se svou členskou základnou mezi největší společenské organizace Národní fronty. K osamostatnění fotbalového oddílu od ostatních sportovních oddílů TJ Pálava došlo až v roce 1991. Od té doby začal klub používat současný název FC Pálava Mikulov.'
+const aboutClubHeadLine = 'Chelsea Fc';
+const news = 'B r n o - Záložník Peter Štepanovský se po dvouzápasové pauze vrátil na hřišti Českých Budějovic do základní sestavy. A návrat to byl vydařený - Peter přispěl k výhře nahrávkou na první gól a za svůj...';
+const newsHeadLine = 'Novinky';
 
-  const classes = useStyles();
+const classes = useStyles();
   const { ...rest } = props;
   return (
     <div>
@@ -58,59 +63,21 @@ const [selectedImg, setSelectedImg] = useState(null);
         }}
         {...rest}
       />
-      {/*<Parallax image={require("assets/img/footballPitch.jpg")}>*/}
-      {/*  <div className={classes.container}>*/}
-      {/*    <GridContainer>*/}
-      {/*      <GridItem>*/}
-      {/*        <div className={classes.brand}>*/}
-      {/*          <h1 className={classes.title}>FC Brno Sokol</h1>*/}
-      {/*          <h3 className={classes.subtitle}>*/}
+      <Parallax image={require("assets/img/footballPitch.jpg")}>
+        <div className={classes.container}>
+          <GridContainer>
+            <GridItem>
+              <div className={classes.brand}>
+                <h1 className={classes.title}>FC Brno Sokol</h1>
+                <h3 className={classes.subtitle}>
 
-      {/*          </h3>*/}
-      {/*        </div>*/}
-      {/*      </GridItem>*/}
-      {/*    </GridContainer>*/}
-      {/*  </div>*/}
-      {/*</Parallax>*/}
-      <GridItem >
-        <Carousel >
-            <Carousel.Item className="carousel-styles" style={{height: '70%'}}>
-                <img
-                    className="d-block w-100"
-                    src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'"
-                    alt="First slide"
-                />
-                <Carousel.Caption>
-                    <h3>First slide label</h3>
-                    <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-                <img
-                    className="d-block w-100"
-                    src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'"
-                    alt="Second slide"
-                />
+                </h3>
+              </div>
+            </GridItem>
+          </GridContainer>
+        </div>
+      </Parallax>
 
-                <Carousel.Caption>
-                    <h3>Second slide label</h3>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                </Carousel.Caption>
-            </Carousel.Item>
-            <Carousel.Item>
-                <img
-                    className="d-block w-100"
-                    src="https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?ixid=MXwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80'"
-                    alt="Third slide"
-                />
-
-                <Carousel.Caption>
-                    <h3>Third slide label</h3>
-                    <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
-                </Carousel.Caption>
-            </Carousel.Item>
-        </Carousel>
-      </GridItem>
       <div className={classNames(classes.main, classes.mainRaised)}>
         <GridItem md={12} className={classes.textCenter}>
         {isUserLoggedIn && 
@@ -125,25 +92,14 @@ const [selectedImg, setSelectedImg] = useState(null);
                 icon={Check}
               />
             }
-          <Link to={"/login-page"} className={classes.link}>
-            <Button color="primary" size="lg" simple>
-              View Login Page
-            </Button>
-          </Link>
-        </GridItem>
-          {/*gallery images from firestore !!!!!!!!*/}
-          <GridContainer justify="center">
-          <GridItem xs={12} sm={12} md={8}>
-              <ImageGrid  setSelectedImg={setSelectedImg}/>
-          </GridItem>
 
-          </GridContainer>
-          {selectedImg &&
-          <Modal selectedImg={selectedImg} setSelectedImg={setSelectedImg}/>
-          }
+        </GridItem>
           <Event />
-        <SectionExamples />
-        <SectionDownload />
+          <ParagraphSection content={news} headline={newsHeadLine} />
+        <CarouselSection />
+        <ParagraphSection content={aboutClub} headline={aboutClubHeadLine}/>
+        {/*<SectionExamples />*/}
+        {/*<SectionDownload />*/}
       </div>
       <Footer />
     </div>

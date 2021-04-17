@@ -44,7 +44,7 @@ import Table from "react-bootstrap/Table";
 import axios from "axios";
 import ProgressBar from "../../../ProgressBar";
 import ImageGrid from "../../ImageGrid";
-// import Carousel from "react-material-ui-carousel";
+// import ParagraphSection from "react-material-ui-carouselSection";
 // import {Paper} from "@material-ui/core";
 // const functions = require("firebase-functions");
 // const gcs = require('@google-cloud/storage')();

@@ -126,6 +126,16 @@ export default function HeaderLinks() {
                 </Button>
             </Link>
         </ListItem>
+        <ListItem className={classes.listItem}>
+            <Link to={"/photo-gallery"}>
+                <Button
+                    color="transparent"
+                    className={classes.navLink}
+                >
+                    Foto Galerie
+                </Button>
+            </Link>
+        </ListItem>
       <ListItem className={classes.listItem}>
         {!isUserLoggedIn ?
         <Link to={"/login-page"}  >
