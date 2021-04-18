@@ -87,14 +87,15 @@ const Event = ({
 }) => {
   const classes = useStyles();
 
-  const [eventAttendance, setEventAttendance] = useState(false);
+  const [editedEventRow, setEditedEventRow] = useState();
 
   const [selectedFile, setSelectedFile] = useState();
+  const [rowId, setRowId] = useState();
   const [error, setError] = useState(null);
   const [fileSize, setFileSize] = useState();
   const [fileInput, setFileInput] = useState();
   const [nearestEvents, setNearestEvents] = useState();
-  const [attendanceButton, setAttendanceButton] = useState(true);
+  const [attendanceButton, setAttendanceButton] = useState(false);
   const types = ["image/png", "image/jpeg"];
   useEffect(() => {
     fetchOccurrences();
@@ -108,7 +109,7 @@ const Event = ({
     if (occurrencesList) {
       console.log("hmnm sultana i love", filterNearestEvents(occurrencesList));
       setNearestEvents(filterNearestEvents(occurrencesList));
-      setAttendanceButton(true);
+      setAttendanceButton(false);
     }
   }, [occurrencesList]);
 
@@ -166,10 +167,11 @@ const Event = ({
   };
 
   const handleAttendance = (participate, ev, creationTime) => {
-    setAttendanceButton(false);
+    setAttendanceButton(true);
+    setRowId(creationTime);
     console.log("click", creationTime);
     const occurrenceId = ev.target.id;
-    participate ? setEventAttendance(true) : setEventAttendance(false);
+    setEditedEventRow(occurrenceId);
     processEventAttendance(participate, occurrenceId, creationTime);
   };
 
@@ -216,6 +218,8 @@ const Event = ({
             handleAttendance={handleAttendance}
             handleAttendanceButton = {attendanceButton}
             userId={userId}
+            editedEventRow={editedEventRow}
+            rowId={rowId}
           />
         )}
       </GridContainer>

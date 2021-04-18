@@ -17,6 +17,7 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import {Avatar, Checkbox, Switch} from "@material-ui/core";
 import GridContainer from "../../../components/Grid/GridContainer";
 import Button from "../../../components/CustomButtons/Button";
+import Spinner from "../../Spinner";
 
 const useRowStyles = makeStyles({
     root: {
@@ -52,15 +53,18 @@ function createData(name, calories, fat, carbs, protein, price) {
 }
 
 function Row(props) {
-    const { row, handleAttendance, userId } = props;
+    const { row, handleAttendance, userId, editedEventRow, handleAttendanceButton, rowId ,  } = props;
     const cr = row.creationTime;
-    console.log('row attendance', row.attendance);
+    console.log('handleAttendanceButton',handleAttendanceButton);
+    console.log('row.creation time je', row.creationTime);
+    console.log('moje row id neboli time', rowId);
+
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
 
     const isUserInAttendance = () => row.attendance.find( el => el?.userID === userId)
      const isTher =  !!isUserInAttendance();
-    console.log('je user v atten',isTher);
+    console.log('je user v atten',editedEventRow);
     const timeStampToData = (timeStamp) => {
         const date =  new Date(timeStamp);
         return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
@@ -83,12 +87,27 @@ function Row(props) {
                     >
                         Ano
                     </Button>
+                    {/* if equels then spinning circle else disabled*/}
+                    {handleAttendanceButton && row.creationTime === rowId && (
+                        <Spinner/>
+                    )}
+                    {handleAttendanceButton && row.creationTime !== rowId && (
                     <Switch
-                        checked={!!isUserInAttendance()}
-                        id={row.id}
-                        onChange={(ev) => handleAttendance(!isTher, ev, cr)}
-                        inputProps={{ 'aria-label': 'secondary checkbox' }}
-                    />
+                            checked={!!isUserInAttendance()}
+                            id={row.id}
+                            disabled
+                        />
+                    )
+                    }
+                    {!handleAttendanceButton && (
+                        <Switch
+                            checked={!!isUserInAttendance()}
+                            id={row.id}
+                            onChange={(ev) => handleAttendance(!isTher, ev, cr)}
+                            inputProps={{'aria-label': 'secondary checkbox'}}
+                        />
+                    )
+                    }
                 </TableCell>
                 <TableCell>
                     <Button
@@ -160,7 +179,7 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
 ];
 
-const  CollapsibleTable = ({radek, handleAttendance, handleAttendanceButton, userId}) => {
+const  CollapsibleTable = ({radek, handleAttendance, handleAttendanceButton, userId, editedEventRow, rowId, creationTime}) => {
     console.log('jjjjjjjj',radek);
     return (
         <TableContainer component={Paper}>
@@ -178,7 +197,7 @@ const  CollapsibleTable = ({radek, handleAttendance, handleAttendanceButton, use
                 </TableHead>
                 <TableBody>
                     {radek.map((row) => {
-                      return ( <Row key={row.creationTime} row={ row } userId={userId} handleAttendance={handleAttendance} /> )
+                      return ( <Row key={row.creationTime} row={ row }   editedEventRow={editedEventRow} userId={userId} handleAttendance={handleAttendance} handleAttendanceButton={handleAttendanceButton} rowId={rowId} /> )
                     })}
                 </TableBody>
             </Table>
