@@ -25,6 +25,7 @@ export function* processEventAttendance(action) {
         })
         yield axios.put(`/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`, removedUserArr);
         yield put({type: FETCH_OCCURRENCES});
+        yield console.log('last yield');
       }
     }
   } catch (e) {

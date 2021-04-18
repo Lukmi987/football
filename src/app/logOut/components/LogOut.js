@@ -27,13 +27,16 @@ import { Redirect } from 'react-router-dom';
 const useStyles = makeStyles(styles);
 
 export default function LogOut({ logOut}) {
+
+if(localStorage.token) {
   console.log('v logout .............................!!');
-  useEffect(()=>{
-    console.log('.............................v log out');
-    logOut()
-    localStorage.token = '';
+  localStorage.token = '';
+  logOut();
+    console.log('v logout .............................!! ppo');
+
+}
+
         // history.push('/','successLogin');
-      },[])
 return (
      <Redirect to="/"/>
  )

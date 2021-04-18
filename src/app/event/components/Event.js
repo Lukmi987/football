@@ -34,7 +34,7 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/basic
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
-import CollapsibleTable from "./eventsTable"
+import CollapsibleTable from "./eventsTable";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -60,20 +60,20 @@ const responsive = {
   superLargeDesktop: {
     // the naming can be any, depends on you.
     breakpoint: { max: 4000, min: 3000 },
-    items: 5
+    items: 5,
   },
   desktop: {
     breakpoint: { max: 3000, min: 1024 },
-    items: 3
+    items: 3,
   },
   tablet: {
     breakpoint: { max: 1024, min: 464 },
-    items: 2
+    items: 2,
   },
   mobile: {
     breakpoint: { max: 464, min: 0 },
-    items: 1
-  }
+    items: 1,
+  },
 };
 
 const Event = ({
@@ -87,7 +87,6 @@ const Event = ({
 }) => {
   const classes = useStyles();
 
-
   const [eventAttendance, setEventAttendance] = useState(false);
 
   const [selectedFile, setSelectedFile] = useState();
@@ -95,52 +94,53 @@ const Event = ({
   const [fileSize, setFileSize] = useState();
   const [fileInput, setFileInput] = useState();
   const [nearestEvents, setNearestEvents] = useState();
-  const types = ['image/png', 'image/jpeg'];
+  const [attendanceButton, setAttendanceButton] = useState(true);
+  const types = ["image/png", "image/jpeg"];
   useEffect(() => {
     fetchOccurrences();
-    if(occurrencesList) {
-        // console.log('hmnm sultana i love', filterNearestEvents(occurrencesList));
-        // setNearestEvents(filterNearestEvents());
+    if (occurrencesList) {
+      // console.log('hmnm sultana i love', filterNearestEvents(occurrencesList));
+      // setNearestEvents(filterNearestEvents());
     }
   }, [localStorage.token]);
 
   useEffect(() => {
-      if(occurrencesList) {
-          console.log('hmnm sultana i love', filterNearestEvents(occurrencesList));
-          setNearestEvents(filterNearestEvents(occurrencesList));
-      }
-  },[occurrencesList])
+    if (occurrencesList) {
+      console.log("hmnm sultana i love", filterNearestEvents(occurrencesList));
+      setNearestEvents(filterNearestEvents(occurrencesList));
+      setAttendanceButton(true);
+    }
+  }, [occurrencesList]);
 
-  console.log("nahore 1", eventAttendance);
 
 
   const filterBySize = (file) => {
     //filter out images larger than 5MB
-    return file.size <= 3332880 ;
+    return file.size <= 3332880;
   };
 
   const fileSelectedHandler = (ev) => {
-  let selected = ev.target.files[0];
-    setFileSize('');
+    let selected = ev.target.files[0];
+    setFileSize("");
 
-  if(!filterBySize(selected)){
-    setFileSize('Obrazek musi byt mensi jak 3 MB!!!');
-    return
-  } else {
-    setFileSize('');
-  }
-  if(selected && types.includes(selected.type)){
-    setSelectedFile(selected);
-    setError('');
+    if (!filterBySize(selected)) {
+      setFileSize("Obrazek musi byt mensi jak 3 MB!!!");
+      return;
     } else {
-    setSelectedFile(null);
-    setError('Please vyber obrazek ve formatu (png nebo jpeg)');
-   }
-  }
+      setFileSize("");
+    }
+    if (selected && types.includes(selected.type)) {
+      setSelectedFile(selected);
+      setError("");
+    } else {
+      setSelectedFile(null);
+      setError("Please vyber obrazek ve formatu (png nebo jpeg)");
+    }
+  };
 
-  function filterNearestEvents(occurrencesList){
-      console.log('do not make me sad', occurrencesList);
-      return occurrencesList.filter((event) => event.creationTime < Date.now());
+  function filterNearestEvents(occurrencesList) {
+    console.log("do not make me sad", occurrencesList);
+    return occurrencesList.filter((event) => event.creationTime < Date.now());
   }
 
   const fileUploadHandler = () => {
@@ -166,97 +166,59 @@ const Event = ({
   };
 
   const handleAttendance = (participate, ev, creationTime) => {
-    console.log('click',creationTime);
+    setAttendanceButton(false);
+    console.log("click", creationTime);
     const occurrenceId = ev.target.id;
     participate ? setEventAttendance(true) : setEventAttendance(false);
     processEventAttendance(participate, occurrenceId, creationTime);
   };
 
   return (
-     <div>
-        {nearestEvents && (
-        <ul className="card-players">
-            { nearestEvents[0]?.attendance.map((event) =>(
-            <li key={event?.creationTime} className="card-player">
-            <div className="card__side card__side--front">
-                <div className="card__picture card__picture--1"><img  className="card-player-img"src={event?.profileUrl}/></div>
-                <h4 className="card__heading">The sea explorer</h4>
-                <div className="card__details">Details</div>
-            </div>
-            <div className="card__side card__side--back card__side--back-1">
-                Back
-            </div>
-            </li>
-            ))}
-        </ul>
-        )
-        }
-      <div className={classes.section}>
-        <div className={classes.container}>
-          <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={4}>
-              {/*<input*/}
-              {/*  type="file"*/}
-              {/*  onChange={fileSelectedHandler}*/}
-              {/*  ref={(fileInput) => setFileInput(fileInput)}*/}
-              {/*/>*/}
+    <div>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={8}>
+          {nearestEvents && (
+            <ul className="card-players">
+              {nearestEvents[0]?.attendance.map((event) => (
+                <li key={event?.creationTime} className="card-player">
+                  <div className="card__side card__side--front">
+                    <div className="card__picture card__picture--1">
+                      <img
+                        className="card-player-img"
+                        src={event?.profileUrl}
+                      />
+                    </div>
 
-              {/*<div>*/}
-              {/*  {fileSize && <div>{fileSize}</div>}*/}
-              {/*  {error && <div className="error">{error}</div>}*/}
-              {/*  {selectedFile && <div>{selectedFile.name}</div>}*/}
-              {/*  {selectedFile && <ProgressBar file={selectedFile} setFile={setSelectedFile}/>}*/}
-              {/*</div>*/}
-              {/*<button onClick={fileUploadHandler}>Upload</button>*/}
-              <div>
-                <h3>Dalsi trening ucast</h3>
-              </div>
-            </GridItem>
-              {/*<Table striped bordered hover>*/}
-              {/*  <thead>*/}
-              {/*    <tr>*/}
-              {/*      <th>StartTime</th>*/}
-              {/*      <th>event start date</th>*/}
-              {/*      <th>Ucast</th>*/}
-              {/*      <th>Moje ucast</th>*/}
-              {/*      <th>Pujdu na trening ?</th>*/}
-              {/*    </tr>*/}
-              {/*  </thead>*/}
-              {/*  <tbody>*/}
-              {/*    {eventsList.map((event) => (*/}
-              {/*      <tr key={event.id}>*/}
-              {/*        <td>{event.eventData.startTime}</td>*/}
-              {/*        <td>{event.eventData.endTime}</td>*/}
-              {/*        <td>*/}
-              {/*          {event.eventData.users &&*/}
-              {/*            Object.values(*/}
-              {/*              event.eventData?.users*/}
-              {/*            ).map((user, index) => <li key={index}>{user}</li>)}*/}
-              {/*        </td>*/}
-              {/*        {eventAttendance ? <td>Zucastnim se</td> : <td>Nejdu</td>}*/}
-              {/*        <td>*/}
-              {/*          <Button*/}
-              {/*            id={event.id}*/}
-              {/*            onClick={(ev) => handleAttendance(true, ev)}*/}
-              {/*          >*/}
-              {/*            Ano*/}
-              {/*          </Button>*/}
-              {/*          <Button*/}
-              {/*            id={event.id}*/}
-              {/*            onClick={(ev) => handleAttendance(false, ev)}*/}
-              {/*          >*/}
-              {/*            Ne*/}
-              {/*          </Button>*/}
-              {/*        </td>*/}
-              {/*      </tr>*/}
-              {/*    ))}*/}
-              {/*  </tbody>*/}
-              {/*</Table>*/}
-              {occurrencesList && <CollapsibleTable radek={occurrencesList} handleAttendance={handleAttendance}/>}
+                    <h4 className="card__heading">The sea explorer</h4>
+                    <div className="card__details">Details</div>
+                  </div>
+                  <div className="card__side card__side--back card__side--back-1">
+                    Back
+                  </div>
+                </li>
+              ))}
+            </ul>
+          )}
+        </GridItem>
+      </GridContainer>
+      <br />
+      <br />
 
-          </GridContainer>
-        </div>
-      </div>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={8}>
+          <div>
+            <h3>Dalsi trening ucast</h3>
+          </div>
+        </GridItem>
+        {occurrencesList && (
+          <CollapsibleTable
+            radek={occurrencesList}
+            handleAttendance={handleAttendance}
+            handleAttendanceButton = {attendanceButton}
+            userId={userId}
+          />
+        )}
+      </GridContainer>
     </div>
   );
 };

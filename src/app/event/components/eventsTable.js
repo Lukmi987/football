@@ -14,7 +14,7 @@ import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import {Avatar} from "@material-ui/core";
+import {Avatar, Checkbox, Switch} from "@material-ui/core";
 import GridContainer from "../../../components/Grid/GridContainer";
 import Button from "../../../components/CustomButtons/Button";
 
@@ -30,7 +30,11 @@ const useRowStyles = makeStyles({
 
 
 
-
+// const isUserInAttendance = (attendance, userId) => {
+//     console.log('coooo tam je attendance',attendance);
+//     console.log('coooo tam je userId',userId);
+//     attendance.find( el => el?.userID === userId)
+// }
 
 function createData(name, calories, fat, carbs, protein, price) {
     return {
@@ -48,12 +52,15 @@ function createData(name, calories, fat, carbs, protein, price) {
 }
 
 function Row(props) {
-    const { row, handleAttendance } = props;
+    const { row, handleAttendance, userId } = props;
     const cr = row.creationTime;
-    console.log('dopice', cr);
+    console.log('row attendance', row.attendance);
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
 
+    const isUserInAttendance = () => row.attendance.find( el => el?.userID === userId)
+     const isTher =  !!isUserInAttendance();
+    console.log('je user v atten',isTher);
     const timeStampToData = (timeStamp) => {
         const date =  new Date(timeStamp);
         return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
@@ -76,6 +83,12 @@ function Row(props) {
                     >
                         Ano
                     </Button>
+                    <Switch
+                        checked={!!isUserInAttendance()}
+                        id={row.id}
+                        onChange={(ev) => handleAttendance(!isTher, ev, cr)}
+                        inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    />
                 </TableCell>
                 <TableCell>
                     <Button
@@ -147,7 +160,7 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
 ];
 
-const  CollapsibleTable = ({radek, handleAttendance}) => {
+const  CollapsibleTable = ({radek, handleAttendance, handleAttendanceButton, userId}) => {
     console.log('jjjjjjjj',radek);
     return (
         <TableContainer component={Paper}>
@@ -157,13 +170,16 @@ const  CollapsibleTable = ({radek, handleAttendance}) => {
                         <TableCell align="left">Ucast</TableCell>
                         <TableCell align="right">Event Id</TableCell>
                         <TableCell align="right">Zacatek</TableCell>
+                        {handleAttendanceButton &&
                         <TableCell align="right">Jdu na trening ?</TableCell>
+
+                        }
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {radek.map((row) => (
-                        <Row key={row.creationTime} row={ row } handleAttendance={handleAttendance} />
-                    ))}
+                    {radek.map((row) => {
+                      return ( <Row key={row.creationTime} row={ row } userId={userId} handleAttendance={handleAttendance} /> )
+                    })}
                 </TableBody>
             </Table>
         </TableContainer>

@@ -23,6 +23,7 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; import
     'mdbreact/dist/css/mdb.css';
 import LogOut from "./app/logOut/containers/LogOut";
 import PhotoGallery from "./app/photoGallery/PhotoGallery";
+import Cabin from "./app/cabin/Cabin";
 
 const token = localStorage.token;
 const hist = createBrowserHistory();
@@ -36,6 +37,7 @@ if(token){
     <Route path="/userAccount-page" component={UserAccount} />
     <Route path="/about-us" component={AboutUs} />
     <Route path="/photo-gallery" component={PhotoGallery} />
+    <Route path="/cabin" component={Cabin} />
     <Route path="/event-form-page" component={EventForm} />
     <Route path="/" component={Components} />
        </Switch>
@@ -44,9 +46,11 @@ if(token){
     routes = (
         <Switch>
     <Route path="/login-page" component={Login} />
+            <Route path="/logout-page" component={LogOut} />
     <Route path="/about-us" component={AboutUs} />
     <Route path="/event-form-page" component={EventForm} />
     <Route path="/photo-gallery" component={PhotoGallery} />
+            <Route path="/cabin" component={Cabin} />
     <Route path="/" component={Components} />
         </Switch>
     )

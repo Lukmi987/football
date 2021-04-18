@@ -94,7 +94,7 @@ const classes = useStyles();
             }
 
         </GridItem>
-          <Event />
+
           <ParagraphSection content={news} headline={newsHeadLine} />
         <CarouselSection />
         <ParagraphSection content={aboutClub} headline={aboutClubHeadLine}/>

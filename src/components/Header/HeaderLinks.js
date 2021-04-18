@@ -136,6 +136,16 @@ export default function HeaderLinks() {
                 </Button>
             </Link>
         </ListItem>
+        <ListItem className={classes.listItem}>
+            <Link to={"/cabin"}>
+                <Button
+                    color="transparent"
+                    className={classes.navLink}
+                >
+                    Kabina
+                </Button>
+            </Link>
+        </ListItem>
       <ListItem className={classes.listItem}>
         {!isUserLoggedIn ?
         <Link to={"/login-page"}  >
