@@ -51,6 +51,10 @@ function createData(name, calories, fat, carbs, protein, price) {
         ],
     };
 }
+export function timeStampToData (timeStamp) {
+    const date =  new Date(timeStamp);
+    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+}
 
 function Row(props) {
     const { row, handleAttendance, userId, editedEventRow, handleAttendanceButton, rowId ,  } = props;
@@ -65,10 +69,7 @@ function Row(props) {
     const isUserInAttendance = () => row.attendance.find( el => el?.userID === userId)
      const isTher =  !!isUserInAttendance();
     console.log('je user v atten',editedEventRow);
-    const timeStampToData = (timeStamp) => {
-        const date =  new Date(timeStamp);
-        return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
-    }
+
 
     return (
         <React.Fragment>

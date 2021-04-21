@@ -21,17 +21,22 @@ export default function Cabin() {
 console.log('jsem v kabine');
 
   return (
-      <div>
-          <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
-          <div className={classNames(classes.main, classes.mainRaised)}>
-              <div className={classes.section}>
-                  <div className={classes.container}>
-                              <Event />
-                  </div>
-              </div>
+    <div>
+      <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
+      <div className={classNames(classes.main, classes.mainRaised)}>
+        <div className={classes.section}>
+          <div className={classes.container}>
+            <GridContainer className={classes.textCenter} justify="center">
+              {/*<GridItem className='cabin' xs={12} sm={12} md={12}>*/}
+              <h1 style={{ marginTop: "180px" }}>Vitej v kabine spoluhraci</h1>
+              {/*</GridItem>*/}
+            </GridContainer>
+            <Event />
           </div>
-          <Footer />
+        </div>
       </div>
+      <Footer />
+    </div>
   );
 }
 

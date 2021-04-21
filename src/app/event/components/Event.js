@@ -34,7 +34,7 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/basic
 import "date-fns";
 import Grid from "@material-ui/core/Grid";
 import DateFnsUtils from "@date-io/date-fns";
-import CollapsibleTable from "./eventsTable";
+import CollapsibleTable, {timeStampToData} from "./eventsTable";
 import {
   MuiPickersUtilsProvider,
   KeyboardTimePicker,
@@ -53,6 +53,7 @@ import ImageGrid from "../../ImageGrid";
 // const spawn = require("child-process-promise").spawn;
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
+import {Avatar, Switch} from "@material-ui/core";
 
 const useStyles = makeStyles();
 
@@ -174,34 +175,32 @@ const Event = ({
     setEditedEventRow(occurrenceId);
     processEventAttendance(participate, occurrenceId, creationTime);
   };
+  const isUserInAttendance = (row) => row.attendance.find( el => el?.userID === userId)
+  const isTher =  !!isUserInAttendance();
 
   return (
     <div>
       <GridContainer justify="center">
+        {nearestEvents && (
+            <>
         <GridItem xs={12} sm={12} md={8}>
-          {nearestEvents && (
-            <ul className="card-players">
-              {nearestEvents[0]?.attendance.map((event) => (
-                <li key={event?.creationTime} className="card-player">
-                  <div className="card__side card__side--front">
-                    <div className="card__picture card__picture--1">
-                      <img
-                        className="card-player-img"
-                        src={event?.profileUrl}
-                      />
-                    </div>
-
-                    <h4 className="card__heading">The sea explorer</h4>
-                    <div className="card__details">Details</div>
-                  </div>
-                  <div className="card__side card__side--back card__side--back-1">
-                    Back
-                  </div>
-                </li>
-              ))}
-            </ul>
-          )}
+        <h3 className="cabin-headline">Dalsi trening te ceka v {timeStampToData(nearestEvents[0]?.creationTime)}</h3>
+          <Switch
+              checked={!!isUserInAttendance(nearestEvents[0])}
+              id={nearestEvents[0].id}
+              onChange={(ev) => handleAttendance(!isTher, ev, nearestEvents[0].creationTime)}
+              disabled
+          />
         </GridItem>
+        <GridItem xs={12} sm={12} md={8}>
+               <div className="nearest-event">
+                  {nearestEvents[0]?.attendance.map((item) => (
+                    <Avatar key={item?.userId} alt="Remy Sharp" src={item?.profileUrl}  className="nearest-event-player" />
+              ))}
+               </div>
+        </GridItem>
+            </>
+          )}
       </GridContainer>
       <br />
       <br />

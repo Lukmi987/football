@@ -99,7 +99,7 @@ const classes = useStyles();
         <CarouselSection />
         <ParagraphSection content={aboutClub} headline={aboutClubHeadLine}/>
         {/*<SectionExamples />*/}
-        {/*<SectionDownload />*/}
+        <SectionDownload />
       </div>
       <Footer />
     </div>

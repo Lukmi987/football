@@ -1,3 +1,18 @@
+.nearest-event {
+  display: flex;
+  margin-top: 20px;
+
+  &-player{
+    margin: 0 10px 0 10px;
+    width: 80px!important;
+    height: 80px!important;
+  }
+}
+
+.cabin-headline {
+    margin-top:50px;
+}
+
 .card-players {
   display: flex;
   list-style: none;
