@@ -125,16 +125,18 @@ const Event = ({
     return occurrencesList.filter((event) => event.creationTime < Date.now());
   }
 
-  function handleAttendance (participate, ev, creationTime) {
-    setAttendanceButton(true);
+  function handleAttendance (ev, creationTime) {
+    // setAttendanceButton(true);
     setRowId(creationTime);
-    console.log("click", creationTime);
+    console.log('tel',ev.target, ev.target.name, ev.target.id);
+    let status = null;
+      if(ev.target.name === "yes") status = 1;
+      if(ev.target.name === "no") status = 0;
+      if(ev.target.name === "dunno") status = 2;
     const occurrenceId = ev.target.id;
-
-
-    console.log('infoooooooooooo occurenceId, participate, creationTime',participate,occurrenceId,creationTime);
+console.log('status, ocurrId, creatioTime',status);
     setEditedEventRow(occurrenceId);
-    processEventAttendance(participate, occurrenceId, creationTime);
+    processEventAttendance(status, occurrenceId, creationTime);
   };
   const isUserInAttendance = (row) => row?.attendance.find( el => el?.userID === userId);
 

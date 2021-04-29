@@ -80,77 +80,121 @@ function Row(props) {
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
 
-    const isUserInAttendance = () => row.attendance.find( el => el?.userID === userId)
-     const isTher =  !!isUserInAttendance();
-    console.log('je user v atten',editedEventRow);
+    // const isUserInAttendance = () => row.attendance.find( el => el?.userID === userId)
+    //  const isTher =  !!isUserInAttendance();
+
 
     return (
-        <React.Fragment>
-            <TableRow className={classes.root}>
-                <TableCell>
-                    <IconButton aria-label="expand row" size="small" onClick={() => setOpen(!open)}>
-                        {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
-                    </IconButton>
-                </TableCell>
-                <TableCell align="right">{getEventType(row.eventType)}</TableCell>
-                <TableCell align="right"><b>{timeStampToData(row.creationTime)}</b></TableCell>
-                <TableCell className="attendance-table-attendance-cell">
-                    {/* if equels then spinning circle else disabled*/}
-                    {handleAttendanceButton && row.creationTime === rowId && (
-                        <Spinner/>
-                    )}
-                    {handleAttendanceButton && row.creationTime !== rowId && (
-                    <Switch
-                            checked={!!isUserInAttendance()}
-                            id={row.id}
-                            disabled
-                        />
-                    )
-                    }
-                    {!handleAttendanceButton && (
-                        <Switch
-                            checked={!!isUserInAttendance()}
-                            id={row.id}
-                            onChange={(ev) => handleAttendance(!isTher, ev, cr)}
-                            inputProps={{'aria-label': 'secondary checkbox'}}
-                        />
-                    )
-                    }
-                </TableCell>
-            </TableRow>
-            <TableRow>
-                <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
-                    <Collapse in={open} timeout="auto" unmountOnExit>
-                        <Box margin={1}>
-                            <Typography variant="h6" gutterBottom component="div">
-                                Players
-                            </Typography>
-                            <Table size="small" aria-label="purchases">
-                                {/*<TableHead>*/}
-                                {/*    <TableRow>*/}
-                                {/*        <TableCell>Date</TableCell>*/}
-                                {/*        <TableCell>Customer</TableCell>*/}
-                                {/*        <TableCell align="right">Amount</TableCell>*/}
-                                {/*        <TableCell align="right">Total price ($)</TableCell>*/}
-                                {/*    </TableRow>*/}
-                                {/*</TableHead>*/}
-                                <TableBody>
-                                    <ul id="table-attendance">
-                                    {row?.attendance && row?.attendance.map((user) => (
-                                        user && (
-                                        <li key={user?.userId}>
-                                             <Avatar alt="Remy Sharp" src={user?.profileUrl} className={classes.large} />
-                                        </li>
-                                        )
-                                     ))}
-                                    </ul>
-                                </TableBody>
-                            </Table>
-                        </Box>
-                    </Collapse>
-                </TableCell>
-            </TableRow>
-        </React.Fragment>
+      <React.Fragment>
+        <TableRow className={classes.root}>
+          <TableCell>
+            <IconButton
+              aria-label="expand row"
+              size="small"
+              onClick={() => setOpen(!open)}
+            >
+              {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
+            </IconButton>
+          </TableCell>
+          <TableCell align="right">{getEventType(row.eventType)}</TableCell>
+          <TableCell align="right">
+            <b>{timeStampToData(row.creationTime)}</b>
+          </TableCell>
+          <TableCell className="attendance-table-attendance-cell">
+            {/* if equels then spinning circle else disabled*/}
+
+            {handleAttendanceButton && row.creationTime === rowId && (
+              <Spinner />
+            )}
+            {handleAttendanceButton && row.creationTime !== rowId && (
+              // <Switch
+              //         checked={!!isUserInAttendance()}
+              //         id={row.id}
+              //         disabled
+              //     />
+              <div>
+                <Button disabled>Jdu</Button>
+                <Button disabled>Nevím</Button>
+                <Button disabled>Nejdu</Button>
+              </div>
+            )}
+            {!handleAttendanceButton && (
+              // <Switch
+              //     checked={!!isUserInAttendance()}
+              //     id={row.id}
+              //     onChange={(ev) => handleAttendance(!isTher, ev, cr)}
+              //     inputProps={{'aria-label': 'secondary checkbox'}}
+              // />
+              <div>
+                <Button
+                  id={row.id}
+                  target="_blank"
+                  name="yes"
+                  value="1"
+                  label="1"
+                  onClick={(e) => handleAttendance(e,cr)}
+                >
+                  Jdu
+                </Button>
+                <Button
+                    id={row.id}
+                    target="_blank"
+                    name="dunno"
+                    onClick={(e) => handleAttendance( e, cr)}
+                >
+                  Nevím
+                </Button>
+                <Button
+                  id={row.id}
+                  target
+                  name="no"
+                  onClick={(e) => handleAttendance( e, cr)}
+                >
+                  Nejdu
+                </Button>
+              </div>
+            )}
+          </TableCell>
+        </TableRow>
+        <TableRow>
+          <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
+            <Collapse in={open} timeout="auto" unmountOnExit>
+              <Box margin={1}>
+                <Typography variant="h6" gutterBottom component="div">
+                  Players
+                </Typography>
+                <Table size="small" aria-label="purchases">
+                  {/*<TableHead>*/}
+                  {/*    <TableRow>*/}
+                  {/*        <TableCell>Date</TableCell>*/}
+                  {/*        <TableCell>Customer</TableCell>*/}
+                  {/*        <TableCell align="right">Amount</TableCell>*/}
+                  {/*        <TableCell align="right">Total price ($)</TableCell>*/}
+                  {/*    </TableRow>*/}
+                  {/*</TableHead>*/}
+                  <TableBody>
+                    <ul id="table-attendance">
+                      {row?.attendance &&
+                        row?.attendance.map(
+                          (user) =>
+                            user && (
+                              <li key={user?.userId}>
+                                <Avatar
+                                  alt="Remy Sharp"
+                                  src={user?.profileUrl}
+                                  className={classes.large}
+                                />
+                              </li>
+                            )
+                        )}
+                    </ul>
+                  </TableBody>
+                </Table>
+              </Box>
+            </Collapse>
+          </TableCell>
+        </TableRow>
+      </React.Fragment>
     );
 }
 

@@ -6,9 +6,9 @@ import {
 } from "../../constants/actionTypes";
 import { createRoutine } from 'redux-saga-routines';
 
-export const processEventAttendance = (participate, occurrenceId, creationTime) => ({
+export const processEventAttendance = (status, occurrenceId, creationTime) => ({
   type: PROCESS_EVENT_ATTENDANCE,
-  participate,
+  status,
   occurrenceId,
   creationTime
 });
