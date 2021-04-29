@@ -15,11 +15,14 @@ export function* processEventAttendance(action) {
         return id === userId;
       })
 
+      console.log('v save process Attendance user, response, ocurrencei, crationTime, user Token', participate, user.length);
       if (participate && !user.length) {
+        console.log('brno');
         const addedUserArr = [...response.data, userId];
         yield axios.put(`/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`, addedUserArr);
         yield put({type: FETCH_OCCURRENCES});
       } else if (!participate && user.length) {
+        console.log('pragu');
         const removedUserArr = response.data.filter(id => {
           return id != userId;
         })

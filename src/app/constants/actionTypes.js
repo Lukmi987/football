@@ -2,6 +2,7 @@ export const DELETE_AUTH_INFO = 'DELETE_AUTH_INFO';
 export const STORE_USER = "STORE_USER";
 export const STORE_USER_SAGA = "STORE_USER_SAGA";
 export const SET_OCCURRENCES_WITH_USERS = "SET_OCCURRENCES_WITH_USERS";
+
 //userAccount
 export const STORE_PROFILE_IMG_URL = "STORE_PROFILE_IMG_URL";
 export const STORE_PROFILE_IMG_URL_SAGA = "STORE_PROFILE_IMG_URL_SAGA";
@@ -13,6 +14,7 @@ export const SET_EVENT = "SET_EVENT";
 export const FETCH_EVENTS = "FETCH_EVENTS";
 export const PROCESS_EVENT = "PROCESS_EVENT";
 export const FETCH_USER_LIST = "FETCH_USER_LIST";
+export const SET_LOADING_EVENT = "SET_LOADING_EVENT";
 
 //authentication
 export const SET_AUTH_INFO = "SET_AUTH_INFO";

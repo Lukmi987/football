@@ -8,9 +8,34 @@
     height: 80px!important;
   }
 }
+.cabin {
+  display: flex;
+  flex-direction: column;
+  &-nearest-attendance {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+  &-nearest-avatars {
+    padding-bottom: 40px;
+    border-bottom: 1px solid lightblue;
+  }
+  &-nearest-span{
+    margin-top:10px;
+    font-size: 18px;
+  }
 
+  &-table{
+    &-header{
+      display: flex;
+      justify-content: center;
+      margin: 15px 0 27px 0 !important;
+    }
+  }
+}
 .cabin-headline {
     margin-top:50px;
+  font-weight: bold;
 }
 
 .card-players {

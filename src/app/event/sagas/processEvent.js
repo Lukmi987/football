@@ -1,43 +1,46 @@
 import { put, select } from "redux-saga/effects";
 import axios from "../../axios-football";
-import { SET_AUTH_INFO, SET_OCCURRENCES } from "../../constants/actionTypes";
+import {SET_AUTH_INFO, SET_LOADING_EVENT, SET_OCCURRENCES} from "../../constants/actionTypes";
 import { createOccurrences } from "../../helpers/eventHelpers";
+import { createEvent } from '../actions'
 
 export function* processEvent(action) {
+ /* yield put(createEvent.REQUEST()) */
+  yield put({type:SET_LOADING_EVENT, data: {isLoading: true, success: false ,error: false}})
   const eventData = action.sportEvent;
   const eventCount = action.eventCount;
+  const eventType = action.sportEvent.eventType;
   const startDate = action.sportEvent.startDate;
   const startTime = action.sportEvent.startTime;
   const defaultStartTime = new Date(
-    `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
+    `${startDate.getFullYear()} ${startDate.getMonth() + 1} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`
   );
 
-  const arr = [{userID: "5wiVxV3Ag7S5K2bcmFVHLgvBrA12", nickname: 'lukmi', age: 77}, {userID: "8zY5hPIex7YS6huWb7X0K6KCE1A2", age: 77, nickname: 'cristiano' }];
-
-  const testData = {
-    MwfsC: { creatingTime: "4545", attendance: ["lukas", "tomas"] },
-  };
+  // fix the date for start time
+  eventData.startTime = defaultStartTime;
   const userToken = localStorage.token;
   try {
-    const response = yield axios.post(`users/players.json?auth=${userToken}`, arr);
+    const response = yield axios.post(`events.json/?auth=${userToken}`, eventData);
     if (response) {
-      if (eventCount > 1) {
         const eventId = response.data.name;
-        yield processOccurrences(eventCount, eventId, defaultStartTime);
-      }
+        yield processOccurrences(eventCount, eventId, defaultStartTime, eventType);
     }
+    // yield put(createEvent.SUCCESS());
+    yield put({type:SET_LOADING_EVENT, data: {isLoading: false, success:true ,error: false}})
   } catch (e) {
     console.log(e);
+    yield put({type:SET_LOADING_EVENT, data: {isLoading: false, success: false ,error: e}})
   }
 }
 
-function* processOccurrences(eventCount, eventId, defaultStartTime) {
+function* processOccurrences(eventCount, eventId, defaultStartTime, eventType) {
   try {
     const userToken = localStorage.token;
     const occurrences = createOccurrences(
       eventCount,
       eventId,
-      defaultStartTime
+      defaultStartTime,
+        eventType
     );
 
     const res = yield axios.post(

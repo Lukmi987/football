@@ -76,7 +76,6 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
   const fileSelectedHandler = (ev) => {
     let selected = ev.target.files[0];
     setFileSize("");
-    console.log("uhhhhhh", ev.target.id);
 
     if (!filterBySize(selected)) {
       setFileSize("Obrazek musi byt mensi jak 3 MB!!!");

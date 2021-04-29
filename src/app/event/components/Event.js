@@ -54,6 +54,8 @@ import ImageGrid from "../../ImageGrid";
 import Carousel from "react-multi-carousel";
 import "react-multi-carousel/lib/styles.css";
 import {Avatar, Switch} from "@material-ui/core";
+import Spinner from "../../Spinner";
+import TableCell from "@material-ui/core/TableCell";
 
 const useStyles = makeStyles();
 
@@ -95,7 +97,7 @@ const Event = ({
   const [error, setError] = useState(null);
   const [fileSize, setFileSize] = useState();
   const [fileInput, setFileInput] = useState();
-  const [nearestEvents, setNearestEvents] = useState();
+  const [nearestEvents, setNearestEvents] = useState([]);
   const [attendanceButton, setAttendanceButton] = useState(false);
   const types = ["image/png", "image/jpeg"];
   useEffect(() => {
@@ -107,8 +109,9 @@ const Event = ({
   }, [localStorage.token]);
 
   useEffect(() => {
+    console.log("................tohle mi vraci1");
     if (occurrencesList) {
-      console.log("hmnm sultana i love", filterNearestEvents(occurrencesList));
+      console.log("tohle mi vraci...............2");
       setNearestEvents(filterNearestEvents(occurrencesList));
       setAttendanceButton(false);
     }
@@ -116,86 +119,63 @@ const Event = ({
 
 
 
-  const filterBySize = (file) => {
-    //filter out images larger than 5MB
-    return file.size <= 3332880;
-  };
-
-  const fileSelectedHandler = (ev) => {
-    let selected = ev.target.files[0];
-    setFileSize("");
-
-    if (!filterBySize(selected)) {
-      setFileSize("Obrazek musi byt mensi jak 3 MB!!!");
-      return;
-    } else {
-      setFileSize("");
-    }
-    if (selected && types.includes(selected.type)) {
-      setSelectedFile(selected);
-      setError("");
-    } else {
-      setSelectedFile(null);
-      setError("Please vyber obrazek ve formatu (png nebo jpeg)");
-    }
-  };
 
   function filterNearestEvents(occurrencesList) {
     console.log("do not make me sad", occurrencesList);
     return occurrencesList.filter((event) => event.creationTime < Date.now());
   }
 
-  const fileUploadHandler = () => {
-    const fd = new FormData();
-    fd.append("image", selectedFile, selectedFile.name);
-    axios
-      .post(
-        "https://us-central1-football-25167.cloudfunctions.net/uploadFile",
-        fd,
-        {
-          onUploadProgress: (progressEvent) => {
-            console.log(
-              "Upload Prgress: " +
-                Math.round((progressEvent.loaded / progressEvent.total) * 100) +
-                "%"
-            );
-          },
-        }
-      )
-      .then((res) => {
-        console.log("our respond", res);
-      });
-  };
-
-  const handleAttendance = (participate, ev, creationTime) => {
+  function handleAttendance (participate, ev, creationTime) {
     setAttendanceButton(true);
     setRowId(creationTime);
     console.log("click", creationTime);
     const occurrenceId = ev.target.id;
+
+
+    console.log('infoooooooooooo occurenceId, participate, creationTime',participate,occurrenceId,creationTime);
     setEditedEventRow(occurrenceId);
     processEventAttendance(participate, occurrenceId, creationTime);
   };
-  const isUserInAttendance = (row) => row.attendance.find( el => el?.userID === userId)
-  const isTher =  !!isUserInAttendance();
+  const isUserInAttendance = (row) => row?.attendance.find( el => el?.userID === userId);
+
 
   return (
     <div>
       <GridContainer justify="center">
-        {nearestEvents && (
+        {nearestEvents.length && (
             <>
-        <GridItem xs={12} sm={12} md={8}>
-        <h3 className="cabin-headline">Dalsi trening te ceka v {timeStampToData(nearestEvents[0]?.creationTime)}</h3>
-          <Switch
-              checked={!!isUserInAttendance(nearestEvents[0])}
-              id={nearestEvents[0].id}
-              onChange={(ev) => handleAttendance(!isTher, ev, nearestEvents[0].creationTime)}
-              disabled
-          />
+        <GridItem xs={12} sm={12} md={8} className='cabin'>
+        <h3 className="cabin-headline">Další trenál tě čeká {timeStampToData(nearestEvents[0]?.creationTime)}</h3>
+
+          <div className="cabin-nearest-attendance">
+            <h4>Mužu s tebou počítat?</h4>
+            {attendanceButton && nearestEvents[0].creationTime === rowId && (
+                <Spinner/>
+            )}
+            {attendanceButton && nearestEvents[0].creationTime !== rowId && (
+                <Switch
+                    checked={!!isUserInAttendance(nearestEvents[0])}
+                    id={nearestEvents[0].id}
+                    disabled
+                />
+            )
+            }
+            {!attendanceButton && (
+                <Switch
+                    checked={!!isUserInAttendance(nearestEvents[0])}
+                    id={nearestEvents[0].id}
+                    onChange={(ev) => handleAttendance(!isUserInAttendance(nearestEvents[0]), ev, nearestEvents[0].creationTime)}
+                    inputProps={{'aria-label': 'secondary checkbox'}}
+                />
+            )
+            }
+          </div>
+          <span className="cabin-nearest-span">Potkáš se tam s:</span>
         </GridItem>
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={8} className="cabin-nearest-avatars">
                <div className="nearest-event">
-                  {nearestEvents[0]?.attendance.map((item) => (
-                    <Avatar key={item?.userId} alt="Remy Sharp" src={item?.profileUrl}  className="nearest-event-player" />
+                  {nearestEvents[0]?.attendance && nearestEvents[0]?.attendance.map((item) => (
+                      item && <Avatar key={item?.userId} alt="Remy Sharp" src={item?.profileUrl} className="nearest-event-player" />
               ))}
                </div>
         </GridItem>
@@ -206,13 +186,14 @@ const Event = ({
       <br />
 
       <GridContainer justify="center">
-        <GridItem xs={12} sm={12} md={8}>
+        <GridItem xs={12} sm={12} md={8} className="cabin-table-header">
           <div>
-            <h3>Dalsi trening ucast</h3>
+            <h3>Přehled všech událostí</h3>
           </div>
         </GridItem>
         {occurrencesList && (
-          <CollapsibleTable
+
+            <CollapsibleTable
             radek={occurrencesList}
             handleAttendance={handleAttendance}
             handleAttendanceButton = {attendanceButton}
@@ -221,6 +202,11 @@ const Event = ({
             rowId={rowId}
           />
         )}
+      </GridContainer>
+      <GridContainer justify="center">
+        <GridItem xs={12} sm={12} md={8} className="cabin-table">
+        <img src="https://images.unsplash.com/photo-1594536717222-b26df7f2f23b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1534&q=80"  width="500"/>
+        </GridItem>
       </GridContainer>
     </div>
   );

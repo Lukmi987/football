@@ -28,7 +28,7 @@ console.log('jsem v kabine');
           <div className={classes.container}>
             <GridContainer className={classes.textCenter} justify="center">
               {/*<GridItem className='cabin' xs={12} sm={12} md={12}>*/}
-              <h1 style={{ marginTop: "180px" }}>Vitej v kabine spoluhraci</h1>
+              <h1 style={{ marginTop: "180px" }}>Vítej v kabině spoluhrači!</h1>
               {/*</GridItem>*/}
             </GridContainer>
             <Event />

@@ -51,9 +51,23 @@ function createData(name, calories, fat, carbs, protein, price) {
         ],
     };
 }
+
 export function timeStampToData (timeStamp) {
     const date =  new Date(timeStamp);
-    return `${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+    return `v ${date.getHours()}.${date.getMinutes()}h ${date.getDate()}-${date.getMonth() + 1}-${date.getFullYear()}`;
+}
+
+const getEventType = (eventTypeId) => {
+    switch (eventTypeId) {
+        case 1:
+            return "Trening"
+        case 2:
+            return "Zápas"
+        case 3:
+            return "Ukončená"
+        case 4:
+            return "Chlastačka"
+    }
 }
 
 function Row(props) {
@@ -70,7 +84,6 @@ function Row(props) {
      const isTher =  !!isUserInAttendance();
     console.log('je user v atten',editedEventRow);
 
-
     return (
         <React.Fragment>
             <TableRow className={classes.root}>
@@ -79,15 +92,9 @@ function Row(props) {
                         {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
                     </IconButton>
                 </TableCell>
-                <TableCell align="right">{row.eventId}</TableCell>
-                <TableCell align="right">{timeStampToData(row.creationTime)}</TableCell>
-                <TableCell>
-                    <Button
-                        id={row.id}
-                        onClick={(ev) => handleAttendance(true, ev, cr)}
-                    >
-                        Ano
-                    </Button>
+                <TableCell align="right">{getEventType(row.eventType)}</TableCell>
+                <TableCell align="right"><b>{timeStampToData(row.creationTime)}</b></TableCell>
+                <TableCell className="attendance-table-attendance-cell">
                     {/* if equels then spinning circle else disabled*/}
                     {handleAttendanceButton && row.creationTime === rowId && (
                         <Spinner/>
@@ -110,15 +117,6 @@ function Row(props) {
                     )
                     }
                 </TableCell>
-                <TableCell>
-                    <Button
-                        id={row.id}
-                        onClick={(ev) => handleAttendance(false, ev, cr)}
-                    >
-                        Ne
-                    </Button>
-                </TableCell>
-
             </TableRow>
             <TableRow>
                 <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
@@ -138,10 +136,12 @@ function Row(props) {
                                 {/*</TableHead>*/}
                                 <TableBody>
                                     <ul id="table-attendance">
-                                    {row.attendance.map((user) => (
+                                    {row?.attendance && row?.attendance.map((user) => (
+                                        user && (
                                         <li key={user?.userId}>
-                                            <Avatar alt="Remy Sharp" src={user?.profileUrl} className={classes.large} />
+                                             <Avatar alt="Remy Sharp" src={user?.profileUrl} className={classes.large} />
                                         </li>
+                                        )
                                      ))}
                                     </ul>
                                 </TableBody>
@@ -187,13 +187,10 @@ const  CollapsibleTable = ({radek, handleAttendance, handleAttendanceButton, use
             <Table aria-label="collapsible table">
                 <TableHead>
                     <TableRow>
-                        <TableCell align="left">Ucast</TableCell>
-                        <TableCell align="right">Event Id</TableCell>
-                        <TableCell align="right">Zacatek</TableCell>
-                        {handleAttendanceButton &&
-                        <TableCell align="right">Jdu na trening ?</TableCell>
-
-                        }
+                        <TableCell align="left">Účast</TableCell>
+                        <TableCell align="right">Typ události</TableCell>
+                        <TableCell align="right">Začátek</TableCell>
+                        <TableCell align="right">Zůčastním se?</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>

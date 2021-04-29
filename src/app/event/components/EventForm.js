@@ -13,9 +13,10 @@ import CardBody from "../../../components/Card/CardBody";
 import CustomInput from "../../../components/CustomInput/CustomInput";
 import InputAdornment from "@material-ui/core/InputAdornment";
 import Email from "@material-ui/icons/Email";
-import {storeProfileImgSaga, storeUser} from "../actions";
+import {createEvent, storeProfileImgSaga, storeUser} from "../actions";
 import CardFooter from "../../../components/Card/CardFooter";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent";
+import Snackbar from '@material-ui/core/Snackbar';
 import Check from "@material-ui/icons/Check";
 import FormControl from "@material-ui/core/FormControl";
 import InputLabel from "@material-ui/core/InputLabel";
@@ -42,40 +43,35 @@ const selectStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function EventForm({processEvent}) {
+export default function EventForm({processEvent, createEvent, eventStatusMes, eventStatus}) {
     const classes = useStyles();
     const selectClasses = selectStyles();
     const [openEventCount, setOpenEventCount] = useState(false);
     const [openEventType, setOpenEventType] = useState(false);
     const [repeatEvent, setRepeatEvent] = useState(false);
     const [startDate, setStartDate] = useState(new Date());
-    const [endDate, setEndDate] = useState(new Date());
     const [startTime, setStartTime] = useState(new Date());
-    const [endTime, setEndTime] = useState(new Date());
-    const [eventCount, setEventCount] = useState(1);
-    const [eventType, setEventType] = useState("");
+    const [eventCount, setEventCount] = useState(0);
+    const [eventType, setEventType] = useState(1);
+    const [validDate, setValidDate] = useState(true);
 
+    // console.log('je event created',isEventCreated)
+    console.log('je event created prerendruji component', eventStatusMes)
+    // useEffect(()=>{
+    //     if(eventStatusMes) console.log('event,status v effectu',eventStatusMes);
+    // },[eventStatusMes])
 
     const handleDateChange = (id, ev) => {
+        console.log('jfkfj',ev);
+        if(ev === 'Invalid Date Format'){
+            console.log('v handle invalid ',ev,id);
+        }
         switch (id) {
             case "startDate":
                 setStartDate(ev);
                 break;
-            case "endDate":
-                console.log(
-                    "end date format",
-                    ev.getFullYear(),
-                    ev.getMonth(),
-                    ev.getDate()
-                );
-                setEndDate(ev);
-                break;
             case "startTime":
-                // const time = `${ev.getHours()}:${ev.getMinutes()}`;
                 setStartTime(ev);
-                break;
-            case "endTime":
-                setEndTime(ev);
                 break;
         }
     };
@@ -83,7 +79,8 @@ export default function EventForm({processEvent}) {
     const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
     const handleChange = (ev) => {
-        ev.target.name === "event-repeat-select"
+        console.log('event c ount',ev.target.value)
+                ev.target.name === "event-repeat-select"
             ? setEventCount(ev.target.value)
             : setEventType(ev.target.value);
     };
@@ -101,19 +98,43 @@ export default function EventForm({processEvent}) {
 
     const handleRepeatCheckbox = (ev) => {
         setRepeatEvent(ev.target.checked);
+        ev.target.checked ? setEventCount(1) : setEventCount(0);
     };
 
     const composeEventData = () => ({
         eventType,
         startDate,
-        endDate,
         startTime,
-        endTime,
     });
 
     const handleSubmitEvent = () => {
+        if(startDate){
+            setValidDate(true);
+          const isValidStartDate = Date.parse(startDate);
+          const isValidStartTime = Date.parse(startTime);
+          if(!isValidStartDate || !isValidStartTime){
+              setValidDate(false);
+              return
+          }
+            console.log('proslo')
+
+        }
+
+     const nev =   new Date(
+            `${startDate.getFullYear()} ${startDate.getMonth()} ${startDate.getDate()} ${startTime.getHours()}:${startTime.getMinutes()}`)
+        console.log('nevim ...........',nev)
+        console.log('nevim ...........1111111',startDate.getFullYear())
+        console.log('nevim ...........2222222',startDate.getMonth() +1)
+        console.log('nevim ...........333333',startDate.getDate())
+        // createEvent();
         processEvent(composeEventData(), eventCount);
     };
+
+    const handleSnackbarClose = () => {
+        console.log(' v handleSnackbarClose');
+        setTimeout(eventStatus, 3000);
+
+    }
 
     return (
         <div>
@@ -131,6 +152,39 @@ export default function EventForm({processEvent}) {
                     <div className={classes.title}>
                         <h1>Vytvoř událost</h1>
                     </div>
+                    {eventStatusMes.success && (
+                    <Snackbar
+                        anchorOrigin={{
+                            vertical: 'center',
+                            horizontal: 'top',
+                        }}
+                        open={true}
+                        autoHideDuration={6000}
+                         onClose={handleSnackbarClose()}
+                        message={eventStatusMes.error || "Uspesne vytvoreno"}
+                        // action={
+                        //     <React.Fragment>
+                        //         <Button color="secondary" size="small" onClick={handleClose}>
+                        //             UNDO
+                        //         </Button>
+                        //         <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
+                        //             <CloseIcon fontSize="small" />
+                        //         </IconButton>
+                        //     </React.Fragment>
+                        // }
+                    />
+                    )}
+                    {!validDate &&
+                    <SnackbarContent
+                        message={
+                            <span>
+                                <b>Chyba:</b> <h3>Vyber platné datum !!</h3>
+                  </span>
+                        }
+                        close
+                        color="warning"
+                    />
+                    }
                 </GridItem>
                 <GridItem>
                     <FormControl className={selectClasses.formControl}>
@@ -142,16 +196,14 @@ export default function EventForm({processEvent}) {
                             onClose={handleClose}
                             onOpen={handleOpen}
                             value={eventType}
+                            required
                             onChange={handleChange}
                             name="type"
                         >
-                            <MenuItem value="">
-                                <em>None</em>
-                            </MenuItem>
-                            <MenuItem value={1}>Trening</MenuItem>
-                            <MenuItem value={2}>Zapas</MenuItem>
-                            <MenuItem value={3}>Ukoncena</MenuItem>
-                            <MenuItem value={4}>Chlastacka</MenuItem>
+                            <MenuItem selected value={1}>Trening</MenuItem>
+                            <MenuItem value={2}>Zápas</MenuItem>
+                            <MenuItem value={3}>Ukončená</MenuItem>
+                            <MenuItem value={4}>Chlastačka</MenuItem>
                         </Select>
                     </FormControl>
                     <MuiPickersUtilsProvider utils={DateFnsUtils}>
@@ -160,7 +212,8 @@ export default function EventForm({processEvent}) {
                                 margin="normal"
                                 id="date-picker-dialog"
                                 label="Datum začátku"
-                                format="MM/dd/yyyy"
+                                required
+                                format="dd/MM/yyyy"
                                 value={startDate}
                                 onChange={dateListener("startDate")}
                                 KeyboardButtonProps={{
@@ -171,29 +224,9 @@ export default function EventForm({processEvent}) {
                                 margin="normal"
                                 id="time-picker"
                                 label="Začátek"
+                                required
                                 value={startTime}
                                 onChange={dateListener("startTime")}
-                                KeyboardButtonProps={{
-                                    "aria-label": "change time",
-                                }}
-                            />
-                            <KeyboardDatePicker
-                                margin="normal"
-                                id="date-picker-dialog"
-                                label="Datum konce"
-                                format="MM/dd/yyyy"
-                                value={endDate}
-                                onChange={dateListener("endDate")}
-                                KeyboardButtonProps={{
-                                    "aria-label": "change date",
-                                }}
-                            />
-                            <KeyboardTimePicker
-                                margin="normal"
-                                id="time-picker"
-                                label="Konec"
-                                value={endTime}
-                                onChange={dateListener("endTime")}
                                 KeyboardButtonProps={{
                                     "aria-label": "change time",
                                 }}
@@ -224,9 +257,6 @@ export default function EventForm({processEvent}) {
                                 onChange={handleChange}
                                 name="event-repeat-select"
                             >
-                                <MenuItem value="">
-                                    <em>None</em>
-                                </MenuItem>
                                 <MenuItem value={1}>1</MenuItem>
                                 <MenuItem value={2}>2</MenuItem>
                                 <MenuItem value={3}>3</MenuItem>
@@ -259,12 +289,13 @@ export default function EventForm({processEvent}) {
                 </GridItem>
                 <GridItem>
                     <Button
+                        disabled={eventStatusMes.loading}
                         simple
                         color="primary"
                         size="lg"
                         onClick={handleSubmitEvent}
                     >
-                        Submit
+                        VYTVOŘIT
                     </Button>
                 </GridItem>
                 </GridContainer>

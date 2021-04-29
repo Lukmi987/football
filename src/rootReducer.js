@@ -1,5 +1,7 @@
 import { combineReducers } from "redux";
 import events from "./app/event/reducers/events";
+import createEvent from "./app/event/reducers/createEvent";
+import eventStatus from "./app/event/reducers/eventStatus";
 import occurrences from "./app/event/reducers/occurrences";
 import login from "./app/login/reducers/login";
 import logout from "./app/login/reducers/logout";
@@ -21,6 +23,7 @@ const rootReducer = combineReducers({
   profileUrl,
   user,
   occurrencesWithUsers,
+  eventStatus,
 });
 
 export default rootReducer;
