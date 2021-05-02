@@ -126,13 +126,15 @@ const Event = ({
   }
 
   function handleAttendance (ev, creationTime) {
+    // window.stopPropagation();
     // setAttendanceButton(true);
     setRowId(creationTime);
-    console.log('tel',ev.target, ev.target.name, ev.target.id);
+    console.log('event',ev);
+    console.log('tel',ev.currentTarget, ev.currentTarget.name, ev.currentTarget.id);
     let status = null;
-      if(ev.target.name === "yes") status = 1;
-      if(ev.target.name === "no") status = 0;
-      if(ev.target.name === "dunno") status = 2;
+      if(ev.currentTarget.name === "yes") status = 1;
+      if(ev.currentTarget.name === "no") status = 0;
+      if(ev.currentTarget.name === "dunno") status = 2;
     const occurrenceId = ev.target.id;
 console.log('status, ocurrId, creatioTime',status);
     setEditedEventRow(occurrenceId);

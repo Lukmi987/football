@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import ReactDOM from "react-dom";
 import { Provider } from "react-redux";
 import store from "./configureStore";
@@ -26,10 +26,14 @@ import PhotoGallery from "./app/photoGallery/PhotoGallery";
 import Cabin from "./app/cabin/Cabin";
 
 const token = localStorage.token;
+
 const hist = createBrowserHistory();
 const isSuccessLogin = hist.location.state;
 
 let routes;
+// useEffect(()=>{
+//
+// }, [token])
 if(token){
    routes = (
        <Switch>

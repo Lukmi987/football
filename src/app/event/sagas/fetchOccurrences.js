@@ -32,6 +32,7 @@ export function* fetchOccurrences() {
             for (let k = 0; k < occurrencesValues.length; k++) {
               const attendance = mapUsers(occurrencesValues, k, responseUsers);
               occurrencesValues[k].attendance = attendance;
+              console.log('bim',occurrencesValues);
               let result = { ...node, ...occurrencesValues[k] };
               acumm.push(result);
             }
@@ -45,10 +46,11 @@ export function* fetchOccurrences() {
     occurrencesWithUsers.sort(function (a, b) {
       return a?.creationTime - b?.creationTime;
     });
-
+    console.log('ahh',occurrencesWithUsers)
     function mapUsers(occurrencesValues, index, responseUsers) {
-      return occurrencesValues[index].attendance.map((id) => {
-        const user = responseUsers.data.filter((user) => user.userID === id);
+      return occurrencesValues[index].attendance.map((attendance) => {
+        console.log('ahhhh jo',attendance, responseUsers)
+        const user = responseUsers.data.filter((user) => user.userId === attendance.userId);
         return user[0];
       });
     }

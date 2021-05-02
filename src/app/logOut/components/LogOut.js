@@ -28,13 +28,14 @@ const useStyles = makeStyles(styles);
 
 export default function LogOut({ logOut}) {
 
-if(localStorage.token) {
-  console.log('v logout .............................!!');
-  localStorage.token = '';
-  logOut();
-    console.log('v logout .............................!! ppo');
 
-}
+
+useEffect(() => {
+    if(localStorage.token) {
+        localStorage.token = '';
+        logOut();
+    }
+}, [])
 
         // history.push('/','successLogin');
 return (
