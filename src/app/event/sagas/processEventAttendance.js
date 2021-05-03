@@ -16,7 +16,7 @@ export function* processEventAttendance(action) {
       })
       const userIndex = data.findIndex((item) => item.userId === userId)
 
-      console.log('v sage manage userIndex je',userIndex);
+      console.log('v sage manage userIndex je a status !!!',userIndex, status);
       if (userIndex === -1) {
         console.log('prvni');
         const addedUserArr = [...data, {userId: userId, status: status}];

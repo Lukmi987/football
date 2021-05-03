@@ -129,14 +129,14 @@ const Event = ({
     // window.stopPropagation();
     // setAttendanceButton(true);
     setRowId(creationTime);
-    console.log('event',ev);
-    console.log('tel',ev.currentTarget, ev.currentTarget.name, ev.currentTarget.id);
+
+    console.log('handle attendance, target, name, a id',ev.currentTarget, ev.currentTarget.name, ev.currentTarget.id);
     let status = null;
       if(ev.currentTarget.name === "yes") status = 1;
       if(ev.currentTarget.name === "no") status = 0;
       if(ev.currentTarget.name === "dunno") status = 2;
-    const occurrenceId = ev.target.id;
-console.log('status, ocurrId, creatioTime',status);
+    const occurrenceId = ev.currentTarget.id;
+// console.log('status, ocurrId, creatioTime',status);
     setEditedEventRow(occurrenceId);
     processEventAttendance(status, occurrenceId, creationTime);
   };

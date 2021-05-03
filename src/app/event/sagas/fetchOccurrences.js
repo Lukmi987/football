@@ -50,7 +50,7 @@ export function* fetchOccurrences() {
     function mapUsers(occurrencesValues, index, responseUsers) {
       return occurrencesValues[index].attendance.map((attendance) => {
         console.log('ahhhh jo',attendance, responseUsers)
-        const user = responseUsers.data.filter((user) => user.userId === attendance.userId);
+        const user = responseUsers.data.filter(user => user.userID === attendance.userId);
         return user[0];
       });
     }
