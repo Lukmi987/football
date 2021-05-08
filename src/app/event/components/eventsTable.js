@@ -18,6 +18,9 @@ import {Avatar, Checkbox, Switch} from "@material-ui/core";
 import GridContainer from "../../../components/Grid/GridContainer";
 import Button from "../../../components/CustomButtons/Button";
 import Spinner from "../../Spinner";
+import { v4 as uuid_v4 } from "uuid";
+import EventAttendanceButtons from './EventAttendanceButtons';
+
 
 const useRowStyles = makeStyles({
     root: {
@@ -71,18 +74,24 @@ const getEventType = (eventTypeId) => {
 }
 
 function Row(props) {
-    const { row, handleAttendance, userId, editedEventRow, handleAttendanceButton, rowId ,  } = props;
-    const cr = row.creationTime;
-    console.log('handleAttendanceButton',handleAttendanceButton);
-    console.log('row.creation time je', row.creationTime);
-    console.log('moje row id neboli time', rowId);
+    const { occurrence, handleAttendance, userId, editedEventRow, handleAttendanceButton, rowId ,  } = props;
+    const [attendanceStatus, setAttendanceStatus] = useState();
+    const cr = occurrence.creationTime;
 
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
 
-    // const isUserInAttendance = () => row.attendance.find( el => el?.userID === userId)
-    //  const isTher =  !!isUserInAttendance();
 
+  // const userIndex = data.findIndex((item) => item.userId === userId)
+    const userAttendanceIndex = occurrence.attendance.findIndex( el => el?.userID === userId);
+    let userAttendanceStatus;
+    if (userAttendanceIndex !== -1 ) {
+      userAttendanceStatus = occurrence.attendance[userAttendanceIndex].status;
+    }
+  console.log('v event ttable userAttendanceIndex', userAttendanceIndex);
+  console.log('v event ttable userAttendanceStatus', userAttendanceStatus);
+
+const disabledButton = handleAttendanceButton && occurrence.creationTime !== rowId;
 
     return (
       <React.Fragment>
@@ -96,28 +105,28 @@ function Row(props) {
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
           </TableCell>
-          <TableCell align="right">{getEventType(row.eventType)}</TableCell>
+          <TableCell align="right">{getEventType(occurrence.eventType)}</TableCell>
           <TableCell align="right">
-            <b>{timeStampToData(row.creationTime)}</b>
+            <b>{timeStampToData(occurrence.creationTime)}</b>
           </TableCell>
           <TableCell className="attendance-table-attendance-cell">
             {/* if equels then spinning circle else disabled*/}
 
-            {handleAttendanceButton && row.creationTime === rowId && (
+            {handleAttendanceButton && occurrence.creationTime === rowId && (
               <Spinner />
             )}
-            {handleAttendanceButton && row.creationTime !== rowId && (
-              // <Switch
-              //         checked={!!isUserInAttendance()}
-              //         id={row.id}
-              //         disabled
-              //     />
-              <div>
-                <Button disabled>Jdu</Button>
-                <Button disabled>Nevím</Button>
-                <Button disabled>Nejdu</Button>
-              </div>
-            )}
+            {/*{handleAttendanceButton && occurrence.creationTime !== rowId && (*/}
+            {/*  // <Switch*/}
+            {/*  //         checked={!!isUserInAttendance()}*/}
+            {/*  //         id={row.id}*/}
+            {/*  //         disabled*/}
+            {/*  //     />*/}
+            {/*  <div>*/}
+            {/*    <Button disabled>Jdu</Button>*/}
+            {/*    <Button disabled>Nevím</Button>*/}
+            {/*    <Button disabled>Nejdu</Button>*/}
+            {/*  </div>*/}
+            {/*)}*/}
             {!handleAttendanceButton && (
               // <Switch
               //     checked={!!isUserInAttendance()}
@@ -126,32 +135,36 @@ function Row(props) {
               //     inputProps={{'aria-label': 'secondary checkbox'}}
               // />
               <div>
-                <Button
-                  id={row.id}
-                  target="_blank"
-                  name="yes"
-                  value="1"
-                  label="1"
-                  onClick={(e) => handleAttendance(e,cr)}
-                >
-                  Jdu
-                </Button>
-                <Button
-                    id={row.id}
-                    target="_blank"
-                    name="dunno"
-                    onClick={(e) => handleAttendance( e, cr)}
-                >
-                  Nevím
-                </Button>
-                <Button
-                  id={row.id}
-                  target
-                  name="no"
-                  onClick={(e) => handleAttendance( e, cr)}
-                >
-                  Nejdu
-                </Button>
+               <EventAttendanceButtons occurrence={occurrence} disabledButton={disabledButton} handleAttendance={handleAttendance} userAttendanceStatus={userAttendanceStatus} cr={cr}/>
+                {/*<Button*/}
+                {/*  id={occurrence.id}*/}
+                {/*  disabled={disabledButton}*/}
+                {/*  name="yes"*/}
+                {/*  value="1"*/}
+                {/*  label="1"*/}
+                {/*  onClick={(e) => handleAttendance(e,cr)}*/}
+                {/*  className={ userAttendanceStatus === 1 ? "attendance-active-button" : '' }*/}
+                {/*>*/}
+                {/*  Jdu*/}
+                {/*</Button>*/}
+                {/*<Button*/}
+                {/*    id={occurrence.id}*/}
+                {/*    disabled={disabledButton}*/}
+                {/*    name="dunno"*/}
+                {/*    onClick={(e) => handleAttendance( e, cr)}*/}
+                {/*    className={ userAttendanceStatus === 2 ? "attendance-active-button" : '' }*/}
+                {/*>*/}
+                {/*  Nevím*/}
+                {/*</Button>*/}
+                {/*<Button*/}
+                {/*  id={occurrence.id}*/}
+                {/*  disabled={disabledButton}*/}
+                {/*  name="no"*/}
+                {/*  onClick={(e) => handleAttendance( e, cr)}*/}
+                {/*  className={ userAttendanceStatus === 0 ? "attendance-active-button" : '' }*/}
+                {/*>*/}
+                {/*  Nejdu*/}
+                {/*</Button>*/}
               </div>
             )}
           </TableCell>
@@ -174,11 +187,11 @@ function Row(props) {
                   {/*</TableHead>*/}
                   <TableBody>
                     <ul id="table-attendance">
-                      {row?.attendance &&
-                        row?.attendance.map(
+                      {occurrence?.attendance &&
+                      occurrence?.attendance.map(
                           (user) =>
                             user && (
-                              <li key={user?.userId}>
+                              <li key={uuid_v4()}>
                                 <Avatar
                                   alt="Remy Sharp"
                                   src={user?.profileUrl}
@@ -198,23 +211,23 @@ function Row(props) {
     );
 }
 
-Row.propTypes = {
-    row: PropTypes.shape({
-        calories: PropTypes.number.isRequired,
-        carbs: PropTypes.number.isRequired,
-        fat: PropTypes.number.isRequired,
-        history: PropTypes.arrayOf(
-            PropTypes.shape({
-                amount: PropTypes.number.isRequired,
-                customerId: PropTypes.string.isRequired,
-                date: PropTypes.string.isRequired,
-            }),
-        ).isRequired,
-        name: PropTypes.string.isRequired,
-        price: PropTypes.number.isRequired,
-        protein: PropTypes.number.isRequired,
-    }).isRequired,
-};
+// Row.propTypes = {
+//     row: PropTypes.shape({
+//         calories: PropTypes.number.isRequired,
+//         carbs: PropTypes.number.isRequired,
+//         fat: PropTypes.number.isRequired,
+//         history: PropTypes.arrayOf(
+//             PropTypes.shape({
+//                 amount: PropTypes.number.isRequired,
+//                 customerId: PropTypes.string.isRequired,
+//                 date: PropTypes.string.isRequired,
+//             }),
+//         ).isRequired,
+//         name: PropTypes.string.isRequired,
+//         price: PropTypes.number.isRequired,
+//         protein: PropTypes.number.isRequired,
+//     }).isRequired,
+// };
 
 const rows = [
     createData('Frozen yoghurt', 159, 6.0, 24, 4.0, 3.99),
@@ -224,8 +237,8 @@ const rows = [
     createData('Gingerbread', 356, 16.0, 49, 3.9, 1.5),
 ];
 
-const  CollapsibleTable = ({radek, handleAttendance, handleAttendanceButton, userId, editedEventRow, rowId, creationTime}) => {
-    console.log('jjjjjjjj',radek);
+const  CollapsibleTable = ({occurrencesList, handleAttendance, handleAttendanceButton, userId, editedEventRow, rowId, creationTime}) => {
+
     return (
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table">
@@ -238,8 +251,8 @@ const  CollapsibleTable = ({radek, handleAttendance, handleAttendanceButton, use
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {radek.map((row) => {
-                      return ( <Row key={row.creationTime} row={ row }   editedEventRow={editedEventRow} userId={userId} handleAttendance={handleAttendance} handleAttendanceButton={handleAttendanceButton} rowId={rowId} /> )
+                    {occurrencesList.map((occurrence) => {
+                      return ( <Row key={occurrence.creationTime} occurrence={ occurrence }   editedEventRow={editedEventRow} userId={userId} handleAttendance={handleAttendance} handleAttendanceButton={handleAttendanceButton} rowId={rowId} /> )
                     })}
                 </TableBody>
             </Table>

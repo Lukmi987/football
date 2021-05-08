@@ -49,8 +49,16 @@ export function* fetchOccurrences() {
     console.log('ahh',occurrencesWithUsers)
     function mapUsers(occurrencesValues, index, responseUsers) {
       return occurrencesValues[index].attendance.map((attendance) => {
-        console.log('ahhhh jo',attendance, responseUsers)
+
         const user = responseUsers.data.filter(user => user.userID === attendance.userId);
+        const userCopy = [...user]
+        console.log('jo mapUsers attendance.staus ',attendance.status);
+        if(attendance.status === 0 || attendance.status === 1 || attendance.status === 2 ){
+          console.log('if attendance.status ',userCopy);
+          userCopy[0].status = attendance.status
+          console.log('if po setnuti',userCopy);
+        }
+        console.log('ahhhh jo mapUsers copy user object ',userCopy);
         return user[0];
       });
     }

@@ -69,7 +69,9 @@
     "postcss": "^8.2.9",
     "prettier": "2.0.5",
     "react-multi-carousel": "^2.6.2",
-    "tailwindcss": "^2.1.1"
+    "tailwindcss": "^2.1.1",
+    "uuid": "^3.4.0",
+    "uuidv4": "^6.2.7"
   },
   "optionalDependencies": {
     "typescript": "3.9.3"

@@ -56,6 +56,8 @@ import "react-multi-carousel/lib/styles.css";
 import {Avatar, Switch} from "@material-ui/core";
 import Spinner from "../../Spinner";
 import TableCell from "@material-ui/core/TableCell";
+import { v4 as uuid_v4 } from 'uuid';
+import EventAttendanceButtons from './EventAttendanceButtons';
 
 const useStyles = makeStyles();
 
@@ -140,7 +142,14 @@ const Event = ({
     setEditedEventRow(occurrenceId);
     processEventAttendance(status, occurrenceId, creationTime);
   };
-  const isUserInAttendance = (row) => row?.attendance.find( el => el?.userID === userId);
+  const userAttendanceStatus = (row) => {
+    const userAttendanceIndex = row?.attendance.findIndex( el => el?.userID === userId);
+    let userAttendanceStatus;
+    if (userAttendanceIndex !== -1 ) {
+      userAttendanceStatus = row.attendance[userAttendanceIndex].status;
+      return userAttendanceStatus;
+    }
+  }
 
 
   return (
@@ -153,33 +162,70 @@ const Event = ({
 
           <div className="cabin-nearest-attendance">
             <h4>Mužu s tebou počítat?</h4>
-            {attendanceButton && nearestEvents[0].creationTime === rowId && (
-                <Spinner/>
-            )}
-            {attendanceButton && nearestEvents[0].creationTime !== rowId && (
-                <Switch
-                    checked={!!isUserInAttendance(nearestEvents[0])}
-                    id={nearestEvents[0].id}
-                    disabled
-                />
-            )
-            }
-            {!attendanceButton && (
-                <Switch
-                    checked={!!isUserInAttendance(nearestEvents[0])}
-                    id={nearestEvents[0].id}
-                    onChange={(ev) => handleAttendance(!isUserInAttendance(nearestEvents[0]), ev, nearestEvents[0].creationTime)}
-                    inputProps={{'aria-label': 'secondary checkbox'}}
-                />
-            )
-            }
+            {/*{attendanceButton && nearestEvents[0].creationTime === rowId && (*/}
+            {/*    <Spinner/>*/}
+            {/*)}*/}
+            {/*{attendanceButton && nearestEvents[0].creationTime !== rowId && (*/}
+            {/*    <Switch*/}
+            {/*        checked={!!isUserInAttendance(nearestEvents[0])}*/}
+            {/*        id={nearestEvents[0].id}*/}
+            {/*        disabled*/}
+            {/*    />*/}
+            {/*)*/}
+            {/*}*/}
+            {/*{!attendanceButton && (*/}
+            {/*    // <Switch*/}
+            {/*    //     checked={!!isUserInAttendance(nearestEvents[0])}*/}
+            {/*    //     id={nearestEvents[0].id}*/}
+            {/*    //     onChange={(ev) => handleAttendance(!isUserInAttendance(nearestEvents[0]), ev, nearestEvents[0].creationTime)}*/}
+            {/*    //     inputProps={{'aria-label': 'secondary checkbox'}}*/}
+            {/*    // />*/}
+              {/*<div>*/}
+            {/*<EventAttendanceButtons occurrence={nearestEvents[0]}*/}
+            {/*                        disabledButton={attendanceButton && nearestEvents[0].creationTime !== rowId}*/}
+            {/*                        handleAttendance={handleAttendance}*/}
+            {/*                        userAttendanceStatus={userAttendanceStatus(nearestEvents[0])}*/}
+            {/*                        cr={nearestEvents[0].creationTime}*/}
+            {/*/>*/}
+                {/*<Button*/}
+                {/*  id={occurrence.id}*/}
+                {/*  disabled={disabledButton}*/}
+                {/*  name="yes"*/}
+                {/*  value="1"*/}
+                {/*  label="1"*/}
+                {/*  onClick={(e) => handleAttendance(e,cr)}*/}
+                {/*  className={ userAttendanceStatus === 1 ? "attendance-active-button" : '' }*/}
+                {/*>*/}
+                {/*  Jdu*/}
+                {/*</Button>*/}
+                {/*<Button*/}
+                {/*  id={occurrence.id}*/}
+                {/*  disabled={disabledButton}*/}
+                {/*  name="dunno"*/}
+                {/*  onClick={(e) => handleAttendance( e, cr)}*/}
+                {/*  className={ userAttendanceStatus === 2 ? "attendance-active-button" : '' }*/}
+                {/*>*/}
+                {/*  Nevím*/}
+                {/*</Button>*/}
+                {/*<Button*/}
+                {/*  id={occurrence.id}*/}
+                {/*  disabled={disabledButton}*/}
+                {/*  name="no"*/}
+                {/*  onClick={(e) => handleAttendance( e, cr)}*/}
+                {/*  className={ userAttendanceStatus === 0 ? "attendance-active-button" : '' }*/}
+                {/*>*/}
+                {/*  Nejdu*/}
+                {/*</Button>*/}
+          {/*    </div>*/}
+          {/*  )*/}
+          {/*  }*/}
           </div>
           <span className="cabin-nearest-span">Potkáš se tam s:</span>
         </GridItem>
         <GridItem xs={12} sm={12} md={8} className="cabin-nearest-avatars">
                <div className="nearest-event">
                   {nearestEvents[0]?.attendance && nearestEvents[0]?.attendance.map((item) => (
-                      item && <Avatar key={item?.userId} alt="Remy Sharp" src={item?.profileUrl} className="nearest-event-player" />
+                      item && <Avatar key={uuid_v4()} alt="Remy Sharp" src={item?.profileUrl} className="nearest-event-player" />
               ))}
                </div>
         </GridItem>
@@ -198,7 +244,7 @@ const Event = ({
         {occurrencesList && (
 
             <CollapsibleTable
-            radek={occurrencesList}
+              occurrencesList={occurrencesList}
             handleAttendance={handleAttendance}
             handleAttendanceButton = {attendanceButton}
             userId={userId}
