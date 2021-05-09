@@ -129,7 +129,7 @@ const Event = ({
 
   function handleAttendance (ev, creationTime) {
     // window.stopPropagation();
-    // setAttendanceButton(true);
+     setAttendanceButton(true);
     setRowId(creationTime);
 
     console.log('handle attendance, target, name, a id',ev.currentTarget, ev.currentTarget.name, ev.currentTarget.id);
@@ -151,6 +151,7 @@ const Event = ({
     }
   }
 
+  const disabledButton = attendanceButton && nearestEvents[0].creationTime !== rowId;
 
   return (
     <div>
@@ -162,63 +163,23 @@ const Event = ({
 
           <div className="cabin-nearest-attendance">
             <h4>Mužu s tebou počítat?</h4>
-            {/*{attendanceButton && nearestEvents[0].creationTime === rowId && (*/}
-            {/*    <Spinner/>*/}
-            {/*)}*/}
-            {/*{attendanceButton && nearestEvents[0].creationTime !== rowId && (*/}
-            {/*    <Switch*/}
-            {/*        checked={!!isUserInAttendance(nearestEvents[0])}*/}
-            {/*        id={nearestEvents[0].id}*/}
-            {/*        disabled*/}
-            {/*    />*/}
-            {/*)*/}
-            {/*}*/}
-            {/*{!attendanceButton && (*/}
-            {/*    // <Switch*/}
-            {/*    //     checked={!!isUserInAttendance(nearestEvents[0])}*/}
-            {/*    //     id={nearestEvents[0].id}*/}
-            {/*    //     onChange={(ev) => handleAttendance(!isUserInAttendance(nearestEvents[0]), ev, nearestEvents[0].creationTime)}*/}
-            {/*    //     inputProps={{'aria-label': 'secondary checkbox'}}*/}
-            {/*    // />*/}
-              {/*<div>*/}
-            {/*<EventAttendanceButtons occurrence={nearestEvents[0]}*/}
-            {/*                        disabledButton={attendanceButton && nearestEvents[0].creationTime !== rowId}*/}
-            {/*                        handleAttendance={handleAttendance}*/}
-            {/*                        userAttendanceStatus={userAttendanceStatus(nearestEvents[0])}*/}
-            {/*                        cr={nearestEvents[0].creationTime}*/}
-            {/*/>*/}
-                {/*<Button*/}
-                {/*  id={occurrence.id}*/}
-                {/*  disabled={disabledButton}*/}
-                {/*  name="yes"*/}
-                {/*  value="1"*/}
-                {/*  label="1"*/}
-                {/*  onClick={(e) => handleAttendance(e,cr)}*/}
-                {/*  className={ userAttendanceStatus === 1 ? "attendance-active-button" : '' }*/}
-                {/*>*/}
-                {/*  Jdu*/}
-                {/*</Button>*/}
-                {/*<Button*/}
-                {/*  id={occurrence.id}*/}
-                {/*  disabled={disabledButton}*/}
-                {/*  name="dunno"*/}
-                {/*  onClick={(e) => handleAttendance( e, cr)}*/}
-                {/*  className={ userAttendanceStatus === 2 ? "attendance-active-button" : '' }*/}
-                {/*>*/}
-                {/*  Nevím*/}
-                {/*</Button>*/}
-                {/*<Button*/}
-                {/*  id={occurrence.id}*/}
-                {/*  disabled={disabledButton}*/}
-                {/*  name="no"*/}
-                {/*  onClick={(e) => handleAttendance( e, cr)}*/}
-                {/*  className={ userAttendanceStatus === 0 ? "attendance-active-button" : '' }*/}
-                {/*>*/}
-                {/*  Nejdu*/}
-                {/*</Button>*/}
-          {/*    </div>*/}
-          {/*  )*/}
-          {/*  }*/}
+            {attendanceButton && nearestEvents[0].creationTime === rowId && (
+                <Spinner/>
+            )}
+            { !attendanceButton && (
+            <EventAttendanceButtons occurrence={nearestEvents[0]}
+                                    handleAttendance={handleAttendance}
+                                    userAttendanceStatus={userAttendanceStatus(nearestEvents[0])}
+                                    cr={nearestEvents[0].creationTime}
+            /> )
+            }
+            { disabledButton && (
+              <EventAttendanceButtons occurrence={nearestEvents[0]}
+                                      disabledButton={disabledButton}
+                                      handleAttendance={handleAttendance}
+                                      userAttendanceStatus={userAttendanceStatus(nearestEvents[0])}
+                                      cr={nearestEvents[0].creationTime}
+              /> )}
           </div>
           <span className="cabin-nearest-span">Potkáš se tam s:</span>
         </GridItem>

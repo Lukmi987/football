@@ -19,7 +19,10 @@ import GridContainer from "../../../components/Grid/GridContainer";
 import Button from "../../../components/CustomButtons/Button";
 import Spinner from "../../Spinner";
 import { v4 as uuid_v4 } from "uuid";
+import Tabs from 'react-bootstrap/Tabs'
+import Tab from 'react-bootstrap/Tab'
 import EventAttendanceButtons from './EventAttendanceButtons';
+import EventAttendanceList from './EventAttendanceList';
 
 
 const useRowStyles = makeStyles({
@@ -92,7 +95,7 @@ function Row(props) {
   console.log('v event ttable userAttendanceStatus', userAttendanceStatus);
 
 const disabledButton = handleAttendanceButton && occurrence.creationTime !== rowId;
-
+console.log('disabled button',disabledButton);
     return (
       <React.Fragment>
         <TableRow className={classes.root}>
@@ -115,58 +118,10 @@ const disabledButton = handleAttendanceButton && occurrence.creationTime !== row
             {handleAttendanceButton && occurrence.creationTime === rowId && (
               <Spinner />
             )}
-            {/*{handleAttendanceButton && occurrence.creationTime !== rowId && (*/}
-            {/*  // <Switch*/}
-            {/*  //         checked={!!isUserInAttendance()}*/}
-            {/*  //         id={row.id}*/}
-            {/*  //         disabled*/}
-            {/*  //     />*/}
-            {/*  <div>*/}
-            {/*    <Button disabled>Jdu</Button>*/}
-            {/*    <Button disabled>Nevím</Button>*/}
-            {/*    <Button disabled>Nejdu</Button>*/}
-            {/*  </div>*/}
-            {/*)}*/}
             {!handleAttendanceButton && (
-              // <Switch
-              //     checked={!!isUserInAttendance()}
-              //     id={row.id}
-              //     onChange={(ev) => handleAttendance(!isTher, ev, cr)}
-              //     inputProps={{'aria-label': 'secondary checkbox'}}
-              // />
-              <div>
-               <EventAttendanceButtons occurrence={occurrence} disabledButton={disabledButton} handleAttendance={handleAttendance} userAttendanceStatus={userAttendanceStatus} cr={cr}/>
-                {/*<Button*/}
-                {/*  id={occurrence.id}*/}
-                {/*  disabled={disabledButton}*/}
-                {/*  name="yes"*/}
-                {/*  value="1"*/}
-                {/*  label="1"*/}
-                {/*  onClick={(e) => handleAttendance(e,cr)}*/}
-                {/*  className={ userAttendanceStatus === 1 ? "attendance-active-button" : '' }*/}
-                {/*>*/}
-                {/*  Jdu*/}
-                {/*</Button>*/}
-                {/*<Button*/}
-                {/*    id={occurrence.id}*/}
-                {/*    disabled={disabledButton}*/}
-                {/*    name="dunno"*/}
-                {/*    onClick={(e) => handleAttendance( e, cr)}*/}
-                {/*    className={ userAttendanceStatus === 2 ? "attendance-active-button" : '' }*/}
-                {/*>*/}
-                {/*  Nevím*/}
-                {/*</Button>*/}
-                {/*<Button*/}
-                {/*  id={occurrence.id}*/}
-                {/*  disabled={disabledButton}*/}
-                {/*  name="no"*/}
-                {/*  onClick={(e) => handleAttendance( e, cr)}*/}
-                {/*  className={ userAttendanceStatus === 0 ? "attendance-active-button" : '' }*/}
-                {/*>*/}
-                {/*  Nejdu*/}
-                {/*</Button>*/}
-              </div>
+               <EventAttendanceButtons occurrence={occurrence}  handleAttendance={handleAttendance} userAttendanceStatus={userAttendanceStatus} cr={cr}/>
             )}
+            {disabledButton && <EventAttendanceButtons occurrence={occurrence} disabledButton={disabledButton} handleAttendance={handleAttendance} userAttendanceStatus={userAttendanceStatus} cr={cr}/> }
           </TableCell>
         </TableRow>
         <TableRow>
@@ -186,21 +141,34 @@ const disabledButton = handleAttendanceButton && occurrence.creationTime !== row
                   {/*    </TableRow>*/}
                   {/*</TableHead>*/}
                   <TableBody>
-                    <ul id="table-attendance">
-                      {occurrence?.attendance &&
-                      occurrence?.attendance.map(
-                          (user) =>
-                            user && (
-                              <li key={uuid_v4()}>
-                                <Avatar
-                                  alt="Remy Sharp"
-                                  src={user?.profileUrl}
-                                  className={classes.large}
-                                />
-                              </li>
-                            )
-                        )}
-                    </ul>
+                    <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+                      <Tab eventKey="home" title="Home">
+                        <div>jdou</div>
+                      </Tab>
+                      <Tab eventKey="profile" title="Profile">
+                        <div>nevi</div>
+                      </Tab>
+                      <Tab eventKey="contact" title="Contact" disabled>
+                        <div>nejdou</div>
+                      </Tab>
+                    </Tabs>
+                    {/*<ul id="table-attendance">*/}
+                      {/*{occurrence?.attendance &&*/}
+                      {/*occurrence?.attendance.map(*/}
+                      {/*    (user) =>*/}
+                      {/*      user && (*/}
+                      {/*        <li key={uuid_v4()}>*/}
+                      {/*          <Avatar*/}
+                      {/*            alt="Remy Sharp"*/}
+                      {/*            src={user?.profileUrl}*/}
+                      {/*            className={classes.large}*/}
+                      {/*          />*/}
+                      {/*        </li>*/}
+                      {/*      )*/}
+                      {/*  )}*/}
+                    {occurrence?.attendance &&
+                      <EventAttendanceList occurrence={occurrence} status={1} /> }
+                    {/*</ul>*/}
                   </TableBody>
                 </Table>
               </Box>

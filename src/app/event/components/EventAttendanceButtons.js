@@ -1,7 +1,7 @@
 import Button from '../../../components/CustomButtons/Button';
 import React from 'react';
 
-const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton, userAttendanceStatus, cr }) => {
+const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = false, userAttendanceStatus, cr }) => {
   console.log('.......1occurrence',occurrence);
   console.log('.......userAttendanceStatus',userAttendanceStatus);
   return (
@@ -13,7 +13,7 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton, u
         value="1"
         label="1"
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 1 ? "attendance-active-button" : ''}
+        className={userAttendanceStatus === 1 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >
         Jdu
       </Button>
@@ -22,7 +22,7 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton, u
         disabled={disabledButton}
         name="dunno"
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 2 ? "attendance-active-button" : ''}
+        className={userAttendanceStatus === 1 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >
         Nevím
       </Button>
@@ -31,7 +31,7 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton, u
         disabled={disabledButton}
         name="no"
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 0 ? "attendance-active-button" : ''}
+        className={userAttendanceStatus === 1 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >
         Nejdu
       </Button>

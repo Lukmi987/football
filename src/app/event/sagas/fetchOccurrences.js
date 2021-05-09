@@ -1,12 +1,12 @@
-import { put, select } from "redux-saga/effects";
 import axios from "../../axios-football";
 import { SET_OCCURRENCES_WITH_USERS } from "../../constants/actionTypes";
 import { loadEvents } from "../../helpers/eventHelpers";
 import _ from "lodash";
+import { put, select } from "redux-saga/effects";
 
 export function* fetchOccurrences() {
   try {
-    console.log('ale jooo fetchEvents');
+    console.log("ale jooo fetchEvents");
     const userToken = localStorage.token;
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
     const responseUsers = yield axios.get(
@@ -32,7 +32,7 @@ export function* fetchOccurrences() {
             for (let k = 0; k < occurrencesValues.length; k++) {
               const attendance = mapUsers(occurrencesValues, k, responseUsers);
               occurrencesValues[k].attendance = attendance;
-              console.log('bim',occurrencesValues);
+              console.log("bim", occurrencesValues);
               let result = { ...node, ...occurrencesValues[k] };
               acumm.push(result);
             }
@@ -46,20 +46,22 @@ export function* fetchOccurrences() {
     occurrencesWithUsers.sort(function (a, b) {
       return a?.creationTime - b?.creationTime;
     });
-    console.log('ahh',occurrencesWithUsers)
+    console.log("ahh", occurrencesWithUsers);
     function mapUsers(occurrencesValues, index, responseUsers) {
       return occurrencesValues[index].attendance.map((attendance) => {
+        const user = responseUsers.data.filter(
+          (user) => user.userID === attendance.userId
+        );
+        const userCopy = JSON.parse(JSON.stringify(user));
 
-        const user = responseUsers.data.filter(user => user.userID === attendance.userId);
-        const userCopy = [...user]
-        console.log('jo mapUsers attendance.staus ',attendance.status);
-        if(attendance.status === 0 || attendance.status === 1 || attendance.status === 2 ){
-          console.log('if attendance.status ',userCopy);
-          userCopy[0].status = attendance.status
-          console.log('if po setnuti',userCopy);
+        if (
+          attendance.status === 0 ||
+          attendance.status === 1 ||
+          attendance.status === 2
+        ) {
+          userCopy[0].status = attendance.status;
         }
-        console.log('ahhhh jo mapUsers copy user object ',userCopy);
-        return user[0];
+        return userCopy[0];
       });
     }
 
