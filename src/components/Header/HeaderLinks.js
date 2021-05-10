@@ -165,18 +165,18 @@ export default function HeaderLinks() {
         </Link>
         }
       </ListItem>
-        {isUserLoggedIn &&
+        {/*{isUserLoggedIn &&*/}
         <ListItem className={classes.listItem}>
-            <Link to={"/userAccount-page"}>
+            <Link to={"/manage-account"}>
                 <Button
                 color="transparent"
                 className={classes.navLink}
                 >
-                    Account
+                    Account Pico
                 </Button>
             </Link>
         </ListItem>
-        }
+        {/*}*/}
     </List>
   );
 }

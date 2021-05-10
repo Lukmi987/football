@@ -22,7 +22,7 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         disabled={disabledButton}
         name="dunno"
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 1 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
+        className={userAttendanceStatus === 2 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >
         Nevím
       </Button>
@@ -31,7 +31,7 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         disabled={disabledButton}
         name="no"
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 1 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
+        className={userAttendanceStatus === 0 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >
         Nejdu
       </Button>

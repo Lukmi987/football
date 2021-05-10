@@ -140,7 +140,7 @@ console.log('disabled button',disabledButton);
                   {/*        <TableCell align="right">Total price ($)</TableCell>*/}
                   {/*    </TableRow>*/}
                   {/*</TableHead>*/}
-                  <TableBody>
+                  <div>
                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                       <Tab eventKey="home" title="Home">
                         <div>jdou</div>
@@ -166,10 +166,10 @@ console.log('disabled button',disabledButton);
                       {/*        </li>*/}
                       {/*      )*/}
                       {/*  )}*/}
-                    {occurrence?.attendance &&
-                      <EventAttendanceList occurrence={occurrence} status={1} /> }
+                    {/*{occurrence?.attendance &&*/}
+                    {/*  <EventAttendanceList occurrence={occurrence} status={1} /> }*/}
                     {/*</ul>*/}
-                  </TableBody>
+                  </div>
                 </Table>
               </Box>
             </Collapse>

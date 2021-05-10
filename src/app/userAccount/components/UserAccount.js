@@ -40,6 +40,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
     return file.size <= 3332880;
   };
 
+  console.log('jsem v userAcount !!!!!!!!!!');
   useEffect(() => {
     // storeProfileImg('urls');
     if (profileImgUrl) {

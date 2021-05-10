@@ -56,6 +56,7 @@ if(token){
     <Route path="/photo-gallery" component={PhotoGallery} />
             <Route path="/cabin" component={Cabin} />
     <Route path="/" component={Components} />
+          <Route path="/userAccount-page" component={UserAccount} />
         </Switch>
     )
 }
@@ -63,7 +64,17 @@ if(token){
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
-        {routes}
+      <Switch>
+        <Route path="/login-page" component={Login} />
+        <Route path="/logout-page" component={LogOut} />
+        <Route path="/about-us" component={AboutUs} />
+        <Route path="/event-form-page" component={EventForm} />
+        <Route path="/photo-gallery" component={PhotoGallery} />
+        <Route path="/cabin" component={Cabin} />
+        <Route path="/manage-account" component={UserAccount} />
+        <Route path="/" component={Components} />
+
+      </Switch>
     </Router>
   </Provider>,
   document.getElementById("root")
