@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Box from '@material-ui/core/Box';
@@ -23,6 +23,7 @@ import Tabs from 'react-bootstrap/Tabs'
 import Tab from 'react-bootstrap/Tab'
 import EventAttendanceButtons from './EventAttendanceButtons';
 import EventAttendanceList from './EventAttendanceList';
+import { groupBy } from '../../helpers/eventHelpers';
 
 
 const useRowStyles = makeStyles({
@@ -77,25 +78,20 @@ const getEventType = (eventTypeId) => {
 }
 
 function Row(props) {
-    const { occurrence, handleAttendance, userId, editedEventRow, handleAttendanceButton, rowId ,  } = props;
-    const [attendanceStatus, setAttendanceStatus] = useState();
+    const { occurrence, handleAttendance, userId, handleAttendanceButton, rowId } = props;
     const cr = occurrence.creationTime;
-
     const [open, setOpen] = React.useState(false);
     const classes = useRowStyles();
 
-
-  // const userIndex = data.findIndex((item) => item.userId === userId)
     const userAttendanceIndex = occurrence.attendance.findIndex( el => el?.userID === userId);
     let userAttendanceStatus;
     if (userAttendanceIndex !== -1 ) {
       userAttendanceStatus = occurrence.attendance[userAttendanceIndex].status;
     }
-  console.log('v event ttable userAttendanceIndex', userAttendanceIndex);
-  console.log('v event ttable userAttendanceStatus', userAttendanceStatus);
 
+const groupByUsers = groupBy(occurrence.attendance, (a) => a?.status);
 const disabledButton = handleAttendanceButton && occurrence.creationTime !== rowId;
-console.log('disabled button',disabledButton);
+
     return (
       <React.Fragment>
         <TableRow className={classes.root}>
@@ -113,8 +109,6 @@ console.log('disabled button',disabledButton);
             <b>{timeStampToData(occurrence.creationTime)}</b>
           </TableCell>
           <TableCell className="attendance-table-attendance-cell">
-            {/* if equels then spinning circle else disabled*/}
-
             {handleAttendanceButton && occurrence.creationTime === rowId && (
               <Spinner />
             )}
@@ -132,43 +126,27 @@ console.log('disabled button',disabledButton);
                   Players
                 </Typography>
                 <Table size="small" aria-label="purchases">
-                  {/*<TableHead>*/}
-                  {/*    <TableRow>*/}
-                  {/*        <TableCell>Date</TableCell>*/}
-                  {/*        <TableCell>Customer</TableCell>*/}
-                  {/*        <TableCell align="right">Amount</TableCell>*/}
-                  {/*        <TableCell align="right">Total price ($)</TableCell>*/}
-                  {/*    </TableRow>*/}
-                  {/*</TableHead>*/}
                   <div>
                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-                      <Tab eventKey="home" title="Home">
-                        <div>jdou</div>
+                      <Tab eventKey="home" title="Jdou">
+                        {groupByUsers.get(1) ? groupByUsers.get(1).map((user) =>(
+                          <EventAttendanceList key={uuid_v4()} user={user} classes={classes} />
+                        )) : <div>0</div>
+                        }
                       </Tab>
-                      <Tab eventKey="profile" title="Profile">
-                        <div>nevi</div>
+                      <Tab eventKey="profile" title="Neví">
+                        {groupByUsers.get(2) ? groupByUsers.get(2).map((user) =>(
+                          <EventAttendanceList key={uuid_v4()} user={user} classes={classes} />
+                        )) : <div>0</div>
+                        }
                       </Tab>
-                      <Tab eventKey="contact" title="Contact" disabled>
-                        <div>nejdou</div>
+                      <Tab eventKey="contact" title="Nejdou" >
+                        {groupByUsers.get(0) ? groupByUsers.get(0).map((user) =>(
+                          <EventAttendanceList key={uuid_v4()} user={user} classes={classes} />
+                        )) : <div>0</div>
+                        }
                       </Tab>
                     </Tabs>
-                    {/*<ul id="table-attendance">*/}
-                      {/*{occurrence?.attendance &&*/}
-                      {/*occurrence?.attendance.map(*/}
-                      {/*    (user) =>*/}
-                      {/*      user && (*/}
-                      {/*        <li key={uuid_v4()}>*/}
-                      {/*          <Avatar*/}
-                      {/*            alt="Remy Sharp"*/}
-                      {/*            src={user?.profileUrl}*/}
-                      {/*            className={classes.large}*/}
-                      {/*          />*/}
-                      {/*        </li>*/}
-                      {/*      )*/}
-                      {/*  )}*/}
-                    {/*{occurrence?.attendance &&*/}
-                    {/*  <EventAttendanceList occurrence={occurrence} status={1} /> }*/}
-                    {/*</ul>*/}
                   </div>
                 </Table>
               </Box>
