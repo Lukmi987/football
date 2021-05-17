@@ -21,3 +21,6 @@ export const SET_AUTH_INFO = "SET_AUTH_INFO";
 export const LOG_USER_OUT = "LOG_USER_OUT";
 export const UNSET_LOGGED_USER = "UNSET_LOGGED_USER";
 export const LOGIN_USER = "LOGIN_USER";
+
+//manageToken
+export const SET_TOKEN_STATUS = "SET_TOKEN_STATUS";

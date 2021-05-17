@@ -18,7 +18,15 @@ export function* loginUser(action) {
         const response = yield axios.post(url,preparedData);
         console.log('v login userAccount', response);
         const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
-         localStorage.setItem('token', response.data.idToken);
+        //expiratiom Time as a date object
+        //  const expTime = new Date(new Date().getTime() + (+response.data.expiresIn * 1000))
+        console.log('login saga !!!!!!!!!1',response.data.expiresIn * 1000);
+         const  expTime = response.data.expiresIn * 1000;
+        localStorage.setItem('token', response.data.idToken);
+         localStorage.setItem('expTime',expTime.toString());
+         const tokenCreatedTime = new Date().getTime().toString();
+         localStorage.setItem('tokenCreatedTime',tokenCreatedTime);
+
         // function x(){
         //     dispatch({type: DELETE_AUTH_INFO, data:{token: null, userId: null}});
         // }

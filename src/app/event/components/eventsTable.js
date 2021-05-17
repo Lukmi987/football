@@ -126,7 +126,9 @@ const disabledButton = handleAttendanceButton && occurrence.creationTime !== row
                   Players
                 </Typography>
                 <Table size="small" aria-label="purchases">
-                  <div>
+                  <tbody>
+                  <tr>
+                    <th>
                     <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                       <Tab eventKey="home" title="Jdou">
                         {groupByUsers.get(1) ? groupByUsers.get(1).map((user) =>(
@@ -147,7 +149,9 @@ const disabledButton = handleAttendanceButton && occurrence.creationTime !== row
                         }
                       </Tab>
                     </Tabs>
-                  </div>
+                    </th>
+                  </tr>
+                  </tbody>
                 </Table>
               </Box>
             </Collapse>

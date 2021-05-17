@@ -28,8 +28,6 @@ const useStyles = makeStyles(styles);
 
 export default function LogOut({ logOut}) {
 
-
-
 useEffect(() => {
     if(localStorage.token) {
         localStorage.token = '';

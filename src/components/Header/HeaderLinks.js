@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React from "react";
+import React, { useEffect, useState } from 'react';
 import DeleteIcon from "@material-ui/icons/Delete";
 import IconButton from "@material-ui/core/IconButton";
 // react components for routing our app without refresh
@@ -19,12 +19,19 @@ import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
 import Button from "components/CustomButtons/Button.js";
 
 import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
+import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks() {
   const classes = useStyles();
-  const isUserLoggedIn = localStorage.token;
+  const [token, setToken] = useState(null)
+  const tokenStatus = useSelector(state => state.manageToken.deleted);
+
+  useEffect(()=> {
+    setToken(localStorage.token || null);
+
+  },[tokenStatus])
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
@@ -147,7 +154,7 @@ export default function HeaderLinks() {
             </Link>
         </ListItem>
       <ListItem className={classes.listItem}>
-        {!isUserLoggedIn ?
+        {!token ?
         <Link to={"/login-page"}  >
         <Button 
           color="transparent"

@@ -24,16 +24,35 @@ import '@fortawesome/fontawesome-free/css/all.min.css'; import
 import LogOut from "./app/logOut/containers/LogOut";
 import PhotoGallery from "./app/photoGallery/PhotoGallery";
 import Cabin from "./app/cabin/Cabin";
+import ManageToken from './app/manageToken/containers/ManageToken';
+
+
+// const getTimeDiffSinceTokenCreation = ( tokenCreatedTime ) => {
+//   const currentTimeInMill = new Date().getTime();
+//   const timeDiff = currentTimeInMill - tokenCreatedTime;
+//   return timeDiff;
+// }
 
 const token = localStorage.token;
+// const expTime = parseInt(localStorage.expTime);
+// const expTime = 60000;
+// const tokenCreatedTime = parseInt(localStorage.tokenCreatedTime);
+
+// const diff = getTimeDiffSinceTokenCreation(tokenCreatedTime);
+//
+// if(diff > expTime && token) {
+//   console.log('v diff je vetsi');
+//   localStorage.clear();
+// } else if(token) {
+//   console.log('v diff je mensi');
+//   const tokenRemainingValidTime = expTime - diff;
+// setTimeout(()=> localStorage.clear(),tokenRemainingValidTime)
+// }
 
 const hist = createBrowserHistory();
 const isSuccessLogin = hist.location.state;
-
+console.log('v index');
 let routes;
-// useEffect(()=>{
-//
-// }, [token])
 if(token){
    routes = (
        <Switch>
@@ -43,7 +62,7 @@ if(token){
     <Route path="/photo-gallery" component={PhotoGallery} />
     <Route path="/cabin" component={Cabin} />
     <Route path="/event-form-page" component={EventForm} />
-    <Route path="/" component={Components} />
+    <Route path="*" component={Components} />
        </Switch>
     );
 } else {
@@ -64,6 +83,7 @@ if(token){
 ReactDOM.render(
   <Provider store={store}>
     <Router history={hist}>
+      <ManageToken />
       <Switch>
         <Route path="/login-page" component={Login} />
         <Route path="/logout-page" component={LogOut} />
@@ -73,7 +93,6 @@ ReactDOM.render(
         <Route path="/cabin" component={Cabin} />
         <Route path="/manage-account" component={UserAccount} />
         <Route path="/" component={Components} />
-
       </Switch>
     </Router>
   </Provider>,
