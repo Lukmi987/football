@@ -87,11 +87,11 @@ const Event = ({
   fetchEvents,
   fetchOccurrences,
   eventsList,
-  userId,
+
   occurrencesList,
 }) => {
   const classes = useStyles();
-
+const   userId =   localStorage.userId;
   const [editedEventRow, setEditedEventRow] = useState();
 
   const [selectedFile, setSelectedFile] = useState();

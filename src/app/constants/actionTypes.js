@@ -24,3 +24,4 @@ export const LOGIN_USER = "LOGIN_USER";
 
 //manageToken
 export const SET_TOKEN_STATUS = "SET_TOKEN_STATUS";
+export const GET_NEW_TOKEN_SAGA = "GET_NEW_TOKEN_SAGA";

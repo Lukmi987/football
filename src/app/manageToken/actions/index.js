@@ -1,5 +1,5 @@
 import {
-    PROCESS_EVENT,
+    GET_NEW_TOKEN_SAGA,
     SET_TOKEN_STATUS,
 } from '../../constants/actionTypes';
 
@@ -8,6 +8,9 @@ export const setTokenStatus = (action) => ({
     data: action,
 });
 
+export const getNewToken = () => ({
+    type: GET_NEW_TOKEN_SAGA,
+})
 
 
 

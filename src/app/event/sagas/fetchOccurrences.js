@@ -8,6 +8,7 @@ export function* fetchOccurrences() {
   try {
     console.log("ale jooo fetchEvents");
     const userToken = localStorage.token;
+    console.log('............. picccccccccccco fetch',userToken);
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
     const responseUsers = yield axios.get(
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`

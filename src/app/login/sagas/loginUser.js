@@ -24,6 +24,8 @@ export function* loginUser(action) {
          const  expTime = response.data.expiresIn * 1000;
         localStorage.setItem('token', response.data.idToken);
          localStorage.setItem('expTime',expTime.toString());
+         localStorage.setItem('refreshToken', response.data.refreshToken);
+         localStorage.setItem('userId',response.data.localId);
          const tokenCreatedTime = new Date().getTime().toString();
          localStorage.setItem('tokenCreatedTime',tokenCreatedTime);
 

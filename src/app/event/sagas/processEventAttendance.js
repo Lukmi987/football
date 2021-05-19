@@ -10,7 +10,7 @@ export function* processEventAttendance(action) {
   try {
     if(occurrenceId && creationTime) {
       const { data } = yield axios.get(`/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`);
-      const userId = yield select(state => state.login.userId);
+      const userId = localStorage.userId;
       const user = data.filter( attendance => {
         return attendance.userId === userId;
       })
