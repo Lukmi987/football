@@ -19,6 +19,7 @@ import SnackbarContent from "components/Snackbar/SnackbarContent.js";
 import styles from "assets/jss/material-kit-react/views/componentsSections/loginStyle.js";
 import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
+import ManageToken from '../../manageToken/containers/ManageToken';
 
 
 const useStyles = makeStyles(styles);
@@ -75,6 +76,7 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
   const classes = useStyles();
   return (
 <div>
+  <ManageToken />
   <Header
       brand="Login Page"
       rightLinks={<HeaderLinks />}

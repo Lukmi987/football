@@ -12,9 +12,14 @@ export function* getNewToken() {
       content_type: "application/x-www-form-urlencoded",
       data: {grant_type: 'refresh_token', refresh_token: refreshToken},
     });
+
+    const  expTime = response.data.expires_in * 1000;
     localStorage.setItem('token', response.data.access_token);
     localStorage.setItem('userId', response.data.user_id);
-    console.log('token new saga',response);
+    localStorage.setItem('expTime',expTime.toString());
+    localStorage.setItem('refreshToken', response.data.refresh_token);
+    const tokenCreatedTime = new Date().getTime().toString();
+    localStorage.setItem('tokenCreatedTime',tokenCreatedTime);
   } catch (e) {
     console.log('manage saga token error',e);
   }

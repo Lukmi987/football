@@ -29,9 +29,6 @@ export function* loginUser(action) {
          const tokenCreatedTime = new Date().getTime().toString();
          localStorage.setItem('tokenCreatedTime',tokenCreatedTime);
 
-        // function x(){
-        //     dispatch({type: DELETE_AUTH_INFO, data:{token: null, userId: null}});
-        // }
 
         console.log('se');
           yield put({type: SET_AUTH_INFO, data: loginAuthInfo});
