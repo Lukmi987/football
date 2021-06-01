@@ -20,6 +20,7 @@ import styles from "assets/jss/material-kit-react/views/componentsSections/login
 import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
 import ManageToken from '../../manageToken/containers/ManageToken';
+import { Redirect } from 'react-router-dom';
 
 
 const useStyles = makeStyles(styles);
@@ -32,15 +33,13 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
   const [isPwdMinLength, setPwdMinLegth] = useState(false);
   const [errorAlert, setErrorAlert] = useState(null);
 
-  useEffect(()=>{
-        console.log('jo muj erorr',errorMsg,idToken);
-        setErrorAlert(errorMsg);
-        //history.push('/','successLogin');
-  if(idToken) {
-     history.push('/','successLogin');
-    console.log('jo existuje id token');
-  }
-    },[errorMsg,idToken])
+  // useEffect(()=>{
+  //       setErrorAlert(errorMsg);
+  // // if(idToken) {
+  // //    history.push('/','successLogin');
+  // //   console.log('jo existuje id token');
+  // }
+  //   },[errorMsg,idToken])
 
   const composeFormData = () => ({
     email,
@@ -76,7 +75,12 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
   const classes = useStyles();
   return (
 <div>
+  {idToken &&
+    <>
   <ManageToken />
+  <Redirect to='/' />
+    </>
+  }
   <Header
       brand="Login Page"
       rightLinks={<HeaderLinks />}

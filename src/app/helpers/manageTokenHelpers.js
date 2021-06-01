@@ -12,6 +12,7 @@ export function getTimeDiffSinceTokenCreation(tokenCreatedTime){
 export const  manageTokenValidity = (setTokenStatus, getNewToken) => {
   let time;
   window.onclick = checkLastActiveTimeAndGetToken;
+  console.log('click is registered');
   function checkLastActiveTimeAndGetToken() {
     const tokenCreatedTime = parseInt(localStorage.tokenCreatedTime);
     const timeSinceTokenCreation =

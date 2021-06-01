@@ -89,7 +89,7 @@
 //  //background-image: linear-gradient(to right bottom, #ffb900, #ff7730) }
 
 .MuiPaper-root.MuiTableContainer-root.MuiPaper-elevation1.MuiPaper-rounded {
-  width: 55%;
+  width: 100%;
 }
 
 #table-attendance {
@@ -100,3 +100,7 @@
   margin: 0 1rem 0 1rem;
   list-style-type: none;
 }
+
+//.cabin-table-collapsible{
+//  width: 100% !important;
+//}

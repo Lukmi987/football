@@ -2,8 +2,6 @@ import Button from '../../../components/CustomButtons/Button';
 import React from 'react';
 
 const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = false, userAttendanceStatus, cr }) => {
-  console.log('.......1occurrence',occurrence);
-  console.log('.......userAttendanceStatus',userAttendanceStatus);
   return (
     <div>
       <Button
@@ -12,6 +10,8 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         name="yes"
         value="1"
         label="1"
+        size="facebook"
+        round
         onClick={(e) => handleAttendance(e, cr)}
         className={userAttendanceStatus === 1 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >
@@ -21,6 +21,8 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         id={occurrence.id}
         disabled={disabledButton}
         name="dunno"
+        size="facebook"
+        round
         onClick={(e) => handleAttendance(e, cr)}
         className={userAttendanceStatus === 2 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >
@@ -30,6 +32,8 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         id={occurrence.id}
         disabled={disabledButton}
         name="no"
+        size="facebook"
+        round
         onClick={(e) => handleAttendance(e, cr)}
         className={userAttendanceStatus === 0 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
       >

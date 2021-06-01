@@ -55,14 +55,8 @@ export default function EventForm({processEvent, createEvent, eventStatusMes, ev
     const [eventType, setEventType] = useState(1);
     const [validDate, setValidDate] = useState(true);
 
-    // console.log('je event created',isEventCreated)
-    console.log('je event created prerendruji component', eventStatusMes)
-    // useEffect(()=>{
-    //     if(eventStatusMes) console.log('event,status v effectu',eventStatusMes);
-    // },[eventStatusMes])
 
     const handleDateChange = (id, ev) => {
-        console.log('jfkfj',ev);
         if(ev === 'Invalid Date Format'){
             console.log('v handle invalid ',ev,id);
         }

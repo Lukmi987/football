@@ -90,58 +90,49 @@ const Event = ({
 
   occurrencesList,
 }) => {
-  const classes = useStyles();
 const   userId =   localStorage.userId;
   const [editedEventRow, setEditedEventRow] = useState();
 
-  const [selectedFile, setSelectedFile] = useState();
   const [rowId, setRowId] = useState();
-  const [error, setError] = useState(null);
-  const [fileSize, setFileSize] = useState();
-  const [fileInput, setFileInput] = useState();
   const [nearestEvents, setNearestEvents] = useState([]);
   const [attendanceButton, setAttendanceButton] = useState(false);
   const types = ["image/png", "image/jpeg"];
   useEffect(() => {
     fetchOccurrences();
-    if (occurrencesList) {
-      // console.log('hmnm sultana i love', filterNearestEvents(occurrencesList));
-      // setNearestEvents(filterNearestEvents());
-    }
   }, [localStorage.token]);
 
   useEffect(() => {
-    console.log("................tohle mi vraci1");
     if (occurrencesList) {
-      console.log("tohle mi vraci...............2");
       setNearestEvents(filterNearestEvents(occurrencesList));
       setAttendanceButton(false);
     }
   }, [occurrencesList]);
 
 
-
-
   function filterNearestEvents(occurrencesList) {
-    console.log("do not make me sad", occurrencesList);
     return occurrencesList.filter((event) => event.creationTime < Date.now());
   }
 
-  function handleAttendance (ev, creationTime) {
-    // window.stopPropagation();
-     setAttendanceButton(true);
-    setRowId(creationTime);
+  const getEventTypeName = (eventType) => {
+    if(eventType === 1) return 'Trening';
+    if(eventType === 2) return 'Zápas';
+    if(eventType === 3) return 'Ukončená';
+    if(eventType === 4) return 'Chlastačka';
+  }
 
-    console.log('handle attendance, target, name, a id',ev.currentTarget, ev.currentTarget.name, ev.currentTarget.id);
-    let status = null;
+  function handleAttendance (ev, creationTime) {
+     setAttendanceButton(true);
+      setRowId(creationTime);
+      let status = null;
       if(ev.currentTarget.name === "yes") status = 1;
       if(ev.currentTarget.name === "no") status = 0;
       if(ev.currentTarget.name === "dunno") status = 2;
+
     const occurrenceId = ev.currentTarget.id;
-// console.log('status, ocurrId, creatioTime',status);
     setEditedEventRow(occurrenceId);
     processEventAttendance(status, occurrenceId, creationTime);
   };
+
   const userAttendanceStatus = (row) => {
     const userAttendanceIndex = row?.attendance.findIndex( el => el?.userID === userId);
     let userAttendanceStatus;
@@ -159,7 +150,7 @@ const   userId =   localStorage.userId;
         {nearestEvents.length && (
             <>
         <GridItem xs={12} sm={12} md={8} className='cabin'>
-        <h3 className="cabin-headline">Další trenál tě čeká {timeStampToData(nearestEvents[0]?.creationTime)}</h3>
+        <h3 className="cabin-headline">Další {getEventTypeName(nearestEvents[0].eventType)} tě čeká {timeStampToData(nearestEvents[0]?.creationTime)}</h3>
 
           <div className="cabin-nearest-attendance">
             <h4>Mužu s tebou počítat?</h4>
@@ -205,12 +196,14 @@ const   userId =   localStorage.userId;
         {occurrencesList && (
 
             <CollapsibleTable
+              className="cabin-collapsible-table"
               occurrencesList={occurrencesList}
             handleAttendance={handleAttendance}
             handleAttendanceButton = {attendanceButton}
             userId={userId}
             editedEventRow={editedEventRow}
             rowId={rowId}
+
           />
         )}
       </GridContainer>

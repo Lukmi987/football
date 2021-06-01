@@ -191,7 +191,7 @@ const  CollapsibleTable = ({occurrencesList, handleAttendance, handleAttendanceB
 
     return (
         <TableContainer component={Paper}>
-            <Table aria-label="collapsible table">
+            <Table aria-label="collapsible table cabin-table-collapsible">
                 <TableHead>
                     <TableRow>
                         <TableCell align="left">Účast</TableCell>
