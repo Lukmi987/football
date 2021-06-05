@@ -17,6 +17,7 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import EventAttendanceList from '../event/components/EventAttendanceList';
 import { v4 as uuid_v4 } from 'uuid';
+import EventStats from '../event/containers/EventStats';
 
 const useStyles = makeStyles(styles);
 
@@ -38,7 +39,7 @@ console.log('jsem v kabine');
 
             <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
               <Tab eventKey="home" title="Statistiky"  >
-                 Statistiky
+                 <EventStats />
               </Tab>
               <Tab eventKey="profile" title="Manage Events">
                 <Event />

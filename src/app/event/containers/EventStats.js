@@ -10,6 +10,7 @@ import { getEvents } from "../../../selectors/eventsSelectors";
 import { getUserId } from "../../../selectors/loginSelectors";
 import { getUser } from "../../../selectors/loginSelectors";
 import { fetchEvents } from "../actions";
+import EventStats from '../components/EventStats';
 
 const mapStateToProps = (state) => ({
   eventsList: getEvents(state),
@@ -25,4 +26,4 @@ const mapDispatchToProps = {
   fetchOccurrences,
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(Event);
+export default connect(mapStateToProps, mapDispatchToProps)(EventStats);
