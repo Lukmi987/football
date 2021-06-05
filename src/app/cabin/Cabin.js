@@ -13,6 +13,10 @@ import ImageGrid from "../ImageGrid";
 import Modal from "../Modal";
 import {Link} from "react-router-dom";
 import Event from "../event/containers/Event";
+import Tabs from 'react-bootstrap/Tabs';
+import Tab from 'react-bootstrap/Tab';
+import EventAttendanceList from '../event/components/EventAttendanceList';
+import { v4 as uuid_v4 } from 'uuid';
 
 const useStyles = makeStyles(styles);
 
@@ -31,7 +35,19 @@ console.log('jsem v kabine');
               <h1 style={{ marginTop: "180px" }}>Vítej v kabině spoluhrači!</h1>
               {/*</GridItem>*/}
             </GridContainer>
-            <Event />
+
+            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
+              <Tab eventKey="home" title="Statistiky"  >
+                 Statistiky
+              </Tab>
+              <Tab eventKey="profile" title="Manage Events">
+                <Event />
+              </Tab>
+              <Tab eventKey="contact" title="Novinky" >
+                  Novinky
+              </Tab>
+            </Tabs>
+
           </div>
         </div>
       </div>

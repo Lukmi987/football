@@ -1,57 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 import "./Event.scss";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Icon from "@material-ui/core/Icon";
-import Check from "@material-ui/icons/Check";
-// @material-ui/icons
-import People from "@material-ui/icons/People";
-import Email from "@material-ui/icons/Email";
-// core components
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import Card from "components/Card/Card.js";
-import CardHeader from "components/Card/CardHeader.js";
-import CardBody from "components/Card/CardBody.js";
-import CardFooter from "components/Card/CardFooter.js";
-import Button from "components/CustomButtons/Button.js";
-import CustomInput from "components/CustomInput/CustomInput.js";
-import SnackbarContent from "components/Snackbar/SnackbarContent.js";
-import image from "assets/img/pitchfromabove.jpg";
-import bg from "./bg.jpg";
-import Header from "../../../components/Header/Header";
-import HeaderLinks from "../../../components/Header/HeaderLinks";
-import Components from "../../../views/Components/Components";
-import FormControlLabel from "@material-ui/core/FormControlLabel";
-import Checkbox from "@material-ui/core/Checkbox";
-import Select from "@material-ui/core/Select";
-import InputLabel from "@material-ui/core/InputLabel";
-import MenuItem from "@material-ui/core/MenuItem";
-import FormControl from "@material-ui/core/FormControl";
-import styles from "assets/jss/material-kit-react/views/componentsSections/basicsStyle.js";
 import "date-fns";
-import Grid from "@material-ui/core/Grid";
-import DateFnsUtils from "@date-io/date-fns";
+
 import CollapsibleTable, {timeStampToData} from "./eventsTable";
-import {
-  MuiPickersUtilsProvider,
-  KeyboardTimePicker,
-  KeyboardDatePicker,
-} from "@material-ui/pickers";
-import Table from "react-bootstrap/Table";
-import axios from "axios";
-import ProgressBar from "../../../ProgressBar";
-import ImageGrid from "../../ImageGrid";
-// import ParagraphSection from "react-material-ui-carouselSection";
-// import {Paper} from "@material-ui/core";
-// const functions = require("firebase-functions");
-// const gcs = require('@google-cloud/storage')();
-// const os = require("os");
-// const path = require("path");
-// const spawn = require("child-process-promise").spawn;
-import Carousel from "react-multi-carousel";
+
 import "react-multi-carousel/lib/styles.css";
 import {Avatar, Switch} from "@material-ui/core";
 import Spinner from "../../Spinner";
@@ -149,11 +105,9 @@ const   userId =   localStorage.userId;
       <GridContainer justify="center">
         {nearestEvents.length && (
             <>
-        <GridItem xs={12} sm={12} md={8} className='cabin'>
+        <GridItem  className='cabin'>
         <h3 className="cabin-headline">Další {getEventTypeName(nearestEvents[0].eventType)} tě čeká {timeStampToData(nearestEvents[0]?.creationTime)}</h3>
-
           <div className="cabin-nearest-attendance">
-            <h4>Mužu s tebou počítat?</h4>
             {attendanceButton && nearestEvents[0].creationTime === rowId && (
                 <Spinner/>
             )}
@@ -174,7 +128,7 @@ const   userId =   localStorage.userId;
           </div>
           <span className="cabin-nearest-span">Potkáš se tam s:</span>
         </GridItem>
-        <GridItem xs={12} sm={12} md={8} className="cabin-nearest-avatars">
+        <GridItem xs={12} sm={12} md={12} className="cabin-nearest-avatars">
                <div className="nearest-event">
                   {nearestEvents[0]?.attendance && nearestEvents[0]?.attendance.map((item) => (
                       item && <Avatar key={uuid_v4()} alt="Remy Sharp" src={item?.profileUrl} className="nearest-event-player" />

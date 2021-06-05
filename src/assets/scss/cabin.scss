@@ -1,6 +1,7 @@
 .attendance-table-attendance-cell {
-  display: flex !important;
-  justify-content: flex-end;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
 }
 
 .cabin-table{
@@ -13,4 +14,22 @@
 
 .attendance-disabled-button {
   opacity: 0.4;
+}
+
+
+.cabin-table-collapsible {
+  &-table-head > th {
+    text-align: center;
+    @media(min-width: 1024px) {
+      font-size: 1.3rem;
+    }
+  }
+  &-table-cell{
+    @media(min-width: 1024px) {
+      font-size: 1rem !important;
+    }
+    &-event-type {
+      font-family: "monospace" !important;
+    }
+  }
 }

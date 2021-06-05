@@ -30,19 +30,18 @@ const useRowStyles = makeStyles({
     root: {
         '& > *': {
             borderBottom: 'unset',
+          align: 'center',
         },
         width: '55%',
-        padding: '0 30px',
+        padding: '0 1000px',
+      align: 'center',
+      body: {
+          background: 'blue',
+      }
     },
 });
 
 
-
-// const isUserInAttendance = (attendance, userId) => {
-//     console.log('coooo tam je attendance',attendance);
-//     console.log('coooo tam je userId',userId);
-//     attendance.find( el => el?.userID === userId)
-// }
 
 function createData(name, calories, fat, carbs, protein, price) {
     return {
@@ -95,7 +94,7 @@ const disabledButton = handleAttendanceButton && occurrence.creationTime !== row
     return (
       <React.Fragment>
         <TableRow className={classes.root}>
-          <TableCell>
+          <TableCell align='center'>
             <IconButton
               aria-label="expand row"
               size="small"
@@ -103,12 +102,12 @@ const disabledButton = handleAttendanceButton && occurrence.creationTime !== row
             >
               {open ? <KeyboardArrowUpIcon /> : <KeyboardArrowDownIcon />}
             </IconButton>
+          </TableCell  >
+          <TableCell className="cabin-table-collapsible-table-cell cabin-table-collapsible-table-cell-event-type" align="center">{getEventType(occurrence.eventType)}</TableCell>
+          <TableCell className="cabin-table-collapsible-table-cell" align="center">
+            {timeStampToData(occurrence.creationTime)}
           </TableCell>
-          <TableCell align="right">{getEventType(occurrence.eventType)}</TableCell>
-          <TableCell align="right">
-            <b>{timeStampToData(occurrence.creationTime)}</b>
-          </TableCell>
-          <TableCell className="attendance-table-attendance-cell">
+          <TableCell align="center">
             {handleAttendanceButton && occurrence.creationTime === rowId && (
               <Spinner />
             )}
@@ -193,7 +192,7 @@ const  CollapsibleTable = ({occurrencesList, handleAttendance, handleAttendanceB
         <TableContainer component={Paper}>
             <Table aria-label="collapsible table cabin-table-collapsible">
                 <TableHead>
-                    <TableRow>
+                    <TableRow className="cabin-table-collapsible-table-head">
                         <TableCell align="left">Účast</TableCell>
                         <TableCell align="right">Typ události</TableCell>
                         <TableCell align="right">Začátek</TableCell>

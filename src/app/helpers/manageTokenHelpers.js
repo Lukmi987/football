@@ -15,6 +15,7 @@ export const  manageTokenValidity = (setTokenStatus, getNewToken) => {
   console.log('click is registered');
   function checkLastActiveTimeAndGetToken() {
     const tokenCreatedTime = parseInt(localStorage.tokenCreatedTime);
+    console.log('click is registered happend');
     const timeSinceTokenCreation =
       getTimeDiffSinceTokenCreation(tokenCreatedTime);
     if (timeSinceTokenCreation > fiftyMin) {

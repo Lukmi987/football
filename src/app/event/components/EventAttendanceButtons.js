@@ -3,7 +3,7 @@ import React from 'react';
 
 const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = false, userAttendanceStatus, cr }) => {
   return (
-    <div>
+    <div className="attendance-table-attendance-cell">
       <Button
         id={occurrence.id}
         disabled={disabledButton}
