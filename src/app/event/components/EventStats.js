@@ -15,6 +15,10 @@ import { v4 as uuid_v4 } from 'uuid';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
 import { dateListener } from './EventForm';
+import FormControl from '@material-ui/core/FormControl';
+import InputLabel from '@material-ui/core/InputLabel';
+import Select from '@material-ui/core/Select';
+import MenuItem from '@material-ui/core/MenuItem';
 
 
 
@@ -25,43 +29,102 @@ const EventStats = ({
   fetchEvents,
   fetchOccurrences,
   eventsList,
-
+                      fetchUsersProfiles,
   occurrencesList,
+                      usersProfiles,
 }) => {
 const userId =   localStorage.userId;
   const [startDate, setStartDate] = useState(new Date().getTime());
   const [endDate, setEndDate] = useState(new Date().getTime());
-  // useEffect(() => {
-  //   fetchOccurrences();
-  // }, [localStorage.token]);
+  const [eventType, setEventType] = useState(1);
 
   useEffect(() => {
-    if (occurrencesList) {
+    fetchUsersProfiles();
+  }, []);
+
+  useEffect(() => {
+    if (occurrencesList && usersProfiles) {
       console.log('occurrencesList dnes',occurrencesList);
       filterEventsAccordingData(startDate, endDate);
+
     }
-  }, );
-  const filterEventsAccordingData = (startDate, endDate) => {
-   const res =  occurrencesList.filter((ev) => ev.creationTime >= startDate && ev.creationTime <= endDate)
-    console.log('res',res);
+  }, [occurrencesList, startDate, endDate, eventType, usersProfiles]);
+
+  const filterEventsAccordingType = (eventType, events) => {
+    return  events.filter((ev) => ev.eventType === eventType);
   }
+
+  const filterEventsAccordingData = (startDate, endDate) => {
+    const res = occurrencesList.filter((ev) => ev.creationTime >= startDate && ev.creationTime <= endDate)
+    console.log('jealus res', res);
+    const filteredEvents = filterEventsAccordingType(eventType, res);
+    console.log('jealus filteredEvents', filteredEvents);
+    //to do array vsech useru/ ke kazdemu userovi projet vsechny eventy a hledat jeho id a plus 1 kdyz najde
+   const usersAtendace = [];
+
+   const userProfilesCopy = JSON.parse(JSON.stringify(usersProfiles));
+    userProfilesCopy.map((user) => user.attendance = 0);
+
+   usersProfiles.forEach((user) => {
+      filteredEvents.forEach((ev) => {
+        ev.attendance.forEach((attendance) => {
+              if(attendance?.userID === user.userID && attendance?.status === 1) {
+               const userProfileIndex =  userProfilesCopy.findIndex((userCop) => userCop.userID === user.userID);
+               console.log('co mne vraci find',userProfileIndex);
+                userProfilesCopy[userProfileIndex].attendance += 1;
+                console.log('co mne vraci find po pridani',userProfilesCopy);
+
+              }
+        })
+      });
+    })
+    console.log('userProfilesCopy',userProfilesCopy);
+  }
+
+
 
   const handleDateChange = (id, ev) => {
     if (ev === 'Invalid Date Format') {
       console.log('v handle invalid ', ev, id);
     }
+    console.log('v handle Data Change', );
+    if (id === 'startDate') {
+      console.log('jdem setovat start date');
+    }
      if (id === 'startDate') setStartDate(ev.getTime());
      if (id === 'endDate') setEndDate(ev.getTime());
   }
-  console.log('occurrencesList dnes mimo',occurrencesList);
 
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
+  const handleEventType = (ev) => {
+    setEventType(ev.target.value);
+  }
+  console.log('event type',eventType);
   return (
     <div>
       <GridContainer justify="center">
 
           <div>
+            <FormControl>
+              <InputLabel id="event-type-select">Typ Udalosti</InputLabel>
+              <Select
+                labelId="event-type-select"
+                id="event-type"
+                // open={openEventType}
+                // onClose={handleClose}
+                // onOpen={handleOpen}
+                value={eventType}
+                required
+                onChange={handleEventType}
+                name="type"
+              >
+                <MenuItem selected value={1}>Trening</MenuItem>
+                <MenuItem value={2}>Zápas</MenuItem>
+                <MenuItem value={3}>Ukončená</MenuItem>
+                <MenuItem value={4}>Chlastačka</MenuItem>
+              </Select>
+            </FormControl>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               margin="normal"

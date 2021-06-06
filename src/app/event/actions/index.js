@@ -3,7 +3,8 @@ import {
   FETCH_OCCURRENCES,
   PROCESS_EVENT,
   PROCESS_EVENT_ATTENDANCE, SET_LOADING_EVENT,
-} from "../../constants/actionTypes";
+  FETCH_USERS_IDS, FETCH_USERS_PROFILES,
+} from '../../constants/actionTypes';
 import { createRoutine } from 'redux-saga-routines';
 
 export const processEventAttendance = (status, occurrenceId, creationTime) => ({
@@ -36,5 +37,9 @@ export const eventStatus = () => ({
       success: false,
     error: false
   }
+});
+
+export const fetchUsersProfiles = () => ({
+  type: FETCH_USERS_PROFILES,
 });
 

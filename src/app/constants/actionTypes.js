@@ -15,6 +15,8 @@ export const FETCH_EVENTS = "FETCH_EVENTS";
 export const PROCESS_EVENT = "PROCESS_EVENT";
 export const FETCH_USER_LIST = "FETCH_USER_LIST";
 export const SET_LOADING_EVENT = "SET_LOADING_EVENT";
+export const FETCH_USERS_PROFILES = "FETCH_USERS_PROFILES";
+export const SET_USERS_PROFILES = "SET_USERS_IDS";
 
 //authentication
 export const SET_AUTH_INFO = "SET_AUTH_INFO";

@@ -5,11 +5,11 @@ import {
   processEvent,
   processEventAttendance,
 } from "../actions";
-import { getOccurrences } from "../../../selectors/eventsSelectors";
+import { getOccurrences, getUsersProfiles } from '../../../selectors/eventsSelectors';
 import { getEvents } from "../../../selectors/eventsSelectors";
 import { getUserId } from "../../../selectors/loginSelectors";
 import { getUser } from "../../../selectors/loginSelectors";
-import { fetchEvents } from "../actions";
+import { fetchEvents, fetchUsersProfiles } from "../actions";
 import EventStats from '../components/EventStats';
 
 const mapStateToProps = (state) => ({
@@ -17,6 +17,7 @@ const mapStateToProps = (state) => ({
   userId: getUserId(state),
   user: getUser(state),
   occurrencesList: getOccurrences(state),
+  usersProfiles: getUsersProfiles(state)
 });
 
 const mapDispatchToProps = {
@@ -24,6 +25,7 @@ const mapDispatchToProps = {
   processEventAttendance,
   fetchEvents,
   fetchOccurrences,
+  fetchUsersProfiles,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventStats);

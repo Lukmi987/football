@@ -20,3 +20,8 @@ export const getEventStatus = createSelector(
     (state) => state,
     (state) => state.eventStatus
 );
+
+export const getUsersProfiles = createSelector(
+  (state) => state,
+  (state) => state.usersProfiles
+)
