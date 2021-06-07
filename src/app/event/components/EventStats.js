@@ -14,7 +14,6 @@ import Spinner from "../../Spinner";
 import { v4 as uuid_v4 } from 'uuid';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
-import { dateListener } from './EventForm';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
@@ -24,11 +23,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 
 const EventStats = ({
-  processEvent,
-  processEventAttendance,
-  fetchEvents,
-  fetchOccurrences,
-  eventsList,
+
                       fetchUsersProfiles,
   occurrencesList,
                       usersProfiles,
@@ -37,6 +32,7 @@ const userId =   localStorage.userId;
   const [startDate, setStartDate] = useState(new Date().getTime());
   const [endDate, setEndDate] = useState(new Date().getTime());
   const [eventType, setEventType] = useState(1);
+  const [usersAttendance, setUsersAttendance] = useState();
 
   useEffect(() => {
     fetchUsersProfiles();
@@ -44,9 +40,10 @@ const userId =   localStorage.userId;
 
   useEffect(() => {
     if (occurrencesList && usersProfiles) {
-      console.log('occurrencesList dnes',occurrencesList);
-      filterEventsAccordingData(startDate, endDate);
-
+      const eventsAccordingDate = filterEventsAccordingData(startDate, endDate);
+      const eventsAccordingTypeAndDate = filterEventsAccordingType(eventType, eventsAccordingDate);
+      const usersAttendanceQuantity = countUsersAttendance(eventsAccordingTypeAndDate);
+      setUsersAttendance(usersAttendanceQuantity);
     }
   }, [occurrencesList, startDate, endDate, eventType, usersProfiles]);
 
@@ -55,33 +52,25 @@ const userId =   localStorage.userId;
   }
 
   const filterEventsAccordingData = (startDate, endDate) => {
-    const res = occurrencesList.filter((ev) => ev.creationTime >= startDate && ev.creationTime <= endDate)
-    console.log('jealus res', res);
-    const filteredEvents = filterEventsAccordingType(eventType, res);
-    console.log('jealus filteredEvents', filteredEvents);
-    //to do array vsech useru/ ke kazdemu userovi projet vsechny eventy a hledat jeho id a plus 1 kdyz najde
-   const usersAtendace = [];
+    return occurrencesList.filter((ev) => ev.creationTime >= startDate && ev.creationTime <= endDate)
+  }
 
-   const userProfilesCopy = JSON.parse(JSON.stringify(usersProfiles));
+  const countUsersAttendance = (eventsAccordingTypeAndDate) => {
+    const userProfilesCopy = JSON.parse(JSON.stringify(usersProfiles));
     userProfilesCopy.map((user) => user.attendance = 0);
 
-   usersProfiles.forEach((user) => {
-      filteredEvents.forEach((ev) => {
+    usersProfiles.forEach((user) => {
+      eventsAccordingTypeAndDate.forEach((ev) => {
         ev.attendance.forEach((attendance) => {
-              if(attendance?.userID === user.userID && attendance?.status === 1) {
-               const userProfileIndex =  userProfilesCopy.findIndex((userCop) => userCop.userID === user.userID);
-               console.log('co mne vraci find',userProfileIndex);
-                userProfilesCopy[userProfileIndex].attendance += 1;
-                console.log('co mne vraci find po pridani',userProfilesCopy);
-
-              }
+          if(attendance?.userID === user.userID && attendance?.status === 1) {
+            const userProfileIndex =  userProfilesCopy.findIndex((userCop) => userCop.userID === user.userID);
+            userProfilesCopy[userProfileIndex].attendance += 1;
+          }
         })
       });
     })
-    console.log('userProfilesCopy',userProfilesCopy);
+    return userProfilesCopy;
   }
-
-
 
   const handleDateChange = (id, ev) => {
     if (ev === 'Invalid Date Format') {
@@ -97,10 +86,8 @@ const userId =   localStorage.userId;
 
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
 
-  const handleEventType = (ev) => {
-    setEventType(ev.target.value);
-  }
-  console.log('event type',eventType);
+  const handleEventType = (ev) => setEventType(ev.target.value);
+
   return (
     <div>
       <GridContainer justify="center">
@@ -111,9 +98,6 @@ const userId =   localStorage.userId;
               <Select
                 labelId="event-type-select"
                 id="event-type"
-                // open={openEventType}
-                // onClose={handleClose}
-                // onOpen={handleOpen}
                 value={eventType}
                 required
                 onChange={handleEventType}
@@ -161,12 +145,18 @@ const userId =   localStorage.userId;
         <GridItem xs={12} sm={12} md={8}>
           <div>
             <h3>Přehled všech událostí</h3>
+            <ul>
+              {usersAttendance && usersAttendance.map((user) =>
+              <li>
+                {user.nickname}{" "}{user.attendance}
+              </li>
+              )}
+            </ul>
           </div>
         </GridItem>
 
       </GridContainer>
       <GridContainer justify="center">
-
       </GridContainer>
     </div>
   );
