@@ -4,32 +4,70 @@
   flex-wrap: wrap;
 }
 
-.cabin-table{
-  margin-top: 30px!important;
+.cabin-table {
+  margin-top: 30px !important;
 }
 
 .attendance-active-button {
-  background-color: orangered!important;
+  background-color: orangered !important;
 }
 
 .attendance-disabled-button {
   opacity: 0.4;
 }
 
-
 .cabin-table-collapsible {
   &-table-head > th {
     text-align: center;
-    @media(min-width: 1024px) {
+    @media (min-width: 1024px) {
       font-size: 1.3rem;
     }
   }
-  &-table-cell{
-    @media(min-width: 1024px) {
+  &-table-cell {
+    @media (min-width: 1024px) {
       font-size: 1rem !important;
     }
     &-event-type {
       font-family: "monospace" !important;
     }
+  }
+}
+
+.cabin-stats {
+  &-title {
+    @media (max-width: 1024px) {
+      font-size: 25px;
+    }
+  }
+  &-list {
+    margin: 18px 0 18px 0;
+    @media (min-width: 1024px) {
+      margin: 25px 0 25px 0;
+    }
+    display: flex;
+  }
+  &-list > h4 {
+    @media (max-width: 1024px) {
+      font-size: 17px;
+      font-weight: bold;
+    }
+  }
+  &-list > div:last-of-type {
+    width: 100%;
+    margin-left: 13px;
+  }
+}
+
+.cabin-stats-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+
+  &-select-event {
+    margin: 30px 0 20px 0 !important;
+  }
+
+  &-date-from {
+    margin-right: 15px !important;
   }
 }

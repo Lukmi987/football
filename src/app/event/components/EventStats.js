@@ -1,16 +1,9 @@
 import React, { useEffect, useState } from "react";
-// @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
 import "./Event.scss";
 import GridContainer from "components/Grid/GridContainer.js";
 import GridItem from "components/Grid/GridItem.js";
-import "date-fns";
-
-import CollapsibleTable, {timeStampToData} from "./eventsTable";
-
 import "react-multi-carousel/lib/styles.css";
-import {Avatar, Switch} from "@material-ui/core";
-import Spinner from "../../Spinner";
+import { Avatar, LinearProgress, Paper, Switch } from '@material-ui/core';
 import { v4 as uuid_v4 } from 'uuid';
 import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns';
@@ -18,9 +11,6 @@ import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import MenuItem from '@material-ui/core/MenuItem';
-
-
-
 
 const EventStats = ({
 
@@ -33,6 +23,7 @@ const userId =   localStorage.userId;
   const [endDate, setEndDate] = useState(new Date().getTime());
   const [eventType, setEventType] = useState(1);
   const [usersAttendance, setUsersAttendance] = useState();
+  const [totalSelectedEvents, setTotalSelectedEvents] = useState();
 
   useEffect(() => {
     fetchUsersProfiles();
@@ -42,8 +33,11 @@ const userId =   localStorage.userId;
     if (occurrencesList && usersProfiles) {
       const eventsAccordingDate = filterEventsAccordingData(startDate, endDate);
       const eventsAccordingTypeAndDate = filterEventsAccordingType(eventType, eventsAccordingDate);
+      console.log('eventsAccordingTypeAndDate',eventsAccordingTypeAndDate);
+
       const usersAttendanceQuantity = countUsersAttendance(eventsAccordingTypeAndDate);
       setUsersAttendance(usersAttendanceQuantity);
+      setTotalSelectedEvents(eventsAccordingTypeAndDate.length);
     }
   }, [occurrencesList, startDate, endDate, eventType, usersProfiles]);
 
@@ -90,10 +84,10 @@ const userId =   localStorage.userId;
 
   return (
     <div>
-      <GridContainer justify="center">
-
-          <div>
-            <FormControl>
+      <GridContainer justify="left">
+        <GridItem xs={12} sm={12} md={8}>
+          <div className="cabin-stats-form">
+            <FormControl className="cabin-stats-form-select-event">
               <InputLabel id="event-type-select">Typ Udalosti</InputLabel>
               <Select
                 labelId="event-type-select"
@@ -109,9 +103,11 @@ const userId =   localStorage.userId;
                 <MenuItem value={4}>Chlastačka</MenuItem>
               </Select>
             </FormControl>
+            <div>
             <MuiPickersUtilsProvider utils={DateFnsUtils}>
             <KeyboardDatePicker
               margin="normal"
+              className="cabin-stats-form-date-from"
               id="date-picker-dialog"
               label="from"
               required
@@ -136,27 +132,29 @@ const userId =   localStorage.userId;
               }}
             />
             </MuiPickersUtilsProvider>
+            </div>
           </div>
+        </GridItem>
       </GridContainer>
       <br />
       <br />
 
-      <GridContainer justify="center">
+      <GridContainer justify="left">
         <GridItem xs={12} sm={12} md={8}>
-          <div>
-            <h3>Přehled všech událostí</h3>
+          <div className="cabin-stats">
+            <h2 className="cabin-stats-title">Celkový počet události za zvolené období {totalSelectedEvents}</h2>
             <ul>
               {usersAttendance && usersAttendance.map((user) =>
-              <li>
-                {user.nickname}{" "}{user.attendance}
+              <li className="cabin-stats-list">
+                <div><Avatar key={uuid_v4()} alt="Remy Sharp" src={user?.profileUrl} /></div>
+                <div><h4>{user.nickname}{" "}{user.attendance}</h4>
+                <LinearProgress variant="determinate" value={  user.attendance/ totalSelectedEvents * 100 } />
+              </div>
               </li>
               )}
             </ul>
           </div>
         </GridItem>
-
-      </GridContainer>
-      <GridContainer justify="center">
       </GridContainer>
     </div>
   );
