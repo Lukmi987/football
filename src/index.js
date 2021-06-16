@@ -25,6 +25,10 @@ import LogOut from "./app/logOut/containers/LogOut";
 import PhotoGallery from "./app/photoGallery/PhotoGallery";
 import Cabin from "./app/cabin/Cabin";
 import ManageToken from './app/manageToken/containers/ManageToken';
+import IdleTimerContainer from './app/manageToken/components/ManageUserActivity';
+import ManageUserActivity from './app/manageToken/containers/ManageUserActivity';
+import App from './App';
+
 
 
 // const getTimeDiffSinceTokenCreation = ( tokenCreatedTime ) => {
@@ -49,53 +53,10 @@ const token = localStorage.token;
 // setTimeout(()=> localStorage.clear(),tokenRemainingValidTime)
 // }
 
-const hist = createBrowserHistory();
-const isSuccessLogin = hist.location.state;
-console.log('v index');
-let routes;
-if(token){
-   routes = (
-       <Switch>
-    <Route path="/logout-page" component={LogOut} />
-    <Route path="/userAccount-page" component={UserAccount} />
-    <Route path="/about-us" component={AboutUs} />
-    <Route path="/photo-gallery" component={PhotoGallery} />
-    <Route path="/cabin" component={Cabin} />
-    <Route path="/event-form-page" component={EventForm} />
-    <Route path="*" component={Components} />
-       </Switch>
-    );
-} else {
-    routes = (
-        <Switch>
-    <Route path="/login-page" component={Login} />
-            <Route path="/logout-page" component={LogOut} />
-    <Route path="/about-us" component={AboutUs} />
-    <Route path="/event-form-page" component={EventForm} />
-    <Route path="/photo-gallery" component={PhotoGallery} />
-            <Route path="/cabin" component={Cabin} />
-    <Route path="/" component={Components} />
-          <Route path="/userAccount-page" component={UserAccount} />
-        </Switch>
-    )
-}
+
 
 ReactDOM.render(
-  <Provider store={store}>
-    <Router history={hist}>
-      <ManageToken />
-      <Switch>
-        <Route path="/login-page" component={Login} />
-        <Route path="/logout-page" component={LogOut} />
-        <Route path="/about-us" component={AboutUs} />
-        <Route path="/event-form-page" component={EventForm} />
-        <Route path="/photo-gallery" component={PhotoGallery} />
-        <Route path="/cabin" component={Cabin} />
-        <Route path="/manage-account" component={UserAccount} />
-        <Route path="/" component={Components} />
-      </Switch>
-    </Router>
-  </Provider>,
+  <App />,
   document.getElementById("root")
 );
 registerServiceWorker();

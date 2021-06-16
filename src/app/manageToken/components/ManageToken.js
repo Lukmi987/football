@@ -3,6 +3,7 @@ import {
   manageTokenValidity,
 } from "../../helpers/manageTokenHelpers";
 import { useEffect } from "react";
+import IdleTimer from 'react-idle-timer';
 
 const ManageToken = ({ setTokenStatus, getNewToken }) => {
   const oneDay = 86400000;

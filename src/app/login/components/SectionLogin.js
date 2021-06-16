@@ -21,6 +21,7 @@ import Header from "../../../components/Header/Header";
 import HeaderLinks from "../../../components/Header/HeaderLinks";
 import ManageToken from '../../manageToken/containers/ManageToken';
 import { Redirect } from 'react-router-dom';
+import ManageUserActivity from '../../manageToken/containers/ManageUserActivity';
 
 
 const useStyles = makeStyles(styles);
@@ -71,13 +72,13 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
   }
 
   const switchAuthTypeHandler = () => isSignup ? setIsSignup(false) : setIsSignup(true);
-
+console.log('v section login', idToken);
   const classes = useStyles();
   return (
 <div>
   {idToken &&
     <>
-  <ManageToken />
+  {/*<ManageUserActivity />*/}
   <Redirect to='/' />
     </>
   }

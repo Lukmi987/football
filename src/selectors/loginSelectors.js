@@ -19,3 +19,8 @@ export const getFirebaseErrMsg = createSelector(
   (state) => state,
   (state) => state.login.errorMsg
 );
+
+export const getTokenStatus = createSelector(
+  (state) => state,
+  (state) => state.manageToken.deleted
+)

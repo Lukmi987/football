@@ -1,9 +1,12 @@
 import { put, select } from 'redux-saga/effects';
 import axios from 'axios';
-import {DELETE_AUTH_INFO, FETCH_OCCURRENCES, LOG_USER_OUT, SET_AUTH_INFO} from "../../constants/actionTypes";
-// import {useDispatch} from "react-redux";
-// const dispatch = useDispatch();
-
+import {
+  DELETE_AUTH_INFO,
+  FETCH_OCCURRENCES,
+  LOG_USER_OUT,
+  SET_AUTH_INFO,
+  SET_TOKEN_STATUS,
+} from '../../constants/actionTypes';
 
 const delay = (ms) => new Promise(response => setTimeout(response, ms))
 export function* loginUser(action) {
@@ -18,8 +21,7 @@ export function* loginUser(action) {
         const response = yield axios.post(url,preparedData);
         console.log('v login userAccount', response);
         const loginAuthInfo = {idToken: response.data.idToken, userId: response.data.localId };
-        //expiratiom Time as a date object
-        //  const expTime = new Date(new Date().getTime() + (+response.data.expiresIn * 1000))
+
         console.log('login saga !!!!!!!!!1',response.data.expiresIn * 1000);
          const  expTime = response.data.expiresIn * 1000;
         localStorage.setItem('token', response.data.idToken);
@@ -28,12 +30,11 @@ export function* loginUser(action) {
          localStorage.setItem('userId',response.data.localId);
          const tokenCreatedTime = new Date().getTime().toString();
          localStorage.setItem('tokenCreatedTime',tokenCreatedTime);
+          yield put({type: SET_TOKEN_STATUS, data: {deleted: false}});
 
-
-        console.log('se');
+        // oddelat stav budu brat z local storage, vsuse kde pouzivam z redaxu predelat
           yield put({type: SET_AUTH_INFO, data: loginAuthInfo});
-        // yield put({type: FETCH_OCCURRENCES}); it call action, depands on the type, if type defined in reducer it cal reducer
-        yield delay(response.data.expiresIn * 1000);
+        yield delay(10000);
         yield put({type: SET_AUTH_INFO, data:{idToken: null, userId: null}});
     } catch (e) {
         const errorMsg = {

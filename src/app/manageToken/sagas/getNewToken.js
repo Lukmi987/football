@@ -3,7 +3,6 @@ import { put } from "redux-saga/effects";
 
 export function* getNewToken() {
   try {
-    console.log('token new saga1');
     const url = `https://securetoken.googleapis.com/v1/token?key=AIzaSyD7J2_txRFfn1GMfwCF0U7is1HQilKUnog`;
     const refreshToken = localStorage.refreshToken;
     const response =  yield axios({
