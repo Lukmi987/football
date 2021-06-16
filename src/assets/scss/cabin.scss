@@ -71,3 +71,17 @@
     margin-right: 15px !important;
   }
 }
+
+.cabin-news {
+  &-editable-info-div {
+    display: flex;
+    width: 30%;
+    margin: 10px 0 10px 0;
+    &-edit-mode {
+      border: 1px dashed darkred;
+    }
+  }
+}
+
+
+

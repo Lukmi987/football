@@ -43,7 +43,6 @@ const Event = ({
   fetchEvents,
   fetchOccurrences,
   eventsList,
-
   occurrencesList,
 }) => {
 const   userId =   localStorage.userId;

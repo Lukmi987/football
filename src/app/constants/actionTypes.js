@@ -18,6 +18,9 @@ export const SET_LOADING_EVENT = "SET_LOADING_EVENT";
 export const FETCH_USERS_PROFILES = "FETCH_USERS_PROFILES";
 export const SET_USERS_PROFILES = "SET_USERS_IDS";
 
+// Event News
+export const FETCH_NEWS_SAGA = "FETCH_NEWS_SAGA";
+
 //authentication
 export const SET_AUTH_INFO = "SET_AUTH_INFO";
 export const LOG_USER_OUT = "LOG_USER_OUT";

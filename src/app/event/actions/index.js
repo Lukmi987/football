@@ -3,7 +3,7 @@ import {
   FETCH_OCCURRENCES,
   PROCESS_EVENT,
   PROCESS_EVENT_ATTENDANCE, SET_LOADING_EVENT,
-  FETCH_USERS_IDS, FETCH_USERS_PROFILES,
+  FETCH_USERS_IDS, FETCH_USERS_PROFILES, FETCH_NEWS_SAGA
 } from '../../constants/actionTypes';
 import { createRoutine } from 'redux-saga-routines';
 
@@ -42,4 +42,8 @@ export const eventStatus = () => ({
 export const fetchUsersProfiles = () => ({
   type: FETCH_USERS_PROFILES,
 });
+
+export const fetchNews = () => ({
+  type: FETCH_NEWS_SAGA,
+})
 

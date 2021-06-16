@@ -18,6 +18,7 @@ import Tab from 'react-bootstrap/Tab';
 import EventAttendanceList from '../event/components/EventAttendanceList';
 import { v4 as uuid_v4 } from 'uuid';
 import EventStats from '../event/containers/EventStats';
+import EventNews from '../event/containers/EventNews';
 
 const useStyles = makeStyles(styles);
 
@@ -45,7 +46,7 @@ console.log('jsem v kabine');
                 <Event />
               </Tab>
               <Tab eventKey="contact" title="Novinky" >
-                  Novinky
+                  <EventNews />
               </Tab>
             </Tabs>
 
