@@ -11,31 +11,9 @@ import CollapsibleTable, {timeStampToData} from "./eventsTable";
 import "react-multi-carousel/lib/styles.css";
 import {Avatar, Switch} from "@material-ui/core";
 import Spinner from "../../Spinner";
-import TableCell from "@material-ui/core/TableCell";
 import { v4 as uuid_v4 } from 'uuid';
 import EventAttendanceButtons from './EventAttendanceButtons';
 
-const useStyles = makeStyles();
-
-const responsive = {
-  superLargeDesktop: {
-    // the naming can be any, depends on you.
-    breakpoint: { max: 4000, min: 3000 },
-    items: 5,
-  },
-  desktop: {
-    breakpoint: { max: 3000, min: 1024 },
-    items: 3,
-  },
-  tablet: {
-    breakpoint: { max: 1024, min: 464 },
-    items: 2,
-  },
-  mobile: {
-    breakpoint: { max: 464, min: 0 },
-    items: 1,
-  },
-};
 
 const Event = ({
   processEvent,

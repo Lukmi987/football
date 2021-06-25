@@ -16,16 +16,9 @@ import { createBrowserHistory } from 'history';
 const App = () => {
   const hist = createBrowserHistory();
 
-  // useEffect(() => {
-  //   if(localStorage.token) {
-  //     setTokenStatus({deleted: false})
-  //   }
-  // },[localStorage.token])
-
   return (<Provider store={store}>
     <ManageUserActivity />
     <Router history={hist}>
-      {/*<ManageToken />*/}
       <Switch>
         <Route path="/login-page" component={Login} />
         <Route path="/logout-page" component={LogOut} />

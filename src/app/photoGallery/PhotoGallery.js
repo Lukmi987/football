@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, {  useState } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import GridContainer from "components/Grid/GridContainer.js";
 import styles from "assets/jss/material-kit-react/views/components.js";
@@ -8,7 +8,6 @@ import HeaderLinks from "../../components/Header/HeaderLinks";
 import GridItem from "../../components/Grid/GridItem";
 import classNames from "classnames";
 import Footer from "../../components/Footer/Footer";
-import {Carousel} from "react-bootstrap";
 import ImageGrid from "../ImageGrid";
 import Modal from "../Modal";
 

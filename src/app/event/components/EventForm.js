@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, {useEffect, useState} from "react";
+import React, { useState} from "react";
 // @material-ui/core components
 import { makeStyles } from "@material-ui/core/styles";
 // @material-ui/icons
@@ -8,13 +8,6 @@ import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 // core components
 import styles from "assets/jss/material-kit-react/views/componentsSections/downloadStyle.js";
-import ProgressBar from "../../../ProgressBar";
-import CardBody from "../../../components/Card/CardBody";
-import CustomInput from "../../../components/CustomInput/CustomInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Email from "@material-ui/icons/Email";
-import {createEvent, storeProfileImgSaga, storeUser} from "../actions";
-import CardFooter from "../../../components/Card/CardFooter";
 import SnackbarContent from "../../../components/Snackbar/SnackbarContent";
 import Snackbar from '@material-ui/core/Snackbar';
 import Check from "@material-ui/icons/Check";
