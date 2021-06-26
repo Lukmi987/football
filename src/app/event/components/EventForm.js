@@ -276,7 +276,7 @@ export default function EventForm({processEvent, createEvent, eventStatusMes, ev
                 </GridItem>
                 <GridItem>
                     <Button
-                        disabled={eventStatusMes.loading}
+                        disabled={eventStatusMes.isLoading}
                         simple
                         color="primary"
                         size="lg"

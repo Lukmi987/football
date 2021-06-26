@@ -73,14 +73,29 @@
 }
 
 .cabin-news {
-  &-editable-info-div {
+  &-editable {
     display: flex;
-    width: 30%;
-    margin: 10px 0 10px 0;
-    &-edit-mode {
-      border: 1px dashed darkred;
+    flex-wrap: wrap;
+
+    .cabin-news-editable-formik {
+      display: none;
+      &-display {
+        display: initial;
+      }
+    }
+
+    &-news {
+      display: flex;
+      width: 30%;
+      margin: 10px 0 10px 0;
+    }
+
+    &-evaluation {
+      width: 30%;
+      margin: 10px 0 10px 0;
     }
   }
+
 }
 
 

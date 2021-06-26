@@ -10,6 +10,7 @@ import user from "./app/userAccount/reducers/storeUser";
 import occurrencesWithUsers from "./app/event/reducers/occurrencesWithUsers";
 import manageToken from "./app/manageToken/reducers/setTokenStatus";
 import usersProfiles from "./app/event/reducers/usersProfiles"
+import eventNews from './app/event/reducers/eventNews';
 
 //define how the store is going to look like
 
@@ -27,7 +28,8 @@ const rootReducer = combineReducers({
   occurrencesWithUsers,
   eventStatus,
   manageToken,
-  usersProfiles
+  usersProfiles,
+  eventNews
 });
 
 export default rootReducer;

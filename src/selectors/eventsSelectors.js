@@ -26,6 +26,11 @@ export const getUsersProfiles = createSelector(
   (state) => state.usersProfiles
 )
 
+export const getEventNews = createSelector(
+  (state) => state,
+  (state) => state.eventNews
+)
+
 // export const fetchNews = createSelector(
 //   (state) => state,
 //   (state) => state.

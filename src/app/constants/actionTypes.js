@@ -20,6 +20,8 @@ export const SET_USERS_PROFILES = "SET_USERS_IDS";
 
 // Event News
 export const FETCH_NEWS_SAGA = "FETCH_NEWS_SAGA";
+export const SAVE_NEWS_SAGA = "SAVE_NEWS_SAGA";
+export const STORE_EVENT_NEWS = 'STORE_EVENT_NEWS';
 
 //authentication
 export const SET_AUTH_INFO = "SET_AUTH_INFO";
