@@ -6,13 +6,22 @@ import classNames from 'classnames';
 import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Snackbar } from '@material-ui/core';
 import Spinner from '../../Spinner';
-import ContentEditable from 'react-contenteditable';
+import { ContentState, convertToRaw } from 'draft-js';
+import { Editor } from "react-draft-wysiwyg";
+import { convertToHTML } from 'draft-convert';
+import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
+import DOMPurify from 'dompurify';
 
 
 export default function EventNews ({fetchNews, saveNews, loadingStatus, eventStatus, eventNews}) {
   const [disableEditable, setDisableEditable] = useState(true);
   const [cabinNews, setCabinNews] = useState();
   const [trainingEval, setTrainingEval] = useState();
+  const [editorState, setEditorState] = useState(
+    () => EditorState.createEmpty(),
+  );
+  const  [convertedContent, setConvertedContent] = useState(null);
+
 
   useEffect(()=> {
     fetchNews();
@@ -28,9 +37,7 @@ export default function EventNews ({fetchNews, saveNews, loadingStatus, eventSta
   }, [eventNews]);
 
 
-  console.log('dd',eventNews);
-  console.log('sobota v cabin a event cabinNews',cabinNews);
-  console.log('sobota v cabin a event trainingEval',trainingEval);
+  console.log('editorState',editorState);
 
 const handleNews = (ev) => {
   if(ev.target.id === 'cabinNews') {setCabinNews(ev.target.value);}
@@ -40,6 +47,30 @@ const handleNews = (ev) => {
 const handleSubmit = () => {
   saveNews({cabinNews, trainingEval});
 }
+
+
+// returns an object with the sanitized HTML
+const createMarkup = (html) => ({__html: DOMPurify.sanitize(html)})
+
+const handleEditorChange = (state) => {
+  setEditorState(state);
+  // console.log('try', convertToRaw(editorState));
+  converContentToHTML();
+  }
+
+  const converContentToHTML = () => {
+    const currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+    setConvertedContent(currentContentAsHTML);
+
+  }
+
+const handleEditor = () => {
+  console.log('moje ev ',editorState)
+
+}
+
+// to do
+  // -
 
   return (
     <GridContainer justify="left">
@@ -59,6 +90,30 @@ const handleSubmit = () => {
             Povol edit mode
           </Button>
         </div>
+        <Editor
+          // editorState={editorState}
+          defaultEditorState={editorState}
+          onEditorStateChange={handleEditorChange}
+          toolbarClassName="toolbarClassName"
+          wrapperClassName="wrapperClassName"
+          editorClassName="editorClassName"
+        />;
+
+
+        <div dangerouslySetInnerHTML={createMarkup(convertedContent)} />
+
+
+        {/*<Editor*/}
+        {/*  editorState={true}*/}
+        {/*  toolbarClassName="toolbarClassName"*/}
+        {/*  wrapperClassName="wrapperClassName"*/}
+        {/*  editorClassName="editorClassName"*/}
+        {/*  onEditorStateChange={handleEditor}*/}
+        {/*/>;*/}
+
+        {/*<Editor editorState={editorState} />*/}
+
+
 
         <div className="cabin-news-editable-news">
           <p>
