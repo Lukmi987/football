@@ -7,6 +7,7 @@ import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Snackbar } from '@material-ui/core';
 import Spinner from '../../Spinner';
 import { ContentState, convertToRaw } from 'draft-js';
+import { EditorState } from 'draft-js';
 import { Editor } from "react-draft-wysiwyg";
 import { convertToHTML } from 'draft-convert';
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
@@ -60,6 +61,8 @@ const handleEditorChange = (state) => {
 
   const converContentToHTML = () => {
     const currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+   const rawContentState =  convertToRaw(editorState.getCurrentContent());
+   console.log('rawPico',rawContentState);
     setConvertedContent(currentContentAsHTML);
 
   }
