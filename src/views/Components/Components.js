@@ -14,6 +14,10 @@ import GridItem from "components/Grid/GridItem.js";
 import Button from "components/CustomButtons/Button.js";
 import Parallax from "components/Parallax/Parallax.js";
 // sections for this page
+
+
+
+
 import HeaderLinks from "components/Header/HeaderLinks.js";
 import SectionBasics from "./Sections/SectionBasics.js";
 import SectionNavbars from "./Sections/SectionNavbars.js";
@@ -37,6 +41,7 @@ import Modal from "../../app/Modal";
 import {Carousel} from "react-bootstrap";
 import CarouselSection from "../../app/carouselSection/CarouselSection";
 import ParagraphSection from "../../app/paragraphSection/ParagraphSection";
+import footballPitch from  '../../assets/img/footballPitch.jpg';
 
 const useStyles = makeStyles(styles);
 
@@ -63,7 +68,7 @@ const classes = useStyles();
         }}
         {...rest}
       />
-      <Parallax image={require("assets/img/footballPitch.jpg")}>
+      <Parallax image={footballPitch}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
@@ -94,7 +99,7 @@ const classes = useStyles();
             }
 
         </GridItem>
-
+<div className='flex mx-4 my-8'>dfjsa jdasl;jf kl;</div>
           <ParagraphSection content={news} headline={newsHeadLine} />
         <CarouselSection />
         <ParagraphSection content={aboutClub} headline={aboutClubHeadLine}/>
