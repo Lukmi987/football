@@ -7,11 +7,13 @@ import { SET_LOADING_EVENT, STORE_EVENT_NEWS } from '../../constants/actionTypes
 // yield (delay(1000);
 
 export function* saveNews (payload)  {
-  console.log('payload',payload);
+
+  console.log('payload  v save!!!',payload.data);
   try {
     yield put({type: SET_LOADING_EVENT, data: {isLoading: true, success: false, error: false }});
     const response =  yield  axios.put('eventNews.json/', payload.data);
     console.log('response', response);
+
     yield put({type: STORE_EVENT_NEWS, data: response.data});
     yield put({type: SET_LOADING_EVENT, data: {isLoading: false, success: true, error: false }});
   } catch (e) {

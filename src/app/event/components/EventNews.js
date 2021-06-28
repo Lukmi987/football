@@ -28,14 +28,35 @@ export default function EventNews ({fetchNews, saveNews, loadingStatus, eventSta
     fetchNews();
   },[])
 
-  useEffect(()=> {
-    console.log('jsem ve setru na id if !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-    if(eventNews?.cabinNews && eventNews?.trainingEval){
-      console.log('jsem ve stteru volellekjdfsk jdksj ');
-      setCabinNews(eventNews.cabinNews);
-      setTrainingEval(eventNews.trainingEval)
+  useEffect(() => {
+   if(eventNews?.blocks?.length) {
+     // console.log('eventNews?.blocks',eventNews?.blocks)
+      // const justin = JSON.parse(eventNews.blocks)
+      //   console.log('justin',justin)
     }
-  }, [eventNews]);
+  }, [eventNews])
+
+
+
+
+
+
+
+
+
+
+
+
+
+  console.log('to the left',eventNews)
+  // useEffect(()=> {
+  //   console.log('jsem ve setru na id if !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+  //   if(eventNews?.cabinNews && eventNews?.trainingEval){
+  //     console.log('jsem ve stteru volellekjdfsk jdksj ');
+  //     setCabinNews(eventNews.cabinNews);
+  //     setTrainingEval(eventNews.trainingEval)
+  //   }
+  // }, [eventNews]);
 
 
   console.log('editorState',editorState);
@@ -46,7 +67,7 @@ const handleNews = (ev) => {
 }
 
 const handleSubmit = () => {
-  saveNews({cabinNews, trainingEval});
+  saveNews(convertContentToJson());
 }
 
 
@@ -55,25 +76,27 @@ const createMarkup = (html) => ({__html: DOMPurify.sanitize(html)})
 
 const handleEditorChange = (state) => {
   setEditorState(state);
-  // console.log('try', convertToRaw(editorState));
-  converContentToHTML();
+  convertContentToHTML();
   }
 
-  const converContentToHTML = () => {
-    const currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-   const rawContentState =  convertToRaw(editorState.getCurrentContent());
-   console.log('rawPico',rawContentState);
-    setConvertedContent(currentContentAsHTML);
+  const convertContentToJson = () => {
+    const rawContentState =  convertToRaw(editorState.getCurrentContent());
+    console.log('rowContent1111',rawContentState);
+    console.log('JSON.stringify(rawContentState)',JSON.stringify(rawContentState));
+    return JSON.stringify(rawContentState);
+  }
 
+
+
+  const convertContentToHTML = () => {
+    const currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
+    setConvertedContent(currentContentAsHTML);
   }
 
 const handleEditor = () => {
   console.log('moje ev ',editorState)
 
 }
-
-// to do
-  // -
 
   return (
     <GridContainer justify="left">
@@ -93,103 +116,28 @@ const handleEditor = () => {
             Povol edit mode
           </Button>
         </div>
-        <Editor
-          // editorState={editorState}
-          defaultEditorState={editorState}
-          onEditorStateChange={handleEditorChange}
-          toolbarClassName="toolbarClassName"
-          wrapperClassName="wrapperClassName"
-          editorClassName="editorClassName"
-        />;
-
-
+        <div className='bg-danger hidden'>
+          testisk
+        </div>
+        <div className={classNames(!disableEditable && 'hidden')}>
+          {eventNews?.blocks?.length &&(
+          <Editor
+            // editorState={editorState}
+            defaultEditorState={eventNews}
+            onEditorStateChange={handleEditorChange}
+            toolbarClassName="toolbarClassName"
+            wrapperClassName="wrapperClassName"
+            editorClassName="editorClassName"
+          />)
+          }
+        </div>
         <div dangerouslySetInnerHTML={createMarkup(convertedContent)} />
-
-
-        {/*<Editor*/}
-        {/*  editorState={true}*/}
-        {/*  toolbarClassName="toolbarClassName"*/}
-        {/*  wrapperClassName="wrapperClassName"*/}
-        {/*  editorClassName="editorClassName"*/}
-        {/*  onEditorStateChange={handleEditor}*/}
-        {/*/>;*/}
-
-        {/*<Editor editorState={editorState} />*/}
-
-
-
-        <div className="cabin-news-editable-news">
-          <p>
-            {cabinNews}
-          </p>
-        </div>
-
-        <div className="cabin-news-editable-evaluation">
-          <p>
-            {trainingEval}
-          </p>
-        </div>
-
-        <div className={classNames('cabin-news-editable-formik',
-          !disableEditable && 'cabin-news-editable-formik-display'
-        )}>
-
-        <div className=''>
-          <label htmlFor='cabinNews'>Zdroj kod pro cabinNews</label>
-          <textarea value={cabinNews} id='cabinNews' onChange={handleNews} />
-        </div>
-          <div className=''>
-            <label htmlFor='trainingEval'>Zdroj kod trainingEval</label>
-            <textarea value={trainingEval} id='trainingEval' onChange={handleNews} />
-          </div>
               {loadingStatus.isLoading ?
                 <Spinner />
                 :
                 <Button onClick={handleSubmit} type='submit' color='github' size="lg">Uloz</Button>
               }
-
-
-
-                   {/*<Formik*/}
-          {/*  initialValues={{*/}
-          {/*    cabinNews: '',*/}
-          {/*    trainingEvaluation: '',*/}
-          {/*    name: ''*/}
-          {/*  }}*/}
-          {/*  onSubmit={(values) => saveNews(values)}*/}
-          {/*>*/}
-          {/*  <Form>*/}
-          {/*    <div className=''>*/}
-          {/*      <label hmtlFor='cabinNews'>News souce</label>*/}
-          {/*      <Field as='textarea' id='cabinNews' name='cabinNews' />*/}
-          {/*    </div>*/}
-          {/*    <div className=''>*/}
-          {/*      <label hmtlFor='trainingEvaluation'>trainingEvaluation</label>*/}
-          {/*      <Field  as='textarea'*/}
-          {/*              // onChange={handleChangeVole}*/}
-
-          {/*              id='trainingEvaluation' name='trainingEvaluation' />*/}
-          {/*      <input*/}
-          {/*        type="text"*/}
-          {/*        onChange={handleChangeVole}*/}
-          {/*        id='name'*/}
-          {/*        value={cabinNews}*/}
-          {/*        name="name"*/}
-          {/*      />*/}
-          {/*    </div>*/}
-          {/*    {loadingStatus.isLoading ?*/}
-          {/*      <Spinner />*/}
-          {/*      :*/}
-          {/*      <Button type='submit' color='github' size="lg">Uloz</Button>*/}
-          {/*    }*/}
-          {/*  </Form>*/}
-          {/*</Formik>*/}
-        {/*</div>*/}
       </div>
-      </div>
-
-
-
     </GridContainer>
   )
 }
