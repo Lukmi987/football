@@ -1,75 +1,45 @@
 import React, { useEffect, useRef, useState } from 'react';
-import parse from 'html-react-parser';
 import Button from '../../../components/CustomButtons/Button';
 import GridContainer from '../../../components/Grid/GridContainer';
 import classNames from 'classnames';
-import { Formik, Field, Form, ErrorMessage } from 'formik';
 import { Snackbar } from '@material-ui/core';
 import Spinner from '../../Spinner';
-import { ContentState, convertToRaw } from 'draft-js';
+import { convertToRaw, convertFromRaw } from 'draft-js';
+import { Editor } from 'react-draft-wysiwyg';
 import { EditorState } from 'draft-js';
-import { Editor } from "react-draft-wysiwyg";
+import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToHTML } from 'draft-convert';
-import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
 import DOMPurify from 'dompurify';
 
 
 export default function EventNews ({fetchNews, saveNews, loadingStatus, eventStatus, eventNews}) {
   const [disableEditable, setDisableEditable] = useState(true);
-  const [cabinNews, setCabinNews] = useState();
-  const [trainingEval, setTrainingEval] = useState();
-  const [editorState, setEditorState] = useState(
-    () => EditorState.createEmpty(),
-  );
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const  [convertedContent, setConvertedContent] = useState(null);
-
 
   useEffect(()=> {
     fetchNews();
   },[])
-
+console.log('eventNews,',eventNews);
   useEffect(() => {
-   if(eventNews?.blocks?.length) {
-     // console.log('eventNews?.blocks',eventNews?.blocks)
-      // const justin = JSON.parse(eventNews.blocks)
-      //   console.log('justin',justin)
+   if(eventNews?.eventNews) {
+     console.log('aha ale jsem');
+     const rawContent = JSON.parse(eventNews.eventNews);
+     const contentState = convertFromRaw(rawContent);
+     const editorStateFromDb = EditorState.createWithContent(contentState,null);
+     setEditorState(editorStateFromDb);
     }
   }, [eventNews])
 
-
-
-
-
-
-
-
-
-
-
-
-
-  console.log('to the left',eventNews)
-  // useEffect(()=> {
-  //   console.log('jsem ve setru na id if !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
-  //   if(eventNews?.cabinNews && eventNews?.trainingEval){
-  //     console.log('jsem ve stteru volellekjdfsk jdksj ');
-  //     setCabinNews(eventNews.cabinNews);
-  //     setTrainingEval(eventNews.trainingEval)
-  //   }
-  // }, [eventNews]);
-
-
-  console.log('editorState',editorState);
-
-const handleNews = (ev) => {
-  if(ev.target.id === 'cabinNews') {setCabinNews(ev.target.value);}
-  if(ev.target.id === 'trainingEval') {setTrainingEval(ev.target.value);}
-}
+  useEffect(() => {
+    if(editorState){
+      convertContentToHTML();
+    }
+  }, [editorState])
 
 const handleSubmit = () => {
   saveNews(convertContentToJson());
 }
-
 
 // returns an object with the sanitized HTML
 const createMarkup = (html) => ({__html: DOMPurify.sanitize(html)})
@@ -81,22 +51,14 @@ const handleEditorChange = (state) => {
 
   const convertContentToJson = () => {
     const rawContentState =  convertToRaw(editorState.getCurrentContent());
-    console.log('rowContent1111',rawContentState);
-    console.log('JSON.stringify(rawContentState)',JSON.stringify(rawContentState));
     return JSON.stringify(rawContentState);
   }
 
-
-
   const convertContentToHTML = () => {
+    console.log('v convert content',editorState);
     const currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
     setConvertedContent(currentContentAsHTML);
   }
-
-const handleEditor = () => {
-  console.log('moje ev ',editorState)
-
-}
 
   return (
     <GridContainer justify="left">
@@ -112,24 +74,21 @@ const handleEditor = () => {
       />
       <div className="cabin-news-editable">
         <div>
-          <Button color={disableEditable ? 'warning' : 'success' }  onClick={() => setDisableEditable(!disableEditable)} >
+          <Button color={!disableEditable ? 'warning' : 'success' }  onClick={() => setDisableEditable(!disableEditable)} >
             Povol edit mode
           </Button>
         </div>
         <div className='bg-danger hidden'>
           testisk
         </div>
-        <div className={classNames(!disableEditable && 'hidden')}>
-          {eventNews?.blocks?.length &&(
+        <div className={classNames(disableEditable && 'hidden')}>
           <Editor
-            // editorState={editorState}
-            defaultEditorState={eventNews}
+            editorState={ editorState }
             onEditorStateChange={handleEditorChange}
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
             editorClassName="editorClassName"
-          />)
-          }
+          />
         </div>
         <div dangerouslySetInnerHTML={createMarkup(convertedContent)} />
               {loadingStatus.isLoading ?

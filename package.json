@@ -56,7 +56,7 @@
     ],
     "plugins": [
       "@babel/plugin-transform-modules-commonjs",
-      "@babel/plugin-transform-react-jsx"
+      "@babel/plugin-syntax-jsx"
     ]
   },
   "devDependencies": {
