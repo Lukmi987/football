@@ -60,7 +60,7 @@ export default function EventNews({ fetchNews, saveNews, loadingStatus, eventSta
   };
 
   return (
-    <GridContainer justify="left">
+    <div className='pb-10 pt-3'>
       <Snackbar
         anchorOrigin={{
           vertical: 'center',
@@ -71,14 +71,24 @@ export default function EventNews({ fetchNews, saveNews, loadingStatus, eventSta
         onClose={() => setTimeout(eventStatus, 3000)}
         message={loadingStatus.error || '!!!Uspesne ulozeno'}
       />
-      <div className="cabin-news-editable">
-        <div>
+      <div className='pb-3'>
+        <>
           <Button
             color={!disableEditable ? 'warning' : 'success'}
             onClick={() => setDisableEditable(!disableEditable)}
           >
             Povol edit mode
           </Button>
+          <div className={classNames(disableEditable && 'hidden')} >
+            {loadingStatus.isLoading ? (
+              <Spinner />
+            ) : (
+              <Button onClick={handleSubmit} type="submit" color="github" size="lg">
+                Uloz
+              </Button>
+            )}
+          </div>
+          </>
         </div>
         <div className="bg-danger hidden">testisk</div>
         <div className={classNames(disableEditable && 'hidden')}>
@@ -90,15 +100,8 @@ export default function EventNews({ fetchNews, saveNews, loadingStatus, eventSta
             editorClassName="editorClassName"
           />
         </div>
-        <div dangerouslySetInnerHTML={createMarkup(convertedContent)} />
-        {loadingStatus.isLoading ? (
-          <Spinner />
-        ) : (
-          <Button onClick={handleSubmit} type="submit" color="github" size="lg">
-            Uloz
-          </Button>
-        )}
-      </div>
-    </GridContainer>
+        <div className='mt-3 p-4 border rounded shadow-lg' dangerouslySetInnerHTML={createMarkup(convertedContent)} />
+
+    </div>
   );
 }
