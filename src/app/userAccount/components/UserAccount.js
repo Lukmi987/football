@@ -117,6 +117,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer className={classes.textCenter} justify="center">
+           {/*<div className=''>*/}
             {user && (
               <GridItem xs={12} sm={12} md={4}>
                 <SnackbarContent
@@ -131,6 +132,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
                 />
               </GridItem>
             )}
+            <div className='p-4 shadow border flex flex-col rounded  items-center'>
             <GridItem xs={12} sm={12} md={8}>
               <h2>Vypln zakladni udaje o sobe</h2>
             </GridItem>
@@ -159,6 +161,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
             <GridItem xs={12} sm={12} md={8}>
               <CardBody>
                 <CustomInput
+                  className=''
                   labelText="Přezdívka..."
                   id="nickname"
                   handleInputChange={handleAccountInput}
@@ -212,7 +215,9 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
                   Submit
                 </Button>
               </CardBody>
+
             </GridItem>
+            </div>
             <br />
             <br />
             <GridItem xs={12} sm={12} md={8}>
@@ -237,6 +242,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
                 )}
               </div>
             </GridItem>
+           {/*</div>*/}
           </GridContainer>
           <br />
           <br />

@@ -19,7 +19,7 @@ import EventAttendanceList from '../event/components/EventAttendanceList';
 import { v4 as uuid_v4 } from 'uuid';
 import EventStats from '../event/containers/EventStats';
 import EventNews from '../event/containers/EventNews';
-
+import ball from '../../assets/img/ball.jpeg'
 const useStyles = makeStyles(styles);
 
 export default function Cabin() {
@@ -33,8 +33,8 @@ export default function Cabin() {
         <div className={classes.section}>
           <div className={classes.container}>
             <GridContainer className={classes.textCenter} justify="center">
+              <img src={ball} className='mt-12 rounded-circle' width='400' height='300'/>
               {/*<GridItem className='cabin' xs={12} sm={12} md={12}>*/}
-              <h1 style={{ marginTop: '180px' }}>Vítej v kabině spoluhrači!</h1>
               {/*</GridItem>*/}
             </GridContainer>
 

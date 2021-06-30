@@ -149,10 +149,13 @@ const Event = ({
       </GridContainer>
       <GridContainer justify="center">
         <GridItem xs={12} sm={12} md={8} className="cabin-table">
+          <div className='pb-5 round flex justify-center'>
           <img
             src="https://images.unsplash.com/photo-1594536717222-b26df7f2f23b?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1534&q=80"
             width="500"
+            className='rounded'
           />
+          </div>
         </GridItem>
       </GridContainer>
     </div>
