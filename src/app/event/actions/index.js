@@ -2,8 +2,12 @@ import {
   FETCH_EVENTS,
   FETCH_OCCURRENCES,
   PROCESS_EVENT,
-  PROCESS_EVENT_ATTENDANCE, SET_LOADING_EVENT,
-  FETCH_USERS_IDS, FETCH_USERS_PROFILES, FETCH_NEWS_SAGA, SAVE_NEWS_SAGA,
+  PROCESS_EVENT_ATTENDANCE,
+  SET_LOADING_EVENT,
+  FETCH_USERS_IDS,
+  FETCH_USERS_PROFILES,
+  FETCH_NEWS_SAGA,
+  SAVE_NEWS_SAGA,
 } from '../../constants/actionTypes';
 import { createRoutine } from 'redux-saga-routines';
 
@@ -11,10 +15,10 @@ export const processEventAttendance = (status, occurrenceId, creationTime) => ({
   type: PROCESS_EVENT_ATTENDANCE,
   status,
   occurrenceId,
-  creationTime
+  creationTime,
 });
 
-export const createEvent = createRoutine("CREATE_EVENT");
+export const createEvent = createRoutine('CREATE_EVENT');
 
 export const processEvent = (sportEvent, eventCount) => ({
   type: PROCESS_EVENT,
@@ -31,12 +35,11 @@ export const fetchOccurrences = () => ({
 
 export const eventStatus = () => ({
   type: SET_LOADING_EVENT,
-  data:
-  {
-  isLoading: false,
-      success: false,
-    error: false
-  }
+  data: {
+    isLoading: false,
+    success: false,
+    error: false,
+  },
 });
 
 export const fetchUsersProfiles = () => ({
@@ -45,10 +48,9 @@ export const fetchUsersProfiles = () => ({
 
 export const fetchNews = () => ({
   type: FETCH_NEWS_SAGA,
-})
+});
 
 export const saveNews = (payload) => ({
   type: SAVE_NEWS_SAGA,
-  data: payload
+  data: payload,
 });
-

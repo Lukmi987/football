@@ -1,14 +1,11 @@
-import { connect } from "react-redux";
-import {
-  setTokenStatus,
-  getNewToken
-} from "../actions";
-import ManageUserActivity from "../components/ManageUserActivity";
-import { getTokenStatus } from "../../../selectors/loginSelectors";
+import { connect } from 'react-redux';
+import { setTokenStatus, getNewToken } from '../actions';
+import ManageUserActivity from '../components/ManageUserActivity';
+import { getTokenStatus } from '../../../selectors/loginSelectors';
 
 const mapStateToProps = (state) => ({
-  tokenStatus: getTokenStatus(state)
-})
+  tokenStatus: getTokenStatus(state),
+});
 
 const mapDispatchToProps = {
   setTokenStatus,

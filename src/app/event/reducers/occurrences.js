@@ -1,4 +1,4 @@
-import { SET_OCCURRENCES } from "../../constants/actionTypes";
+import { SET_OCCURRENCES } from '../../constants/actionTypes';
 
 const initialState = [];
 

@@ -1,4 +1,4 @@
-import { STORE_PROFILE_IMG_URL } from "../../constants/actionTypes";
+import { STORE_PROFILE_IMG_URL } from '../../constants/actionTypes';
 
 const initialState = [];
 

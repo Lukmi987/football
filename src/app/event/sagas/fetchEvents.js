@@ -1,7 +1,7 @@
-import { put, select } from "redux-saga/effects";
-import axios from "../../axios-football";
-import { SET_EVENT } from "../../constants/actionTypes";
-import { loadEvents } from "../../helpers/eventHelpers";
+import { put, select } from 'redux-saga/effects';
+import axios from '../../axios-football';
+import { SET_EVENT } from '../../constants/actionTypes';
+import { loadEvents } from '../../helpers/eventHelpers';
 
 export function* fetchEvents() {
   try {

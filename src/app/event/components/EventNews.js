@@ -11,54 +11,53 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 
-
-export default function EventNews ({fetchNews, saveNews, loadingStatus, eventStatus, eventNews}) {
+export default function EventNews({ fetchNews, saveNews, loadingStatus, eventStatus, eventNews }) {
   const [disableEditable, setDisableEditable] = useState(true);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
-  const  [convertedContent, setConvertedContent] = useState(null);
+  const [convertedContent, setConvertedContent] = useState(null);
 
-  useEffect(()=> {
+  useEffect(() => {
     fetchNews();
-  },[])
-console.log('eventNews,',eventNews);
+  }, []);
+  console.log('eventNews,', eventNews);
   useEffect(() => {
-   if(eventNews?.eventNews) {
-     console.log('aha ale jsem');
-     const rawContent = JSON.parse(eventNews.eventNews);
-     const contentState = convertFromRaw(rawContent);
-     const editorStateFromDb = EditorState.createWithContent(contentState,null);
-     setEditorState(editorStateFromDb);
+    if (eventNews?.eventNews) {
+      console.log('aha ale jsem');
+      const rawContent = JSON.parse(eventNews.eventNews);
+      const contentState = convertFromRaw(rawContent);
+      const editorStateFromDb = EditorState.createWithContent(contentState, null);
+      setEditorState(editorStateFromDb);
     }
-  }, [eventNews])
+  }, [eventNews]);
 
   useEffect(() => {
-    if(editorState){
+    if (editorState) {
       convertContentToHTML();
     }
-  }, [editorState])
+  }, [editorState]);
 
-const handleSubmit = () => {
-  saveNews(convertContentToJson());
-}
+  const handleSubmit = () => {
+    saveNews(convertContentToJson());
+  };
 
-// returns an object with the sanitized HTML
-const createMarkup = (html) => ({__html: DOMPurify.sanitize(html)})
+  // returns an object with the sanitized HTML
+  const createMarkup = (html) => ({ __html: DOMPurify.sanitize(html) });
 
-const handleEditorChange = (state) => {
-  setEditorState(state);
-  convertContentToHTML();
-  }
+  const handleEditorChange = (state) => {
+    setEditorState(state);
+    convertContentToHTML();
+  };
 
   const convertContentToJson = () => {
-    const rawContentState =  convertToRaw(editorState.getCurrentContent());
+    const rawContentState = convertToRaw(editorState.getCurrentContent());
     return JSON.stringify(rawContentState);
-  }
+  };
 
   const convertContentToHTML = () => {
-    console.log('v convert content',editorState);
+    console.log('v convert content', editorState);
     const currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
     setConvertedContent(currentContentAsHTML);
-  }
+  };
 
   return (
     <GridContainer justify="left">
@@ -70,20 +69,21 @@ const handleEditorChange = (state) => {
         open={loadingStatus.success}
         autoHideDuration={3000}
         onClose={() => setTimeout(eventStatus, 3000)}
-        message={loadingStatus.error || "!!!Uspesne ulozeno"}
+        message={loadingStatus.error || '!!!Uspesne ulozeno'}
       />
       <div className="cabin-news-editable">
         <div>
-          <Button color={!disableEditable ? 'warning' : 'success' }  onClick={() => setDisableEditable(!disableEditable)} >
+          <Button
+            color={!disableEditable ? 'warning' : 'success'}
+            onClick={() => setDisableEditable(!disableEditable)}
+          >
             Povol edit mode
           </Button>
         </div>
-        <div className='bg-danger hidden'>
-          testisk
-        </div>
+        <div className="bg-danger hidden">testisk</div>
         <div className={classNames(disableEditable && 'hidden')}>
           <Editor
-            editorState={ editorState }
+            editorState={editorState}
             onEditorStateChange={handleEditorChange}
             toolbarClassName="toolbarClassName"
             wrapperClassName="wrapperClassName"
@@ -91,12 +91,14 @@ const handleEditorChange = (state) => {
           />
         </div>
         <div dangerouslySetInnerHTML={createMarkup(convertedContent)} />
-              {loadingStatus.isLoading ?
-                <Spinner />
-                :
-                <Button onClick={handleSubmit} type='submit' color='github' size="lg">Uloz</Button>
-              }
+        {loadingStatus.isLoading ? (
+          <Spinner />
+        ) : (
+          <Button onClick={handleSubmit} type="submit" color="github" size="lg">
+            Uloz
+          </Button>
+        )}
       </div>
     </GridContainer>
-  )
+  );
 }

@@ -15,25 +15,25 @@
  * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
 
  */
-@import "tailwindcss/base";
-@import "tailwindcss/components";
-@import "tailwindcss/utilities";
-@import "core/variables";
-@import "core/mixins";
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
+@import 'core/variables';
+@import 'core/mixins';
 
 // Core Components
-@import "core/misc";
+@import 'core/misc';
 
 // Core Plugins
 
 // @import "plugins/plugin-datetime-picker";
-@import "plugins/plugin-nouislider";
-@import "plugins/plugin-react-datetime";
-@import "plugins/plugin-react-slick";
+@import 'plugins/plugin-nouislider';
+@import 'plugins/plugin-react-datetime';
+@import 'plugins/plugin-react-slick';
 
 // Components
-@import "imageGrid";
-@import "aboutUs";
-@import "header-carousel";
-@import "spinner";
-@import "cabin";
+@import 'imageGrid';
+@import 'aboutUs';
+@import 'header-carousel';
+@import 'spinner';
+@import 'cabin';

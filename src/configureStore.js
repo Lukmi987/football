@@ -11,11 +11,7 @@ const middlewares = [sagaMiddleware];
 //dev tool from redux
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(
-  rootReducer,
-  {},
-  composeEnhancers(applyMiddleware(...middlewares)),
-);
+const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(...middlewares)));
 
 sagaMiddleware.run(rootSaga);
 

@@ -1,4 +1,4 @@
-import { SET_USERS_PROFILES } from "../../constants/actionTypes";
+import { SET_USERS_PROFILES } from '../../constants/actionTypes';
 
 const initialState = [];
 

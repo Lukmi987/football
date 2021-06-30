@@ -1,37 +1,36 @@
 /*eslint-disable*/
 import React, { useEffect, useState } from 'react';
-import DeleteIcon from "@material-ui/icons/Delete";
-import IconButton from "@material-ui/core/IconButton";
+import DeleteIcon from '@material-ui/icons/Delete';
+import IconButton from '@material-ui/core/IconButton';
 // react components for routing our app without refresh
-import { Link } from "react-router-dom";
+import { Link } from 'react-router-dom';
 
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
-import List from "@material-ui/core/List";
-import ListItem from "@material-ui/core/ListItem";
-import Tooltip from "@material-ui/core/Tooltip";
+import { makeStyles } from '@material-ui/core/styles';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Tooltip from '@material-ui/core/Tooltip';
 
 // @material-ui/icons
-import { Apps, CloudDownload } from "@material-ui/icons";
+import { Apps, CloudDownload } from '@material-ui/icons';
 
 // core components
-import CustomDropdown from "components/CustomDropdown/CustomDropdown.js";
-import Button from "components/CustomButtons/Button.js";
+import CustomDropdown from 'components/CustomDropdown/CustomDropdown.js';
+import Button from 'components/CustomButtons/Button.js';
 
-import styles from "assets/jss/material-kit-react/components/headerLinksStyle.js";
+import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js';
 import { useSelector } from 'react-redux';
 
 const useStyles = makeStyles(styles);
 
 export default function HeaderLinks() {
   const classes = useStyles();
-  const [token, setToken] = useState(null)
-  const tokenStatus = useSelector(state => state.manageToken.deleted);
+  const [token, setToken] = useState(null);
+  const tokenStatus = useSelector((state) => state.manageToken.deleted);
 
-  useEffect(()=> {
+  useEffect(() => {
     setToken(localStorage.token || null);
-
-  },[tokenStatus])
+  }, [tokenStatus]);
   return (
     <List className={classes.list}>
       <ListItem className={classes.listItem}>
@@ -40,7 +39,7 @@ export default function HeaderLinks() {
           buttonText="Administrace"
           buttonProps={{
             className: classes.navLink,
-            color: "transparent"
+            color: 'transparent',
           }}
           buttonIcon={Apps}
           dropdownList={[
@@ -53,7 +52,7 @@ export default function HeaderLinks() {
               className={classes.dropdownLink}
             >
               Documentation
-            </a>
+            </a>,
           ]}
         />
       </ListItem>
@@ -76,7 +75,7 @@ export default function HeaderLinks() {
         <Tooltip
           id="instagram-twitter"
           title="Follow us on twitter"
-          placement={window.innerWidth > 959 ? "top" : "left"}
+          placement={window.innerWidth > 959 ? 'top' : 'left'}
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
@@ -85,7 +84,7 @@ export default function HeaderLinks() {
             color="transparent"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-twitter"} />
+            <i className={classes.socialIcons + ' fab fa-twitter'} />
           </Button>
         </Tooltip>
       </ListItem>
@@ -93,7 +92,7 @@ export default function HeaderLinks() {
         <Tooltip
           id="instagram-facebook"
           title="Follow us on facebook"
-          placement={window.innerWidth > 959 ? "top" : "left"}
+          placement={window.innerWidth > 959 ? 'top' : 'left'}
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
@@ -102,7 +101,7 @@ export default function HeaderLinks() {
             target="_blank"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-facebook"} />
+            <i className={classes.socialIcons + ' fab fa-facebook'} />
           </Button>
         </Tooltip>
       </ListItem>
@@ -110,7 +109,7 @@ export default function HeaderLinks() {
         <Tooltip
           id="instagram-tooltip"
           title="Follow us on instagram"
-          placement={window.innerWidth > 959 ? "top" : "left"}
+          placement={window.innerWidth > 959 ? 'top' : 'left'}
           classes={{ tooltip: classes.tooltip }}
         >
           <Button
@@ -119,72 +118,55 @@ export default function HeaderLinks() {
             target="_blank"
             className={classes.navLink}
           >
-            <i className={classes.socialIcons + " fab fa-instagram"} />
+            <i className={classes.socialIcons + ' fab fa-instagram'} />
           </Button>
         </Tooltip>
       </ListItem>
-        <ListItem className={classes.listItem}>
-            <Link to={"/about-us"}>
-                <Button
-                    color="transparent"
-                    className={classes.navLink}
-                >
-                    O nás
-                </Button>
-            </Link>
-        </ListItem>
-        <ListItem className={classes.listItem}>
-            <Link to={"/photo-gallery"}>
-                <Button
-                    color="transparent"
-                    className={classes.navLink}
-                >
-                    Foto Galerie
-                </Button>
-            </Link>
-        </ListItem>
-        <ListItem className={classes.listItem}>
-            <Link to={"/cabin"}>
-                <Button
-                    color="transparent"
-                    className={classes.navLink}
-                >
-                    Kabina
-                </Button>
-            </Link>
-        </ListItem>
       <ListItem className={classes.listItem}>
-        {!token ?
-        <Link to={"/login-page"}  >
-        <Button 
-          color="transparent"
-          className={classes.navLink}
-        >Přihlášní/Registrace</Button>
+        <Link to={'/about-us'}>
+          <Button color="transparent" className={classes.navLink}>
+            O nás
+          </Button>
         </Link>
-        :
-        <Link to={"/logout-page"} className={classes.listItem}>
-          <Button
-            color="transparent"
-            className={classes.navLink}
-            >
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Link to={'/photo-gallery'}>
+          <Button color="transparent" className={classes.navLink}>
+            Foto Galerie
+          </Button>
+        </Link>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Link to={'/cabin'}>
+          <Button color="transparent" className={classes.navLink}>
+            Kabina
+          </Button>
+        </Link>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        {!token ? (
+          <Link to={'/login-page'}>
+            <Button color="transparent" className={classes.navLink}>
+              Přihlášní/Registrace
+            </Button>
+          </Link>
+        ) : (
+          <Link to={'/logout-page'} className={classes.listItem}>
+            <Button color="transparent" className={classes.navLink}>
               Odhlasit se
             </Button>
-        </Link>
-        }
+          </Link>
+        )}
       </ListItem>
-        {/*{isUserLoggedIn &&*/}
-        <ListItem className={classes.listItem}>
-            <Link to={"/manage-account"}>
-                <Button
-                color="transparent"
-                className={classes.navLink}
-                >
-                    Account Pico
-                </Button>
-            </Link>
-        </ListItem>
-        {/*}*/}
+      {/*{isUserLoggedIn &&*/}
+      <ListItem className={classes.listItem}>
+        <Link to={'/manage-account'}>
+          <Button color="transparent" className={classes.navLink}>
+            Account Pico
+          </Button>
+        </Link>
+      </ListItem>
+      {/*}*/}
     </List>
   );
 }
-

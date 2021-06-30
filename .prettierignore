@@ -1,0 +1,7 @@
+.next
+.husky
+.storybook
+public/storybook
+**/models/types.ts
+node_modules
+*.less

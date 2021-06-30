@@ -1,9 +1,9 @@
-import React from "react";
-import useFirestore from "../hooks/useFirestore";
-import { motion } from "framer-motion";
+import React from 'react';
+import useFirestore from '../hooks/useFirestore';
+import { motion } from 'framer-motion';
 
 const ImageGrid = ({ setSelectedImg }) => {
-  const { docs } = useFirestore("gallery-images");
+  const { docs } = useFirestore('gallery-images');
   return (
     <div className="img-grid">
       {docs &&

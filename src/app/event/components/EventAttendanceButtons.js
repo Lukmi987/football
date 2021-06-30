@@ -1,7 +1,13 @@
 import Button from '../../../components/CustomButtons/Button';
 import React from 'react';
 
-const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = false, userAttendanceStatus, cr }) => {
+const EventAttendanceButtons = ({
+  occurrence,
+  handleAttendance,
+  disabledButton = false,
+  userAttendanceStatus,
+  cr,
+}) => {
   return (
     <div className="attendance-table-attendance-cell">
       <Button
@@ -13,7 +19,13 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         size="facebook"
         round
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 1 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
+        className={
+          userAttendanceStatus === 1
+            ? 'attendance-active-button'
+            : '' || disabledButton
+            ? 'attendance-disabled-button'
+            : ''
+        }
       >
         Jdu
       </Button>
@@ -24,7 +36,13 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         size="facebook"
         round
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 2 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
+        className={
+          userAttendanceStatus === 2
+            ? 'attendance-active-button'
+            : '' || disabledButton
+            ? 'attendance-disabled-button'
+            : ''
+        }
       >
         Nevím
       </Button>
@@ -35,12 +53,18 @@ const EventAttendanceButtons = ({occurrence, handleAttendance, disabledButton = 
         size="facebook"
         round
         onClick={(e) => handleAttendance(e, cr)}
-        className={userAttendanceStatus === 0 ? "attendance-active-button" : '' || disabledButton ? "attendance-disabled-button" : ''}
+        className={
+          userAttendanceStatus === 0
+            ? 'attendance-active-button'
+            : '' || disabledButton
+            ? 'attendance-disabled-button'
+            : ''
+        }
       >
         Nejdu
       </Button>
     </div>
-  )
-}
+  );
+};
 
 export default EventAttendanceButtons;

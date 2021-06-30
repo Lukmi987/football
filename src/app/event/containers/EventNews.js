@@ -1,4 +1,4 @@
-import { connect } from "react-redux";
+import { connect } from 'react-redux';
 import EventNews from '../components/EventNews';
 import { eventStatus, fetchNews, saveNews } from '../actions';
 import { getUserId } from '../../../selectors/loginSelectors';
@@ -14,7 +14,7 @@ const mapStateToProps = (state) => ({
 const mapDispatchToProps = {
   fetchNews,
   saveNews,
-  eventStatus
+  eventStatus,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(EventNews);

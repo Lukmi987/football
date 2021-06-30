@@ -1,24 +1,24 @@
 /*eslint-disable*/
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState } from 'react';
 // @material-ui/core components
-import { makeStyles } from "@material-ui/core/styles";
+import { makeStyles } from '@material-ui/core/styles';
 // @material-ui/icons
-import GridContainer from "components/Grid/GridContainer.js";
-import GridItem from "components/Grid/GridItem.js";
-import Button from "components/CustomButtons/Button.js";
+import GridContainer from 'components/Grid/GridContainer.js';
+import GridItem from 'components/Grid/GridItem.js';
+import Button from 'components/CustomButtons/Button.js';
 // core components
-import styles from "assets/jss/material-kit-react/views/componentsSections/downloadStyle.js";
-import ProgressBar from "../../../ProgressBar";
-import CardBody from "../../../components/Card/CardBody";
-import CustomInput from "../../../components/CustomInput/CustomInput";
-import InputAdornment from "@material-ui/core/InputAdornment";
-import Email from "@material-ui/icons/Email";
-import { storeProfileImgSaga, storeUser } from "../actions";
-import CardFooter from "../../../components/Card/CardFooter";
-import SnackbarContent from "../../../components/Snackbar/SnackbarContent";
-import Check from "@material-ui/icons/Check";
-import Header from "../../../components/Header/Header";
-import HeaderLinks from "../../../components/Header/HeaderLinks";
+import styles from 'assets/jss/material-kit-react/views/componentsSections/downloadStyle.js';
+import ProgressBar from '../../../ProgressBar';
+import CardBody from '../../../components/Card/CardBody';
+import CustomInput from '../../../components/CustomInput/CustomInput';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import Email from '@material-ui/icons/Email';
+import { storeProfileImgSaga, storeUser } from '../actions';
+import CardFooter from '../../../components/Card/CardFooter';
+import SnackbarContent from '../../../components/Snackbar/SnackbarContent';
+import Check from '@material-ui/icons/Check';
+import Header from '../../../components/Header/Header';
+import HeaderLinks from '../../../components/Header/HeaderLinks';
 
 const useStyles = makeStyles(styles);
 
@@ -30,10 +30,10 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
   const [fileSize, setFileSize] = useState();
   const [profileImgUrl, setProfileImgUrl] = useState();
   const [galleryImgUrl, setGalleryImgUrl] = useState();
-  const [bday, setBday] = useState("");
-  const [nickname, setNickname] = useState("");
-  const [aboutMe, setAboutMe] = useState("");
-  const types = ["image/png", "image/jpeg"];
+  const [bday, setBday] = useState('');
+  const [nickname, setNickname] = useState('');
+  const [aboutMe, setAboutMe] = useState('');
+  const types = ['image/png', 'image/jpeg'];
 
   const filterBySize = (file) => {
     //filter out images larger than 5MB
@@ -45,19 +45,19 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
     if (profileImgUrl) {
       storeProfileImgSaga(profileImgUrl);
     }
-    console.log("profile Img url", profileImgUrl);
+    console.log('profile Img url', profileImgUrl);
   }, [profileImgUrl]);
 
   const handleAccountInput = (e) => {
     const inputId = e.target.id;
     switch (inputId) {
-      case "nickname":
+      case 'nickname':
         setNickname(e.target.value);
         break;
-      case "bDay":
+      case 'bDay':
         setBday(e.target.value);
         break;
-      case "aboutMe":
+      case 'aboutMe':
         setAboutMe(e.target.value);
         break;
     }
@@ -75,39 +75,39 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
 
   const fileSelectedHandler = (ev) => {
     let selected = ev.target.files[0];
-    setFileSize("");
+    setFileSize('');
 
     if (!filterBySize(selected)) {
-      setFileSize("Obrazek musi byt mensi jak 3 MB!!!");
+      setFileSize('Obrazek musi byt mensi jak 3 MB!!!');
       return;
     } else {
-      setFileSize("");
+      setFileSize('');
     }
     if (selected && types.includes(selected.type)) {
       setSelectedFile(selected);
-      setError("");
+      setError('');
     } else {
       setSelectedFile(null);
-      setError("Please vyber obrazek ve formatu (png nebo jpeg)");
+      setError('Please vyber obrazek ve formatu (png nebo jpeg)');
     }
   };
 
   const fileGalleryHandler = (ev) => {
     let selected = ev.target.files[0];
-    setFileSize("");
+    setFileSize('');
 
     if (!filterBySize(selected)) {
-      setFileSize("Obrazek musi byt mensi jak 3 MB!!!");
+      setFileSize('Obrazek musi byt mensi jak 3 MB!!!');
       return;
     } else {
-      setFileSize("");
+      setFileSize('');
     }
     if (selected && types.includes(selected.type)) {
       setGalleryFile(selected);
-      setError("");
+      setError('');
     } else {
       setGalleryFile(null);
-      setError("Please vyber obrazek ve formatu (png nebo jpeg)");
+      setError('Please vyber obrazek ve formatu (png nebo jpeg)');
     }
   };
 
@@ -139,12 +139,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
               <input type="file" onChange={fileSelectedHandler} />
               {profileImgUrl && (
                 <div className="profileUrl">
-                  <img
-                    width="230"
-                    height="280"
-                    id="profile-img"
-                    src={profileImgUrl}
-                  />
+                  <img width="230" height="280" id="profile-img" src={profileImgUrl} />
                 </div>
               )}
               <div>
@@ -171,7 +166,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    type: "nickname",
+                    type: 'nickname',
                     endAdornment: (
                       <InputAdornment position="end">
                         <Email className={classes.inputIconsColor} />
@@ -187,7 +182,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    type: "bDay",
+                    type: 'bDay',
                     endAdornment: (
                       <InputAdornment position="end">
                         <Email className={classes.inputIconsColor} />
@@ -203,7 +198,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
                     fullWidth: true,
                   }}
                   inputProps={{
-                    type: "AboutMe",
+                    type: 'AboutMe',
                     endAdornment: (
                       <InputAdornment position="end">
                         <Email className={classes.inputIconsColor} />

@@ -1,26 +1,26 @@
-import { createSelector } from "reselect";
+import { createSelector } from 'reselect';
 
 export const getUser = createSelector(
-    (state) => state,
-    (state) => state.user
+  (state) => state,
+  (state) => state.user,
 );
 
 export const getUseridToken = createSelector(
   (state) => state,
-  (state) => state.login.idToken
+  (state) => state.login.idToken,
 );
 
 export const getUserId = createSelector(
-    (state) => state,
-    (state) => state.login.userId
+  (state) => state,
+  (state) => state.login.userId,
 );
 
 export const getFirebaseErrMsg = createSelector(
   (state) => state,
-  (state) => state.login.errorMsg
+  (state) => state.login.errorMsg,
 );
 
 export const getTokenStatus = createSelector(
   (state) => state,
-  (state) => state.manageToken.deleted
-)
+  (state) => state.manageToken.deleted,
+);

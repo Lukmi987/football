@@ -1,15 +1,11 @@
-import { connect } from "react-redux";
-import Event from "../components/Event.js";
-import {
-  fetchOccurrences,
-  processEvent,
-  processEventAttendance,
-} from "../actions";
+import { connect } from 'react-redux';
+import Event from '../components/Event.js';
+import { fetchOccurrences, processEvent, processEventAttendance } from '../actions';
 import { getOccurrences, getUsersProfiles } from '../../../selectors/eventsSelectors';
-import { getEvents } from "../../../selectors/eventsSelectors";
-import { getUserId } from "../../../selectors/loginSelectors";
-import { getUser } from "../../../selectors/loginSelectors";
-import { fetchEvents, fetchUsersProfiles } from "../actions";
+import { getEvents } from '../../../selectors/eventsSelectors';
+import { getUserId } from '../../../selectors/loginSelectors';
+import { getUser } from '../../../selectors/loginSelectors';
+import { fetchEvents, fetchUsersProfiles } from '../actions';
 import EventStats from '../components/EventStats';
 
 const mapStateToProps = (state) => ({
@@ -17,7 +13,7 @@ const mapStateToProps = (state) => ({
   userId: getUserId(state),
   user: getUser(state),
   occurrencesList: getOccurrences(state),
-  usersProfiles: getUsersProfiles(state)
+  usersProfiles: getUsersProfiles(state),
 });
 
 const mapDispatchToProps = {

@@ -1,8 +1,8 @@
-.img-grid{
+.img-grid {
   margin: 20px auto;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
-  grid-gap: 40px
+  grid-gap: 40px;
 }
 .img-wrap {
   overflow: hidden;
@@ -17,11 +17,11 @@
   min-height: 100%;
   max-width: 150%;
   position: absolute;
-  top:0;
+  top: 0;
   left: 0;
 }
 
-.progress-bar{
+.progress-bar {
   height: 5px;
   background-color: #0d47a1;
   margin-top: 20px;
@@ -34,24 +34,22 @@
   lef: 0;
   width: 97%;
   height: 100%;
-  background: rgba(0,0,0,0.5);
+  background: rgba(0, 0, 0, 0.5);
 }
 .backdrop img {
   display: block;
   max-width: 60%;
   max-height: 80%;
   margin: 90px auto;
-  box-shadow: 3px 5px 7px rgba(0,0,0,0.5);
+  box-shadow: 3px 5px 7px rgba(0, 0, 0, 0.5);
   border: 3px solid white;
 }
 
 .carousel-styles {
-
   img.slide {
     width: 100%;
     height: auto;
     object-fit: cover;
     max-height: 100vh;
   }
-
 }
