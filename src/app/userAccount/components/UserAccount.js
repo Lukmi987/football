@@ -19,6 +19,7 @@ import SnackbarContent from '../../../components/Snackbar/SnackbarContent';
 import Check from '@material-ui/icons/Check';
 import Header from '../../../components/Header/Header';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
+import {Form} from "react-bootstrap";
 
 const useStyles = makeStyles(styles);
 
@@ -133,12 +134,10 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
               </GridItem>
             )}
             <div className='p-4 shadow border flex flex-col rounded  items-center'>
-            <GridItem xs={12} sm={12} md={8}>
-              <h2>Vypln zakladni udaje o sobe</h2>
-            </GridItem>
             <GridItem xs={12} sm={8} md={6}>
+              <h2>Vypln zakladni udaje o sobe</h2>
               <h4>Nahraj profilovou fotku</h4>
-              <input type="file" onChange={fileSelectedHandler} />
+              <Form.File className='w-full bg-transparent p-4 text-gray' type="file" onChange={fileSelectedHandler} />
               {profileImgUrl && (
                 <div className="profileUrl">
                   <img width="230" height="280" id="profile-img" src={profileImgUrl} />
@@ -211,37 +210,37 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
                 />
                 <br />
                 <br />
-                <Button simple color="primary" size="lg" onClick={handleSubmit}>
-                  Submit
-                </Button>
+                  <Button className='user-account-submit-button'  simple color="primary" size="lg" onClick={handleSubmit}>
+                    Submit
+                  </Button>
               </CardBody>
 
             </GridItem>
             </div>
             <br />
             <br />
-            <GridItem xs={12} sm={12} md={8}>
-              <h3>Upload picture to photo gallery</h3>
-              {galleryImgUrl && (
-                <div className="profileUrl">
-                  <img width="230" height="280" src={galleryImgUrl} />
-                </div>
-              )}
-              <input type="file" onChange={fileGalleryHandler} />
-              <div>
-                {fileSize && <div>{fileSize}</div>}
-                {error && <div className="error">{error}</div>}
-                {galleryFile && <div>{galleryFile.name}</div>}
-                {galleryFile && (
-                  <ProgressBar
-                    file={galleryFile}
-                    collection="gallery-images"
-                    setUrl={setGalleryImgUrl}
-                    setFile={setGalleryFile}
-                  />
-                )}
-              </div>
-            </GridItem>
+            {/*<GridItem xs={12} sm={12} md={8}>*/}
+            {/*  <h3>Upload picture to photo gallery</h3>*/}
+            {/*  {galleryImgUrl && (*/}
+            {/*    <div className="profileUrl">*/}
+            {/*      <img width="230" height="280" src={galleryImgUrl} />*/}
+            {/*    </div>*/}
+            {/*  )}*/}
+            {/*  <input type="file" onChange={fileGalleryHandler} />*/}
+            {/*  <div>*/}
+            {/*    {fileSize && <div>{fileSize}</div>}*/}
+            {/*    {error && <div className="error">{error}</div>}*/}
+            {/*    {galleryFile && <div>{galleryFile.name}</div>}*/}
+            {/*    {galleryFile && (*/}
+            {/*      <ProgressBar*/}
+            {/*        file={galleryFile}*/}
+            {/*        collection="gallery-images"*/}
+            {/*        setUrl={setGalleryImgUrl}*/}
+            {/*        setFile={setGalleryFile}*/}
+            {/*      />*/}
+            {/*    )}*/}
+            {/*  </div>*/}
+            {/*</GridItem>*/}
            {/*</div>*/}
           </GridContainer>
           <br />
