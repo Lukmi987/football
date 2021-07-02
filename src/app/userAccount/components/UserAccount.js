@@ -20,6 +20,7 @@ import Check from '@material-ui/icons/Check';
 import Header from '../../../components/Header/Header';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
 import {Form} from "react-bootstrap";
+import {Image} from 'cloudinary-react';
 
 const useStyles = makeStyles(styles);
 
@@ -35,6 +36,8 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
   const [nickname, setNickname] = useState('');
   const [aboutMe, setAboutMe] = useState('');
   const types = ['image/png', 'image/jpeg'];
+  const [imageUrl, setImage] = useState();
+  const [imageAlt, setImageAlt] = useState();
 
   const filterBySize = (file) => {
     //filter out images larger than 5MB
@@ -112,6 +115,32 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
     }
   };
 
+  const handleImageUpload = (ev) => {
+    let selected = ev.target.files[0];
+    console.log('selecte file',selected);
+    const formData = new FormData();
+    formData.append('file', selected )
+    formData.append('upload_preset', 'vyc7ir6t');
+    const options = {
+      method: 'POST',
+      body: formData,
+    };
+    fetch('https://api.cloudinary.com/v1_1/dnngiu2jb/image/upload', options).then(res => console.log('my rest',res.json()))
+
+  }
+
+
+  const sendPic = () => {
+    const formData = new FormData();
+    formData.append('file', selectedFile )
+     formData.append('upload_preset', 'vyc7ir6t');
+     const options = {
+       method: 'POST',
+       body: formData,
+     };
+     fetch('https://api.cloudinary.com/v1_1/\'dnngiu2jb\'/image/upload', options).then(res => console.log('my rest',res.json()))
+  }
+
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
@@ -135,6 +164,21 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
             )}
             <div className='p-4 shadow border flex flex-col rounded  items-center'>
             <GridItem xs={12} sm={8} md={6}>
+
+             <Image cloudName='dnngiu2jb' />
+
+              <div>
+                <h3>test cloudinary</h3>
+
+                <Form.File className='w-full bg-transparent p-4 text-gray' type="file" onChange={handleImageUpload} />
+              </div>
+
+
+              <div>
+                <h4>Resulting Image</h4>
+                {imageUrl && <img src={imageUrl} alt={imageAlt} />}
+              </div>
+
               <h2>Vypln zakladni udaje o sobe</h2>
               <h4>Nahraj profilovou fotku</h4>
               <Form.File className='w-full bg-transparent p-4 text-gray' type="file" onChange={fileSelectedHandler} />
