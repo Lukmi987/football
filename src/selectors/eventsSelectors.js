@@ -15,9 +15,9 @@ export const getEvents = createSelector(
   (state) => state.events,
 );
 
-export const getEventStatus = createSelector(
+export const getLoadingStatus = createSelector(
   (state) => state,
-  (state) => state.eventStatus,
+  (state) => state.loadingStatus,
 );
 
 export const getUsersProfiles = createSelector(

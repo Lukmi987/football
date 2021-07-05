@@ -26,6 +26,7 @@ import FormControlLabel from '@material-ui/core/FormControlLabel';
 import Checkbox from '@material-ui/core/Checkbox';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
 import Header from '../../../components/Header/Header';
+import { setLoadingStatus } from '../../loadingStatus/actions';
 
 const useStyles = makeStyles(styles);
 
@@ -40,7 +41,7 @@ const selectStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function EventForm({ processEvent, createEvent, eventStatusMes, eventStatus }) {
+export default function EventForm({ processEvent, createEvent, eventStatusMes, setLoadingStatus }) {
   const classes = useStyles();
   const selectClasses = selectStyles();
   const [openEventCount, setOpenEventCount] = useState(false);
@@ -118,10 +119,6 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, e
     processEvent(composeEventData(), eventCount);
   };
 
-  const handleSnackbarClose = () => {
-    console.log(' v handleSnackbarClose');
-    setTimeout(eventStatus, 3000);
-  };
 
   return (
     <div>
@@ -144,8 +141,8 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, e
                     horizontal: 'top',
                   }}
                   open={true}
-                  autoHideDuration={6000}
-                  onClose={handleSnackbarClose()}
+                  autoHideDuration={2000}
+                  onClose={setLoadingStatus}
                   message={eventStatusMes.error || 'Uspesne vytvoreno'}
                   // action={
                   //     <React.Fragment>

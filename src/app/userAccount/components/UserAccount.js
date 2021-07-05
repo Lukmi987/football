@@ -17,7 +17,7 @@ import Spinner from '../../Spinner';
 
 const useStyles = makeStyles(styles);
 
-export default function UserAccount({ storeUser, user, eventStatus, loadingStatus }) {
+export default function UserAccount({ storeUser, user, eventStatus, setLoadingStatus }) {
   const classes = useStyles();
   const [bday, setBday] = useState('');
   const [nickname, setNickname] = useState('');
@@ -88,7 +88,7 @@ export default function UserAccount({ storeUser, user, eventStatus, loadingStatu
                   }
                   open={loadingStatus.success}
                   autoHideDuration={2000}
-                  onClose={eventStatus}
+                  onClose={setLoadingStatus}
                   color="success"
                   icon={Check}
                 />

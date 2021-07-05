@@ -10,8 +10,9 @@ import { EditorState } from 'draft-js';
 import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
+import { setLoadingStatus } from '../../loadingStatus/actions';
 
-export default function EventNews({ fetchNews, saveNews, loadingStatus, eventStatus, eventNews }) {
+export default function EventNews({ fetchNews, saveNews, loadingStatus, setLoadingStatus, eventNews }) {
   const [disableEditable, setDisableEditable] = useState(true);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [convertedContent, setConvertedContent] = useState(null);
@@ -68,7 +69,7 @@ export default function EventNews({ fetchNews, saveNews, loadingStatus, eventSta
         }}
         open={loadingStatus.success}
         autoHideDuration={3000}
-        onClose={() => setTimeout(eventStatus, 3000)}
+        onClose={setLoadingStatus}
         message={loadingStatus.error || '!!!Uspesne ulozeno'}
       />
       <div className='pb-3'>

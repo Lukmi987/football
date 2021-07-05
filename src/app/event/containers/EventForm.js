@@ -2,18 +2,19 @@ import { connect } from 'react-redux';
 import { processEvent, eventStatus, createEvent } from '../actions';
 import { getUserId, getUser } from '../../../selectors/loginSelectors';
 import EventForm from '../components/EventForm';
-import { getEventStatus, getOccurrences } from '../../../selectors/eventsSelectors';
+import {  getLoadingStatus, getOccurrences } from '../../../selectors/eventsSelectors';
+import { setLoadingStatus } from '../../loadingStatus/actions';
 
 const mapStateToProps = (state) => ({
   userId: getUserId(state),
   user: getUser(state),
-  eventStatusMes: getEventStatus(state),
+  eventStatusMes: getLoadingStatus(state),
   occurrencesList: getOccurrences(state),
 });
 
 const mapDispatchToProps = {
   processEvent,
-  eventStatus,
+  setLoadingStatus,
   createEvent,
 };
 

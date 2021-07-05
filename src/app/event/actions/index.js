@@ -33,15 +33,6 @@ export const fetchOccurrences = () => ({
   type: FETCH_OCCURRENCES,
 });
 
-export const eventStatus = () => ({
-  type: SET_LOADING_EVENT,
-  data: {
-    isLoading: false,
-    success: false,
-    error: false,
-  },
-});
-
 export const fetchUsersProfiles = () => ({
   type: FETCH_USERS_PROFILES,
 });
