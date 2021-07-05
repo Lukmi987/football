@@ -4,9 +4,10 @@ import { SET_EVENT, STORE_PROFILE_IMG_URL } from '../../constants/actionTypes';
 
 export function* storeProfileImg(action) {
   const { profileUrl } = action;
+
   const userToken = localStorage.token;
+  const userId = localStorage.userId;
   try {
-    const userId = yield select((state) => state.login.userId);
     const responseUsers = yield axios.get(
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
     );
@@ -17,7 +18,6 @@ export function* storeProfileImg(action) {
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
       responseUsers.data,
     );
-    console.log('my url saga', profileUrl);
     if (profileUrl) {
       yield put({ type: STORE_PROFILE_IMG_URL, data: profileUrl });
     }

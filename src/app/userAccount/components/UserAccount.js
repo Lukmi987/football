@@ -20,7 +20,7 @@ import Check from '@material-ui/icons/Check';
 import Header from '../../../components/Header/Header';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
 import {Form} from "react-bootstrap";
-import {Image} from 'cloudinary-react';
+// import { WidgetLoader, Widget } from 'react-cloudinary-upload-widget'
 
 const useStyles = makeStyles(styles);
 
@@ -36,13 +36,16 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
   const [nickname, setNickname] = useState('');
   const [aboutMe, setAboutMe] = useState('');
   const types = ['image/png', 'image/jpeg'];
-  const [imageUrl, setImage] = useState();
+  const [imageUrl, setImageUrl] = useState();
   const [imageAlt, setImageAlt] = useState();
 
   const filterBySize = (file) => {
     //filter out images larger than 5MB
     return file.size <= 3332880;
   };
+
+
+
 
   useEffect(() => {
     // storeProfileImg('urls');
@@ -51,6 +54,24 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
     }
     console.log('profile Img url', profileImgUrl);
   }, [profileImgUrl]);
+
+  const openWidget = () => {
+    window.cloudinary.createUploadWidget(
+      {
+        cloudName: 'dnngiu2jb',
+        uploadPreset: 'vyc7ir6t',
+      },
+      (error, result) => {
+        setImageUrl(result.info.secure_url);
+        setImageAlt(`An image of ${result.info.original_filename}`);
+        console.log('result.info.secure_url',result.info.secure_url);
+        if(result?.info?.secure_url) {
+          console.log('jsem define pico',result.info.secure_url);
+          storeProfileImgSaga(result.info.secure_url);
+          }
+      }
+    ).open();
+  }
 
   const handleAccountInput = (e) => {
     const inputId = e.target.id;
@@ -125,21 +146,16 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
       method: 'POST',
       body: formData,
     };
-    fetch('https://api.cloudinary.com/v1_1/dnngiu2jb/image/upload', options).then(res => console.log('my rest',res.json()))
+    fetch('https://api.cloudinary.com/v1_1/dnngiu2jb/image/upload/', options)
+      .then(res => res.json())
+      .then(res => {
+        setImageUrl(res.secure_url);
 
+        console.log('vysledek',res);
+      })
+      .catch(err => console.log(err))
   }
 
-
-  const sendPic = () => {
-    const formData = new FormData();
-    formData.append('file', selectedFile )
-     formData.append('upload_preset', 'vyc7ir6t');
-     const options = {
-       method: 'POST',
-       body: formData,
-     };
-     fetch('https://api.cloudinary.com/v1_1/\'dnngiu2jb\'/image/upload', options).then(res => console.log('my rest',res.json()))
-  }
 
   return (
     <div>
@@ -147,7 +163,7 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer className={classes.textCenter} justify="center">
-           {/*<div className=''>*/}
+            {/*<div className=''>*/}
             {user && (
               <GridItem xs={12} sm={12} md={4}>
                 <SnackbarContent
@@ -163,185 +179,114 @@ export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
               </GridItem>
             )}
             <div className='p-4 shadow border flex flex-col rounded  items-center'>
-            <GridItem xs={12} sm={8} md={6}>
+              <GridItem xs={12} sm={8} md={6}>
 
-             <Image cloudName='dnngiu2jb' />
+                {/*<Image cloudName='dnngiu2jb' />*/}
+                <button onClick={openWidget}>Cloudinary widget</button>
+                <div>
+                  <h3>test cloudinary</h3>
 
-              <div>
-                <h3>test cloudinary</h3>
-
-                <Form.File className='w-full bg-transparent p-4 text-gray' type="file" onChange={handleImageUpload} />
-              </div>
-
-
-              <div>
-                <h4>Resulting Image</h4>
-                {imageUrl && <img src={imageUrl} alt={imageAlt} />}
-              </div>
-
-              <h2>Vypln zakladni udaje o sobe</h2>
-              <h4>Nahraj profilovou fotku</h4>
-              <Form.File className='w-full bg-transparent p-4 text-gray' type="file" onChange={fileSelectedHandler} />
-              {profileImgUrl && (
-                <div className="profileUrl">
-                  <img width="230" height="280" id="profile-img" src={profileImgUrl} />
+                  <Form.File className='w-full bg-transparent p-4 text-gray' type="file" onChange={handleImageUpload} />
                 </div>
-              )}
-              <div>
-                {fileSize && <div>{fileSize}</div>}
-                {error && <div className="error">{error}</div>}
-                {selectedFile && <div>{selectedFile.name}</div>}
-                {selectedFile && (
-                  <ProgressBar
-                    file={selectedFile}
-                    collection="profile-images"
-                    setUrl={setProfileImgUrl}
-                    setFile={setSelectedFile}
-                  />
+
+                <h3>Future favourite</h3>
+
+
+                <div>
+                  <h4>Resulting Image</h4>
+                  {imageUrl && <img src={imageUrl} alt={imageAlt} />}
+                </div>
+
+                <h2>Vypln zakladni udaje o sobe</h2>
+                <h4>Nahraj profilovou fotku</h4>
+                <Form.File className='w-full bg-transparent p-4 text-gray' type="file" onChange={fileSelectedHandler} />
+                {profileImgUrl && (
+                  <div className="profileUrl">
+                    <img width="230" height="280" id="profile-img" src={profileImgUrl} />
+                  </div>
                 )}
-              </div>
-            </GridItem>
-            <GridItem xs={12} sm={12} md={8}>
-              <CardBody>
-                <CustomInput
-                  className=''
-                  labelText="Přezdívka..."
-                  id="nickname"
-                  handleInputChange={handleAccountInput}
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    type: 'nickname',
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Email className={classes.inputIconsColor} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <CustomInput
-                  labelText="Rok narození..."
-                  id="bDay"
-                  handleInputChange={handleAccountInput}
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    type: 'bDay',
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Email className={classes.inputIconsColor} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <CustomInput
-                  labelText="About me..."
-                  id="aboutMe"
-                  handleInputChange={handleAccountInput}
-                  formControlProps={{
-                    fullWidth: true,
-                  }}
-                  inputProps={{
-                    type: 'AboutMe',
-                    endAdornment: (
-                      <InputAdornment position="end">
-                        <Email className={classes.inputIconsColor} />
-                      </InputAdornment>
-                    ),
-                  }}
-                />
-                <br />
-                <br />
+                <div>
+                  {fileSize && <div>{fileSize}</div>}
+                  {error && <div className="error">{error}</div>}
+                  {selectedFile && <div>{selectedFile.name}</div>}
+                  {selectedFile && (
+                    <ProgressBar
+                      file={selectedFile}
+                      collection="profile-images"
+                      setUrl={setProfileImgUrl}
+                      setFile={setSelectedFile}
+                    />
+                  )}
+                </div>
+              </GridItem>
+              <GridItem xs={12} sm={12} md={8}>
+                <CardBody>
+                  <CustomInput
+                    className=''
+                    labelText="Přezdívka..."
+                    id="nickname"
+                    handleInputChange={handleAccountInput}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: 'nickname',
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Email className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <CustomInput
+                    labelText="Rok narození..."
+                    id="bDay"
+                    handleInputChange={handleAccountInput}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: 'bDay',
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Email className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <CustomInput
+                    labelText="About me..."
+                    id="aboutMe"
+                    handleInputChange={handleAccountInput}
+                    formControlProps={{
+                      fullWidth: true,
+                    }}
+                    inputProps={{
+                      type: 'AboutMe',
+                      endAdornment: (
+                        <InputAdornment position="end">
+                          <Email className={classes.inputIconsColor} />
+                        </InputAdornment>
+                      ),
+                    }}
+                  />
+                  <br />
+                  <br />
                   <Button className='user-account-submit-button'  simple color="primary" size="lg" onClick={handleSubmit}>
                     Submit
                   </Button>
-              </CardBody>
+                </CardBody>
 
-            </GridItem>
+              </GridItem>
             </div>
             <br />
             <br />
-            {/*<GridItem xs={12} sm={12} md={8}>*/}
-            {/*  <h3>Upload picture to photo gallery</h3>*/}
-            {/*  {galleryImgUrl && (*/}
-            {/*    <div className="profileUrl">*/}
-            {/*      <img width="230" height="280" src={galleryImgUrl} />*/}
-            {/*    </div>*/}
-            {/*  )}*/}
-            {/*  <input type="file" onChange={fileGalleryHandler} />*/}
-            {/*  <div>*/}
-            {/*    {fileSize && <div>{fileSize}</div>}*/}
-            {/*    {error && <div className="error">{error}</div>}*/}
-            {/*    {galleryFile && <div>{galleryFile.name}</div>}*/}
-            {/*    {galleryFile && (*/}
-            {/*      <ProgressBar*/}
-            {/*        file={galleryFile}*/}
-            {/*        collection="gallery-images"*/}
-            {/*        setUrl={setGalleryImgUrl}*/}
-            {/*        setFile={setGalleryFile}*/}
-            {/*      />*/}
-            {/*    )}*/}
-            {/*  </div>*/}
-            {/*</GridItem>*/}
-           {/*</div>*/}
+
+
+
           </GridContainer>
           <br />
-          <br />
-          {/*<GridContainer className={classes.textCenter} justify="center">*/}
-          {/*    <GridItem xs={12} sm={12} md={8}>*/}
-          {/*        <h2>Want more?</h2>*/}
-          {/*        <h4>*/}
-          {/*            We{"'"}ve launched{" "}*/}
-          {/*            <a*/}
-          {/*                href="https://www.creative-tim.com/product/material-kit-pro-react?ref=mkr-download-section"*/}
-          {/*                target="_blank"*/}
-          {/*            >*/}
-          {/*                Material Kit PRO React{" "}*/}
-          {/*            </a>*/}
-          {/*            .It has a huge number of components, sections and example pages.*/}
-          {/*            Start Your Development With A Badass Material-UI nspired by*/}
-          {/*            Material Design.*/}
-          {/*        </h4>*/}
-          {/*    </GridItem>*/}
-          {/*    <GridItem xs={12} sm={8} md={6}>*/}
-          {/*        <Button*/}
-          {/*            color="rose"*/}
-          {/*            size="lg"*/}
-          {/*            href="https://www.creative-tim.com/product/material-kit-pro-react?ref=mkr-download-section"*/}
-          {/*            target="_blank"*/}
-          {/*        >*/}
-          {/*            Material Kit PRO*/}
-          {/*        </Button>*/}
-          {/*        <Button*/}
-          {/*            color="rose"*/}
-          {/*            size="lg"*/}
-          {/*            href="https://www.creative-tim.com/product/material-dashboard-pro-react?ref=mkr-download-section"*/}
-          {/*            target="_blank"*/}
-          {/*        >*/}
-          {/*            Material Dashboard PRO*/}
-          {/*        </Button>*/}
-          {/*    </GridItem>*/}
-          {/*</GridContainer>*/}
-          {/*<div className={classes.textCenter + " " + classes.sharingArea}>*/}
-          {/*    <GridContainer justify="center">*/}
-          {/*        <h3>Thank you for supporting us!</h3>*/}
-          {/*    </GridContainer>*/}
-          {/*    <Button color="twitter">*/}
-          {/*        <i className={classes.socials + " fab fa-twitter"} /> Tweet*/}
-          {/*    </Button>*/}
-          {/*    <Button color="facebook">*/}
-          {/*        <i className={classes.socials + " fab fa-facebook-square"} /> Share*/}
-          {/*    </Button>*/}
-          {/*    <Button color="google">*/}
-          {/*        <i className={classes.socials + " fab fa-google-plus-g"} />*/}
-          {/*        Share*/}
-          {/*    </Button>*/}
-          {/*    <Button color="github">*/}
-          {/*        <i className={classes.socials + " fab fa-github"} /> Star*/}
-          {/*    </Button>*/}
-          {/*</div>*/}
+
         </div>
       </div>
     </div>
