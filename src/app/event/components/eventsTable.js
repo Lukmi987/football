@@ -141,49 +141,61 @@ function Row(props) {
                     <th>
                       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                         <Tab eventKey="home" title="Jdou">
+                          <div className='flex wrap'>
                           {groupByUsers.get(1) ? (
                             groupByUsers
                               .get(1)
                               .map((user) => (
-                                <EventAttendanceList
-                                  key={uuid_v4()}
-                                  user={user}
-                                  classes={classes}
-                                />
+                                <div key={uuid_v4()} className='flex items-center my-2 mx-2 flex-column'>
+                                  <EventAttendanceList
+                                    user={user}
+                                    classes={classes}
+                                  />
+                                  <span>{user?.nickname}</span>
+                                </div>
                               ))
                           ) : (
                             <div>0</div>
                           )}
+                          </div>
                         </Tab>
                         <Tab eventKey="profile" title="Neví">
+                          <div className='flex wrap'>
                           {groupByUsers.get(2) ? (
                             groupByUsers
                               .get(2)
                               .map((user) => (
+                                <div key={uuid_v4()} className='flex items-center my-2 mx-2 flex-column'>
                                 <EventAttendanceList
-                                  key={uuid_v4()}
                                   user={user}
                                   classes={classes}
                                 />
+                                  <span>{user?.nickname}</span>
+                                </div>
                               ))
                           ) : (
                             <div>0</div>
                           )}
+                          </div>
                         </Tab>
                         <Tab eventKey="contact" title="Nejdou">
+                          <div className='flex wrap'>
                           {groupByUsers.get(0) ? (
                             groupByUsers
                               .get(0)
                               .map((user) => (
-                                <EventAttendanceList
-                                  key={uuid_v4()}
-                                  user={user}
-                                  classes={classes}
-                                />
+                                <div key={uuid_v4()} className='flex items-center my-2 mx-2 flex-column'>
+                                  <EventAttendanceList
+                                    user={user}
+                                    classes={classes}
+                                  />
+                                  <span>{user?.nickname}</span>
+                                </div>
                               ))
                           ) : (
                             <div>0</div>
                           )}
+                          </div>
                         </Tab>
                       </Tabs>
                     </th>

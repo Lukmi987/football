@@ -22,7 +22,8 @@ const Event = ({
   eventsList,
   occurrencesList,
 }) => {
-  const userId = localStorage.userId;
+  const userId = localStorage?.userId;
+  const userEmail = localStorage?.userEmail;
   const [editedEventRow, setEditedEventRow] = useState();
 
   const [rowId, setRowId] = useState();
@@ -108,18 +109,23 @@ const Event = ({
               <span className="cabin-nearest-span">Potkáš se tam s:</span>
             </GridItem>
             <GridItem xs={12} sm={12} md={12} className="cabin-nearest-avatars">
-              <div className="nearest-event">
+              <div className="flex flex-wrap">
                 {nearestEvents[0]?.attendance &&
-                  nearestEvents[0]?.attendance.map(
+                  nearestEvents[0].attendance.map(
                     (item) =>
-                      item && (
+                      item?.profileUrl ? (
+                       <div className='flex items-center my-2 flex-column'>
                         <Avatar
                           key={uuid_v4()}
                           alt="Remy Sharp"
                           src={item?.profileUrl}
                           className="nearest-event-player"
                         />
-                      ),
+                        <span>{item?.nickname}</span>
+                       </div>
+                      ) : (
+                        <div key={uuid_v4()} className='bg-primary-yellow p-2 mx-2 text-sm rounded align-self-center'>{userEmail}</div>
+                      )
                   )}
               </div>
             </GridItem>

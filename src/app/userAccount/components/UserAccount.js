@@ -17,7 +17,7 @@ import Spinner from '../../Spinner';
 
 const useStyles = makeStyles(styles);
 
-export default function UserAccount({ storeUser, user, eventStatus, setLoadingStatus }) {
+export default function UserAccount({ storeUser, user, loadingStatus, setLoadingStatus }) {
   const classes = useStyles();
   const [bday, setBday] = useState('');
   const [nickname, setNickname] = useState('');
@@ -27,6 +27,13 @@ export default function UserAccount({ storeUser, user, eventStatus, setLoadingSt
   const [imageAlt, setImageAlt] = useState();
 
 
+  const addTransformationToUrl = (url) => {
+    const parsedUrl = url.split('/');
+    const uploadIndex = parsedUrl.findIndex(item => item === 'upload');
+     parsedUrl.splice(uploadIndex + 1,0,'w_200,h_250,c_thumb,g_faces');
+    return parsedUrl.join('/');
+  }
+
   const openWidget = () => {
     window.cloudinary.createUploadWidget(
       {
@@ -35,7 +42,8 @@ export default function UserAccount({ storeUser, user, eventStatus, setLoadingSt
       },
       (error, result) => {
         if(result?.info?.secure_url) {
-          setImageUrl(result.info.secure_url);
+          const transformedUrl = addTransformationToUrl(result.info.secure_url);
+          setImageUrl(transformedUrl);
           setImageAlt(`An image of ${result.info.original_filename}`);
           }
       }

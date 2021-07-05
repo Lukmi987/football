@@ -20,6 +20,7 @@ import Button from 'components/CustomButtons/Button.js';
 
 import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js';
 import { useSelector } from 'react-redux';
+import { ADD_PLAYER, CREATE_EVENT, MANAGE_ACCOUNT, MANAGEACCOUNT } from '../../app/constants/headerLinks';
 
 const useStyles = makeStyles(styles);
 
@@ -44,15 +45,14 @@ export default function HeaderLinks() {
           buttonIcon={Apps}
           dropdownList={[
             <Link to="/event-form-page" className={classes.dropdownLink}>
-              Vytvoř událost
+              {CREATE_EVENT}
             </Link>,
-            <a
-              href="https://creativetimofficial.github.io/material-kit-react/#/documentation?ref=mkr-navbar"
-              target="_blank"
-              className={classes.dropdownLink}
-            >
-              Documentation
-            </a>,
+            <Link to='/manage-account' className={classes.dropdownLink}>
+                {MANAGE_ACCOUNT}
+           </Link>,
+            <Link to='/add-player' className={classes.dropdownLink}>
+              {ADD_PLAYER}
+            </Link>
           ]}
         />
       </ListItem>
@@ -162,7 +162,7 @@ export default function HeaderLinks() {
       <ListItem className={classes.listItem}>
         <Link to={'/manage-account'}>
           <Button color="transparent" className={classes.navLink}>
-            Account Pico
+            {MANAGE_ACCOUNT}
           </Button>
         </Link>
       </ListItem>

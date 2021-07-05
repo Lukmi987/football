@@ -12,6 +12,7 @@ import Cabin from './app/cabin/Cabin';
 import UserAccount from './app/userAccount/containers/UserAccount';
 import Components from './views/Components/Components';
 import { createBrowserHistory } from 'history';
+import AddPlayer from './app/addPlayer/containers/AddPlayer';
 
 const App = () => {
   const hist = createBrowserHistory();
@@ -28,6 +29,7 @@ const App = () => {
           <Route path="/photo-gallery" component={PhotoGallery} />
           <Route path="/cabin" component={Cabin} />
           <Route path="/manage-account" component={UserAccount} />
+          <Route path="/add-player" component={AddPlayer} />
           <Route path="/" component={Components} />
         </Switch>
       </Router>
