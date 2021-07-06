@@ -3,10 +3,11 @@ import { SET_LOADING_EVENT, STORE_USER } from '../../constants/actionTypes';
 import { put, select } from 'redux-saga/effects';
 
 export function* storeUser(action) {
-  const { nickname, bday, aboutMe, imageUrl } = action.user;
+  console.log('................', action);
+  const { nickname, bday, aboutMe, imageUrl, email, firstName, lastName, userId: userIdAddPlayerForm = null, isAdmin = false } = action.user;
   console.log('................', action.user);
   const userToken = localStorage.token;
-  const userId = localStorage.userId;
+  const userId = userIdAddPlayerForm || localStorage.userId;
 
   try {
     yield put({ type: SET_LOADING_EVENT, data: { isLoading: true, success: false, error: false } });
@@ -18,12 +19,14 @@ export function* storeUser(action) {
     const playerListCopy = JSON.parse(JSON.stringify(responseUsers.data));
 
     if (index !== -1) {
+      console.log('store user v foudn');
       playerListCopy[index].nickname = nickname;
       playerListCopy[index].age = bday;
       playerListCopy[index].aboutMe = aboutMe;
       playerListCopy[index].profileUrl = imageUrl;
     } else {
-      playerListCopy.push({ nickname, bday, aboutMe, profileUrl: imageUrl, userID: userId });
+      console.log('store user v else push');
+      playerListCopy.push({ nickname, bday, aboutMe, email, firstName, lastName, profileUrl: imageUrl, userID: userId, isAdmin: isAdmin });
     }
     yield axios.put(
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,

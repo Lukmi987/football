@@ -1,7 +1,8 @@
 import { takeLatest } from 'redux-saga/effects';
-import { LOGIN_USER } from '../../constants/actionTypes';
-import { loginUser } from './loginUser';
+import { CREATE_PLAYER_SAGA,  } from '../../constants/actionTypes';
+import { createPlayer } from './createPlayer';
 
-const loginSagas = [takeLatest(LOGIN_USER, loginUser)];
 
-export default loginSagas;
+const addPlayerSagas = [takeLatest(CREATE_PLAYER_SAGA, createPlayer)];
+
+export default addPlayerSagas;

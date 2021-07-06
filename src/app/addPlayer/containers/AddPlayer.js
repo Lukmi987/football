@@ -1,15 +1,14 @@
 import { connect } from 'react-redux';
-import { getUseridToken, getFirebaseErrMsg } from '../../../selectors/loginSelectors';
 import AddPlayer from '../components/AddPlayer';
+import { createPlayer } from '../actions';
 
 const mapStateToProps = (state) => ({
-  idToken: getUseridToken(state),
-  errorMsg: getFirebaseErrMsg(state),
+
 });
 
 //my redux actions
 const mapDispatchToProps = {
-
+  createPlayer
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AddPlayer);

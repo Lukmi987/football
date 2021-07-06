@@ -8,7 +8,8 @@ import styles from 'assets/jss/material-kit-react/views/componentsSections/login
 import Header from '../../../components/Header/Header';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
 import { ADD_PLAYER } from '../../constants/headerLinks';
-import { useFormik } from 'formik';
+import { Formik, Field, Form, ErrorMessage } from 'formik';
+import * as Yup from 'yup';
 import {
   Create,
   First_Name,
@@ -16,56 +17,12 @@ import {
   Last_Name,
   Last_Name_Limit,
 } from '../../constants/addPlayer';
-import * as Yup from 'yup';
 
+import * as PropTypes from 'prop-types';
 const useStyles = makeStyles(styles);
 
-const validate = values => {
-  const errors = {};
-  if(!values.firstName) {
-    errors.firstName = 'Required';
-  } else if (values.firstName.length > 16) {
-    errors.firstName = First_Name_Limit;
-  }
-
-  if(!values.lastName) {
-    errors.lastName = 'Required';
-  } else if (values.lastName.length > 20) {
-    errors.lastName = Last_Name_Limit;
-  }
-
-  if(!values.email) {
-    errors.email = 'Required';
-  } else if (!/^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/i.test(values.email)) {
-    errors.email = Invalid_Email
-  }
-
-  return errors;
-}
-
-
-export default function AddPlayer({ idToken, processLoginForm, history, errorMsg }) {
+export default function AddPlayer({ createPlayer }) {
   const classes = useStyles();
-const formik = useFormik({
-  initialValues: {
-    firstName: '',
-    lastName: '',
-    email: '',
-  },
-  validationSchema: Yup.object({
-    firstName: Yup.string()
-      .max(15, First_Name_Limit),
-    lastName: Yup.string()
-      .max(20, Last_Name_Limit)
-      .required('Required'),
-    email: Yup.string().email().required('Required'),
-  }),
-  onSubmit: values => {
-    alert(JSON.stringify(values, null, 2));
-  },
-})
-
-
 
   return (
     <div>
@@ -74,39 +31,74 @@ const formik = useFormik({
         <div className={classes.container}>
           <GridContainer justify="center">
             <GridItem xs={12} sm={12} md={4}>
-              <form onSubmit={formik.handleSubmit}>
-                <label htmlFor="firstName">{First_Name}</label>
-                <input
-                  id='firstName'
-                  name='firstName'
-                  type='text'
-                  onChange={formik.handleChange}
-                  onBlur={formik.handleBlur}
-                  value={formik.values.firstName}
-                />
-                { formik.touched.firstName && formik.errors.firstName && <div>{formik.errors.firstName}</div>}
-                <label htmlFor="lastName">{Last_Name}</label>
-                <input
-                  id='lastName'
-                  name='lastName'
-                  type='text'
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.lastName}
-                />
-                {formik.touched.lastName && formik.errors.lastName && <div>{formik.errors.lastName}</div>}
-                <label htmlFor="email">Email</label>
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  onBlur={formik.handleBlur}
-                  onChange={formik.handleChange}
-                  value={formik.values.email}
-                />
-                {formik.touched.email && formik.errors.email && <div>{formik.errors.email}</div>}
-                <button type='submit'>{Create}</button>
-              </form>
+              <Formik
+                initialValues ={{
+                firstName: '',
+                lastName: '',
+                email: '',
+                password: '',
+                  isAdmin: false
+              }}
+              validationSchema = {Yup.object({
+              firstName: Yup.string()
+              .max(15, First_Name_Limit),
+              lastName: Yup.string()
+              .max(20, Last_Name_Limit)
+              .required('Required'),
+              email: Yup.string().email().required('Required'),
+                password: Yup
+                  .string()
+                  .required('Please Enter your password')
+                  .matches(
+                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
+                    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
+                  ),
+            })}
+                onSubmit={(values, { setSubmitting }) => {
+                  createPlayer(values)
+                }}
+              >
+                <Form className="flex w-full items-start flex-column bg-neutral-graylight p-6 shadow-lg rounded">
+                  <div className='mb-2 w-full flex flex-column'>
+                  <div>
+                   <label htmlFor="firstName">{First_Name}</label>
+                  <Field name="firstName" type="text" />
+                  </div>
+                  <ErrorMessage name="firstName" />
+                  </div>
+
+                  <div className='mb-2 w-full flex flex-column'>
+                    <div className='flex'>
+                      <label htmlFor="lastName">{Last_Name}</label>
+                      <Field name="lastName" type="text" />
+                    </div>
+                  <ErrorMessage name="lastName" />
+                  </div>
+
+                  <div className='mb-2 w-full flex flex-column'>
+                  <div>
+                    <label htmlFor="email">Email</label>
+                  <Field name="email" type="email" />
+                    </div>
+                  <ErrorMessage name="email" />
+                  </div>
+
+                  <div className='mb-2 w-full flex flex-column'>
+                    <div>
+                      <label htmlFor="password">Pwd</label>
+                      <Field name="password" type="password" />
+                    </div>
+                    <ErrorMessage name="password" />
+                  </div>
+                  <div className='mb-2 w-full flex flex-column'>
+                    <div>
+                      <label htmlFor="isAdmin">Admin</label>
+                      <Field name="isAdmin" type="checkbox" />
+                    </div>
+                  </div>
+                  <button type="submit">{Create}</button>
+                </Form>
+              </Formik>
             </GridItem>
           </GridContainer>
         </div>
