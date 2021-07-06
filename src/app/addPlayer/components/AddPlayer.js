@@ -15,8 +15,9 @@ import {
   First_Name_Limit, Invalid_Email,
   Last_Name,
   Last_Name_Limit,
-  Name_Limit,
 } from '../../constants/addPlayer';
+import * as Yup from 'yup';
+
 const useStyles = makeStyles(styles);
 
 const validate = values => {
@@ -51,7 +52,14 @@ const formik = useFormik({
     lastName: '',
     email: '',
   },
-  validate,
+  validationSchema: Yup.object({
+    firstName: Yup.string()
+      .max(15, First_Name_Limit),
+    lastName: Yup.string()
+      .max(20, Last_Name_Limit)
+      .required('Required'),
+    email: Yup.string().email().required('Required'),
+  }),
   onSubmit: values => {
     alert(JSON.stringify(values, null, 2));
   },
