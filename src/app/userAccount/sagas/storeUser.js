@@ -14,6 +14,8 @@ export function* storeUser(action) {
     const responseUsers = yield axios.get(
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
     );
+
+    console.log('responseUsers v store user',responseUsers);
     const findUser = (user) => user.userID === userId;
     const index = responseUsers.data.findIndex(findUser);
     const playerListCopy = JSON.parse(JSON.stringify(responseUsers.data));

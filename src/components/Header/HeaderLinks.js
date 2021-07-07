@@ -52,6 +52,9 @@ export default function HeaderLinks() {
            </Link>,
             <Link to='/add-player' className={classes.dropdownLink}>
               {ADD_PLAYER}
+            </Link>,
+            <Link to='/players-administration' className={classes.dropdownLink}>
+              Sprava vsech uzivatelu
             </Link>
           ]}
         />

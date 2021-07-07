@@ -13,6 +13,7 @@ import UserAccount from './app/userAccount/containers/UserAccount';
 import Components from './views/Components/Components';
 import { createBrowserHistory } from 'history';
 import AddPlayer from './app/addPlayer/containers/AddPlayer';
+import PlayersAdministration from './app/playersAdministration/containers/PlayersAdministration';
 
 const App = () => {
   const hist = createBrowserHistory();
@@ -22,6 +23,7 @@ const App = () => {
       <ManageUserActivity />
       <Router history={hist}>
         <Switch>
+
           <Route path="/login-page" component={Login} />
           <Route path="/logout-page" component={LogOut} />
           <Route path="/about-us" component={AboutUs} />
@@ -30,6 +32,7 @@ const App = () => {
           <Route path="/cabin" component={Cabin} />
           <Route path="/manage-account" component={UserAccount} />
           <Route path="/add-player" component={AddPlayer} />
+          <Route path="/players-administration" component={PlayersAdministration}/>
           <Route path="/" component={Components} />
         </Switch>
       </Router>

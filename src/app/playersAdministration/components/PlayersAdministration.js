@@ -27,7 +27,9 @@ export default function PlayersAdministration({ fetchPlayers, players, saveEdite
   const classes = useStyles();
 useEffect(()=> {
   fetchPlayers();
-},[players])
+},[])
+
+  console.log('players ',players);
 
   // list all players nad state if admin checkbox
   // on click switch admin
