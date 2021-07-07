@@ -19,6 +19,7 @@ import {
 } from '../../constants/addPlayer';
 
 import * as PropTypes from 'prop-types';
+import Card from "../../../components/Card/Card";
 const useStyles = makeStyles(styles);
 
 export default function AddPlayer({ createPlayer }) {
@@ -30,7 +31,8 @@ export default function AddPlayer({ createPlayer }) {
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer justify="center">
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} md={8}>
+
               <Formik
                 initialValues ={{
                 firstName: '',
@@ -58,43 +60,33 @@ export default function AddPlayer({ createPlayer }) {
                   createPlayer(values)
                 }}
               >
-                <Form className="flex w-full items-start flex-column bg-neutral-graylight p-6 shadow-lg rounded">
-                  <div className='mb-2 w-full flex flex-column'>
-                  <div>
+                <Form className="flex w-full justify-content-center flex-column bg-neutral-graylight p-6 shadow-lg rounded">
+                  <div className=' mb-5 flex flex-column items-center'>
                    <label htmlFor="firstName">{First_Name}</label>
-                  <Field name="firstName" type="text" />
-                  </div>
+                  <Field name="firstName" type="text" className='py-2 rounded shadow' />
                   <ErrorMessage name="firstName" />
                   </div>
 
-                  <div className='mb-2 w-full flex flex-column'>
-                    <div className='flex'>
+                  <div className='mb-5 flex flex-column items-center'>
                       <label htmlFor="lastName">{Last_Name}</label>
                       <Field name="lastName" type="text" />
-                    </div>
                   <ErrorMessage name="lastName" />
                   </div>
 
-                  <div className='mb-2 w-full flex flex-column'>
-                  <div>
+                  <div className='mb-5 flex flex-column items-center'>
                     <label htmlFor="email">Email</label>
                   <Field name="email" type="email" />
-                    </div>
                   <ErrorMessage name="email" />
                   </div>
 
-                  <div className='mb-2 w-full flex flex-column'>
-                    <div>
+                  <div className='mb-5 flex flex-column items-center'>
                       <label htmlFor="password">Pwd</label>
                       <Field name="password" type="password" />
-                    </div>
                     <ErrorMessage name="password" />
                   </div>
-                  <div className='mb-2 w-full flex flex-column'>
-                    <div>
+                  <div className='mb-5 flex flex-column items-center'>
                       <label htmlFor="isAdmin">Admin</label>
                       <Field name="isAdmin" type="checkbox" />
-                    </div>
                   </div>
                   <button type="submit">{Create}</button>
                 </Form>
