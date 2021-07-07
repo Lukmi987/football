@@ -35,3 +35,8 @@ export const GET_NEW_TOKEN_SAGA = 'GET_NEW_TOKEN_SAGA';
 
 //ADD Player
 export const CREATE_PLAYER_SAGA = 'CREATE_PLAYER_SAGA';
+
+//Players Administration
+export const FETCH_PLAYERS_SAGA = 'FETCH_PLAYERS_SAGA';
+export const SET_PLAYERS = 'SET_PLAYERS';
+export const SAVE_EDITED_PLAYER_SAGA = 'SAVE_EDITED_PLAYER_SAGA';
