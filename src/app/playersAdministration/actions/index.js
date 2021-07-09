@@ -5,6 +5,6 @@ export const fetchPlayers = () => ({
 })
 
 export const saveEditedPlayer = (payload) => ({
-  types: SAVE_EDITED_PLAYER_SAGA,
+  type: SAVE_EDITED_PLAYER_SAGA,
   data: payload
 });
