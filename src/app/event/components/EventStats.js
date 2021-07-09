@@ -155,7 +155,7 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
                     </div>
                     <div>
                       <h4>
-                        {user.nickname} {user.attendance}
+                        {user?.firstName} {" "} {user?.lastName}
                       </h4>
                       <LinearProgress
                         variant="determinate"

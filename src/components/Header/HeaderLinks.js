@@ -20,7 +20,13 @@ import Button from 'components/CustomButtons/Button.js';
 
 import styles from 'assets/jss/material-kit-react/components/headerLinksStyle.js';
 import { useSelector } from 'react-redux';
-import { ADD_PLAYER, CREATE_EVENT, MANAGE_ACCOUNT, MANAGEACCOUNT } from '../../app/constants/headerLinks';
+import {
+  ADD_PLAYER,
+  CREATE_EVENT,
+  MANAGE_ACCOUNT,
+  MANAGE_ACCOUNTS,
+  MANAGEACCOUNT,
+} from '../../app/constants/headerLinks';
 
 const useStyles = makeStyles(styles);
 
@@ -33,42 +39,50 @@ export default function HeaderLinks() {
     setToken(localStorage.token || null);
   }, [tokenStatus]);
   return (
-    <List className={classes.list}>
+    <List className={classes.listItem}>
       <ListItem className={classes.listItem}>
-        <CustomDropdown
-          noLiPadding
-          buttonText="Administrace"
-          buttonProps={{
-            className: classes.navLink,
-            color: 'transparent',
-          }}
-          buttonIcon={Apps}
-          dropdownList={[
-            <Link to="/event-form-page" className={classes.dropdownLink}>
-              {CREATE_EVENT}
-            </Link>,
-            <Link to='/manage-account' className={classes.dropdownLink}>
-                {MANAGE_ACCOUNT}
-           </Link>,
-            <Link to='/add-player' className={classes.dropdownLink}>
-              {ADD_PLAYER}
-            </Link>,
-            <Link to='/players-administration' className={classes.dropdownLink}>
-              Sprava vsech uzivatelu
-            </Link>
-          ]}
-        />
-      </ListItem>
-      {/* <ListItem className={classes.listItem}>
-        <Button
-          href="https://www.creative-tim.com/product/material-kit-react?ref=mkr-navbar"
-          color="transparent"
-          target="_blank"
-          className={classes.navLink}
-        >
-          <CloudDownload className={classes.icons} /> Download
+      <Link to="/manage-accounts">
+        <Button color="transparent" className={classes.navLink}>
+          {MANAGE_ACCOUNTS}
         </Button>
-      </ListItem> */}
+      </Link>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Link to={'/about-us'}>
+          <Button color="transparent" className={classes.navLink}>
+            O nás
+          </Button>
+        </Link>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Link to={'/photo-gallery'}>
+          <Button color="transparent" className={classes.navLink}>
+            Foto Galerie
+          </Button>
+        </Link>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        <Link to={'/cabin'}>
+          <Button color="transparent" className={classes.navLink}>
+            Kabina
+          </Button>
+        </Link>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+        {!token ? (
+          <Link to={'/login-page'}>
+            <Button color="transparent" className={classes.navLink}>
+              Přihlášní/Registrace
+            </Button>
+          </Link>
+        ) : (
+          <Link to={'/logout-page'} className={classes.listItem}>
+            <Button color="transparent" className={classes.navLink}>
+              Odhlasit se
+            </Button>
+          </Link>
+        )}
+      </ListItem>
       <ListItem className={classes.listItem}>
         {/*<Tooltip title="Delete">
           <IconButton aria-label="Delete">
@@ -125,51 +139,6 @@ export default function HeaderLinks() {
           </Button>
         </Tooltip>
       </ListItem>
-      <ListItem className={classes.listItem}>
-        <Link to={'/about-us'}>
-          <Button color="transparent" className={classes.navLink}>
-            O nás
-          </Button>
-        </Link>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Link to={'/photo-gallery'}>
-          <Button color="transparent" className={classes.navLink}>
-            Foto Galerie
-          </Button>
-        </Link>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        <Link to={'/cabin'}>
-          <Button color="transparent" className={classes.navLink}>
-            Kabina
-          </Button>
-        </Link>
-      </ListItem>
-      <ListItem className={classes.listItem}>
-        {!token ? (
-          <Link to={'/login-page'}>
-            <Button color="transparent" className={classes.navLink}>
-              Přihlášní/Registrace
-            </Button>
-          </Link>
-        ) : (
-          <Link to={'/logout-page'} className={classes.listItem}>
-            <Button color="transparent" className={classes.navLink}>
-              Odhlasit se
-            </Button>
-          </Link>
-        )}
-      </ListItem>
-      {/*{isUserLoggedIn &&*/}
-      <ListItem className={classes.listItem}>
-        <Link to={'/manage-account'}>
-          <Button color="transparent" className={classes.navLink}>
-            {MANAGE_ACCOUNT}
-          </Button>
-        </Link>
-      </ListItem>
-      {/*}*/}
     </List>
   );
 }

@@ -57,9 +57,8 @@ function createData(name, calories, fat, carbs, protein, price) {
 
 export function timeStampToData(timeStamp) {
   const date = new Date(timeStamp);
-  return `v ${date.getHours()}.${date.getMinutes()}h ${date.getDate()}-${
-    date.getMonth() + 1
-  }-${date.getFullYear()}`;
+  const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+  return new Intl.DateTimeFormat('de-DE', options).format(timeStamp)
 }
 
 const getEventType = (eventTypeId) => {
@@ -250,7 +249,7 @@ const CollapsibleTable = ({
       <Table aria-label="collapsible table cabin-table-collapsible">
         <TableHead>
           <TableRow className="cabin-table-collapsible-table-head">
-            <TableCell align="left">Účast</TableCell>
+            <TableCell align="left">Účast klikni na šipku dolů</TableCell>
             <TableCell align="right">Typ události</TableCell>
             <TableCell align="right">Začátek</TableCell>
             <TableCell align="right">Zůčastním se?</TableCell>

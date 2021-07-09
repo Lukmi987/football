@@ -1,33 +1,26 @@
 import axios from '../../axios-football';
 import { SET_LOADING_EVENT, STORE_USER } from '../../constants/actionTypes';
-import { put, select } from 'redux-saga/effects';
+import { put } from 'redux-saga/effects';
 
 export function* storeUser(action) {
-  console.log('................', action);
   const { nickname, bday, aboutMe, imageUrl, email, firstName, lastName, userId: userIdAddPlayerForm = null, isAdmin = false } = action.user;
-  console.log('................', action.user);
   const userToken = localStorage.token;
   const userId = userIdAddPlayerForm || localStorage.userId;
-
   try {
     yield put({ type: SET_LOADING_EVENT, data: { isLoading: true, success: false, error: false } });
     const responseUsers = yield axios.get(
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
     );
-
-    console.log('responseUsers v store user',responseUsers);
     const findUser = (user) => user.userID === userId;
     const index = responseUsers.data.findIndex(findUser);
     const playerListCopy = JSON.parse(JSON.stringify(responseUsers.data));
 
     if (index !== -1) {
-      console.log('store user v foudn');
       playerListCopy[index].nickname = nickname;
       playerListCopy[index].age = bday;
       playerListCopy[index].aboutMe = aboutMe;
       playerListCopy[index].profileUrl = imageUrl;
     } else {
-      console.log('store user v else push');
       playerListCopy.push({ nickname, bday, aboutMe, email, firstName, lastName, profileUrl: imageUrl, userID: userId, isAdmin: isAdmin });
     }
     yield axios.put(

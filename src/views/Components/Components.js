@@ -57,7 +57,7 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Chelsea FC"
+        brand="Home"
         rightLinks={<HeaderLinks />}
         fixed
         color="transparent"
@@ -72,7 +72,7 @@ export default function Components(props) {
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>FC Brno Sokol</h1>
+                <h1 className={classes.title}>FC ...</h1>
                 <h3 className={classes.subtitle}></h3>
               </div>
             </GridItem>
@@ -95,12 +95,9 @@ export default function Components(props) {
             />
           )}
         </GridItem>
-        <div className="flex mx-4 my-8">dfjsa jdasl;jf kl;</div>
         <ParagraphSection content={news} headline={newsHeadLine} />
         <CarouselSection />
         <ParagraphSection content={aboutClub} headline={aboutClubHeadLine} />
-        {/*<SectionExamples />*/}
-        <SectionDownload />
       </div>
       <Footer />
     </div>

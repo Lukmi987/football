@@ -124,7 +124,7 @@ const Event = ({
                         <span>{item?.nickname}</span>
                        </div>
                       ) : (
-                        <div key={uuid_v4()} className='bg-primary-yellow p-2 mx-2 text-sm rounded align-self-center'>{userEmail}</div>
+                        <div key={uuid_v4()} className='bg-primary-yellow p-2 mx-2 text-sm rounded align-self-center'>{item?.firstName} {' '} {item?.lastName}</div>
                       )
                   )}
               </div>

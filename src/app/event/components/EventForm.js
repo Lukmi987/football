@@ -124,16 +124,9 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
       <div className={classes.section}>
-        <div>
-          {' '}
-          <img src="./bg.jpg" alt="Girl in a jacket" width="500" height="600" />
-        </div>
         <div className={classes.container}>
           <GridContainer className={classes.textCenter} justify="center">
             <GridItem xs={12} sm={12} md={4}>
-              <div className={classes.title}>
-                <h1>Vytvoř událost</h1>
-              </div>
               {eventStatusMes.success && (
                 <Snackbar
                   anchorOrigin={{
@@ -144,16 +137,6 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
                   autoHideDuration={2000}
                   onClose={setLoadingStatus}
                   message={eventStatusMes.error || 'Uspesne vytvoreno'}
-                  // action={
-                  //     <React.Fragment>
-                  //         <Button color="secondary" size="small" onClick={handleClose}>
-                  //             UNDO
-                  //         </Button>
-                  //         <IconButton size="small" aria-label="close" color="inherit" onClick={handleClose}>
-                  //             <CloseIcon fontSize="small" />
-                  //         </IconButton>
-                  //     </React.Fragment>
-                  // }
                 />
               )}
               {!validDate && (
@@ -170,6 +153,7 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
             </GridItem>
             <GridItem>
               <FormControl className={selectClasses.formControl}>
+                <div className='shadow-sm px-2 rounded'>
                 <InputLabel id="event-type-select">Typ Udalosti</InputLabel>
                 <Select
                   labelId="event-type-select"
@@ -189,9 +173,11 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
                   <MenuItem value={3}>Ukončená</MenuItem>
                   <MenuItem value={4}>Chlastačka</MenuItem>
                 </Select>
+               </div>
               </FormControl>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
                 <Grid container justify="space-between">
+                  <div className='shadow-sm px-2 rounded'>
                   <KeyboardDatePicker
                     margin="normal"
                     id="date-picker-dialog"
@@ -204,6 +190,8 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
                       'aria-label': 'change date',
                     }}
                   />
+                  </div>
+                  <div className='shadow-sm px-2 rounded'>
                   <KeyboardTimePicker
                     margin="normal"
                     id="time-picker"
@@ -215,6 +203,7 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
                       'aria-label': 'change time',
                     }}
                   />
+                  </div>
                 </Grid>
               </MuiPickersUtilsProvider>
 
