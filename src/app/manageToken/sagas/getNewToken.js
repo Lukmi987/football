@@ -19,6 +19,8 @@ export function* getNewToken() {
     localStorage.setItem('refreshToken', response.data.refresh_token);
     const tokenCreatedTime = new Date().getTime().toString();
     localStorage.setItem('tokenCreatedTime', tokenCreatedTime);
+    localStorage.setItem('userEmail', response.data.email);
+    localStorage.setItem('isAdmin', response.data?.isAdmin);
   } catch (e) {
     console.log('manage saga token error', e);
   }

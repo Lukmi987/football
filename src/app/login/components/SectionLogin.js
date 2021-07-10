@@ -1,12 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import Icon from '@material-ui/core/Icon';
 import Check from '@material-ui/icons/Check';
-// @material-ui/icons
 import Email from '@material-ui/icons/Email';
-// core components
 import GridContainer from 'components/Grid/GridContainer.js';
 import GridItem from 'components/Grid/GridItem.js';
 import Card from 'components/Card/Card.js';
@@ -19,9 +16,7 @@ import SnackbarContent from 'components/Snackbar/SnackbarContent.js';
 import styles from 'assets/jss/material-kit-react/views/componentsSections/loginStyle.js';
 import Header from '../../../components/Header/Header';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
-import ManageToken from '../../manageToken/containers/ManageToken';
 import { Redirect } from 'react-router-dom';
-import ManageUserActivity from '../../manageToken/containers/ManageUserActivity';
 
 const useStyles = makeStyles(styles);
 
@@ -32,14 +27,6 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
   const [isSignup, setIsSignup] = useState(true);
   const [isPwdMinLength, setPwdMinLegth] = useState(false);
   const [errorAlert, setErrorAlert] = useState(null);
-
-  // useEffect(()=>{
-  //       setErrorAlert(errorMsg);
-  // // if(idToken) {
-  // //    history.push('/','successLogin');
-  // //   console.log('jo existuje id token');
-  // }
-  //   },[errorMsg,idToken])
 
   const composeFormData = () => ({
     email,
@@ -81,7 +68,7 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
           <Redirect to="/" />
         </>
       )}
-      <Header brand="Login Page" rightLinks={<HeaderLinks />} fixed color="white" />
+      <Header brand="Home" rightLinks={<HeaderLinks />} fixed color="white" />
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer justify="center">
@@ -169,7 +156,7 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary" size="medium" onClick={switchAuthTypeHandler}>
+                    <Button simple color="primary"  onClick={switchAuthTypeHandler}>
                       Prejdi na {isSignup ? 'Prihlasit se' : 'Registraci'}
                     </Button>
                     <Button simple color="primary" size="lg" onClick={handleSubmit}>

@@ -13,9 +13,10 @@ import Tab from 'react-bootstrap/Tab';
 import EventStats from '../event/containers/EventStats';
 import EventNews from '../event/containers/EventNews';
 import ball from '../../assets/img/ball.jpeg'
+
 const useStyles = makeStyles(styles);
 
-export default function Cabin() {
+const Cabin = () => {
   const classes = useStyles();
 
   return (
@@ -46,3 +47,5 @@ export default function Cabin() {
     </div>
   );
 }
+
+export default (Cabin)

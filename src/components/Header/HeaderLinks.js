@@ -35,17 +35,20 @@ export default function HeaderLinks() {
   const [token, setToken] = useState(null);
   const tokenStatus = useSelector((state) => state.manageToken.deleted);
 
+  const userId = localStorage.userID;
+
   useEffect(() => {
     setToken(localStorage.token || null);
   }, [tokenStatus]);
   return (
     <List className={classes.listItem}>
       <ListItem className={classes.listItem}>
-      <Link to="/manage-accounts">
-        <Button color="transparent" className={classes.navLink}>
-          {MANAGE_ACCOUNTS}
-        </Button>
-      </Link>
+        {userId && <Link to="/manage-accounts">
+          <Button color="transparent" className={classes.navLink}>
+            {MANAGE_ACCOUNTS}
+          </Button>
+        </Link>
+        }
       </ListItem>
       <ListItem className={classes.listItem}>
         <Link to={'/about-us'}>
@@ -61,13 +64,14 @@ export default function HeaderLinks() {
           </Button>
         </Link>
       </ListItem>
-      <ListItem className={classes.listItem}>
+      {userId && <ListItem className={classes.listItem}>
         <Link to={'/cabin'}>
           <Button color="transparent" className={classes.navLink}>
             Kabina
           </Button>
         </Link>
       </ListItem>
+      }
       <ListItem className={classes.listItem}>
         {!token ? (
           <Link to={'/login-page'}>

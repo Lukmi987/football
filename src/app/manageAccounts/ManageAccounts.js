@@ -30,27 +30,31 @@ const useStyles = makeStyles(styles);
 export default function ManageAccounts() {
   const classes = useStyles();
   console.log('jsem v kabine voel');
-
+const isAdmin = localStorage.isAdmin;
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
       <div className={classNames(classes.main, classes.mainRaised)}>
         <div className={classes.section}>
           <div className={classes.container}>
-
             <Tabs className="mt-25" defaultActiveKey="profile" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title={CREATE_EVENT}>
+              {isAdmin && <Tab eventKey="home" title={CREATE_EVENT}>
                 <EventForm />
               </Tab>
+              }
               <Tab eventKey="profile" title={MANAGE_ACCOUNT}>
                 <UserAccount />
               </Tab>
+              {isAdmin &&
+              <>
               <Tab eventKey="AddPlayer" title={ADD_PLAYER}>
                 <AddPlayer />
               </Tab>
-              <Tab eventKey="Manage_Admins" title={MANAGE_ADMINS}>
+                <Tab eventKey="Manage_Admins" title={MANAGE_ADMINS}>
                 <PlayersAdministration />
-              </Tab>
+                </Tab>
+              </>
+              }
             </Tabs>
           </div>
         </div>

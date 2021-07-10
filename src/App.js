@@ -14,6 +14,7 @@ import ManageAccounts from './app/manageAccounts/ManageAccounts';
 
 const App = () => {
   const hist = createBrowserHistory();
+const token = localStorage.token;
 
   return (
     <Provider store={store}>
@@ -24,10 +25,10 @@ const App = () => {
           <Route path="/logout-page" component={LogOut} />
           <Route path="/about-us" component={AboutUs} />
           <Route path="/photo-gallery" component={PhotoGallery} />
-          <Route path="/cabin" component={Cabin} />
-          <Route path="/manage-accounts" component={ManageAccounts} />
+          {token &&  <Route path="/cabin" component={Cabin} /> }
+          {token &&  <Route path="/manage-accounts" component={ManageAccounts} />}
           <Route path="/" component={Components} />
-        </Switch>
+      </Switch>
       </Router>
     </Provider>
   );

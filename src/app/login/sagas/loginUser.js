@@ -33,6 +33,7 @@ export function* loginUser(action) {
     const tokenCreatedTime = new Date().getTime().toString();
     localStorage.setItem('tokenCreatedTime', tokenCreatedTime);
     localStorage.setItem('userEmail', response.data.email);
+    localStorage.setItem('isAdmin', response.data?.isAdmin);
     yield put({ type: SET_TOKEN_STATUS, data: { deleted: false } });
 
     // to do
