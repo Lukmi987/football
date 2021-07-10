@@ -35,7 +35,7 @@ export default function HeaderLinks() {
   const [token, setToken] = useState(null);
   const tokenStatus = useSelector((state) => state.manageToken.deleted);
 
-  const userId = localStorage.userID;
+  const userId = localStorage.userId;
 
   useEffect(() => {
     setToken(localStorage.token || null);

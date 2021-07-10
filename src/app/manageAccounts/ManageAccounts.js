@@ -30,7 +30,9 @@ const useStyles = makeStyles(styles);
 export default function ManageAccounts() {
   const classes = useStyles();
   console.log('jsem v kabine voel');
-const isAdmin = localStorage.isAdmin;
+// const isAdmin = localStorage.isAdmin !== 'undefined';
+  const isAdmin = true;
+  console.log('jsem v kabine voel', isAdmin);
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
@@ -46,14 +48,13 @@ const isAdmin = localStorage.isAdmin;
                 <UserAccount />
               </Tab>
               {isAdmin &&
-              <>
               <Tab eventKey="AddPlayer" title={ADD_PLAYER}>
                 <AddPlayer />
               </Tab>
-                <Tab eventKey="Manage_Admins" title={MANAGE_ADMINS}>
+              }
+              {isAdmin && <Tab eventKey="Manage_Admins" title={MANAGE_ADMINS}>
                 <PlayersAdministration />
-                </Tab>
-              </>
+              </Tab>
               }
             </Tabs>
           </div>

@@ -1,5 +1,5 @@
 import axios from '../../axios-football';
-import { SET_OCCURRENCES_WITH_USERS } from '../../constants/actionTypes';
+import { SET_FUTURE_OCCURRENCES, SET_OCCURRENCES_WITH_USERS } from '../../constants/actionTypes';
 import { loadEvents } from '../../helpers/eventHelpers';
 import _ from 'lodash';
 import { put, select } from 'redux-saga/effects';
@@ -44,10 +44,13 @@ export function* fetchOccurrences() {
     };
     const occurrencesWithUsers = mapNodeIdAndUsersToEachEvent(occurrenceList);
 
-    occurrencesWithUsers.sort(function (a, b) {
+    const futureEvents = occurrencesWithUsers.filter((item) => item.creationTime > new Date().getTime())
+    // Sort events according their creating date
+    futureEvents.sort(function (a, b) {
       return a?.creationTime - b?.creationTime;
     });
-    console.log('ahh', occurrencesWithUsers);
+
+    console.log('ahh', futureEvents);
     function mapUsers(occurrencesValues, index, responseUsers) {
       return occurrencesValues[index].attendance.map((attendance) => {
         const user = responseUsers.data.filter((user) => user.userID === attendance.userId);
@@ -60,6 +63,7 @@ export function* fetchOccurrences() {
       });
     }
 
+    yield put({type: SET_FUTURE_OCCURRENCES, data: futureEvents})
     yield put({ type: SET_OCCURRENCES_WITH_USERS, data: occurrencesWithUsers });
   } catch (e) {
     console.log(e);

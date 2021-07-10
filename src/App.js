@@ -14,8 +14,8 @@ import ManageAccounts from './app/manageAccounts/ManageAccounts';
 
 const App = () => {
   const hist = createBrowserHistory();
-const token = localStorage.token;
-
+const userId = localStorage.userId;
+console.log(userId?.length, 'she has to');
   return (
     <Provider store={store}>
       <ManageUserActivity />
@@ -25,8 +25,8 @@ const token = localStorage.token;
           <Route path="/logout-page" component={LogOut} />
           <Route path="/about-us" component={AboutUs} />
           <Route path="/photo-gallery" component={PhotoGallery} />
-          {token &&  <Route path="/cabin" component={Cabin} /> }
-          {token &&  <Route path="/manage-accounts" component={ManageAccounts} />}
+          {userId &&  <Route path="/cabin" component={Cabin} /> }
+          {userId &&  <Route path="/manage-accounts" component={ManageAccounts} />}
           <Route path="/" component={Components} />
       </Switch>
       </Router>

@@ -1,10 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react';
 import IdleTimer from 'react-idle-timer';
-import { getTimeDiffSinceTokenCreation } from '../../helpers/manageTokenHelpers';
 import Modal from 'react-bootstrap/Modal';
 import Button from '../../../components/CustomButtons/Button';
 
+function getTimeDiffSinceTokenCreation() {
+  const currentTimeInMill = new Date().getTime();
+  return currentTimeInMill - parseInt(localStorage.tokenCreatedTime) || 0;
+}
+
 const ManageUserActivity = ({ setTokenStatus, getNewToken, tokenStatus }) => {
+ // Component is first called when user enters page, coz our dependency tokenStatus is set in loginUser saga  this component is calle again
   const idleTimeRef = useRef(null);
   const sessionTimeoutRef = useRef(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
@@ -13,13 +18,11 @@ const ManageUserActivity = ({ setTokenStatus, getNewToken, tokenStatus }) => {
   const oneDay = 86400000;
   const thirtyMin = 1800000;
   const tokenCreatedTime = parseInt(localStorage.tokenCreatedTime);
-  const timeDiffSinceTokenCreation = getTimeDiffSinceTokenCreation(tokenCreatedTime);
 
   useEffect(() => {
-    console.log('registeredIdleTimeout', registeredIdleTimeout);
-    if (timeDiffSinceTokenCreation > oneDay) {
+    if (getTimeDiffSinceTokenCreation() > oneDay) {
       localStorage.clear();
-    } else if (tokenCreatedTime) {
+          } else if (tokenCreatedTime) {
       setTokenStatus({ deleted: false });
     }
   }, []);
@@ -30,7 +33,7 @@ const ManageUserActivity = ({ setTokenStatus, getNewToken, tokenStatus }) => {
   };
 
   const handleAction = () => {
-    if (timeDiffSinceTokenCreation > thirtyMin) {
+    if (getTimeDiffSinceTokenCreation() > thirtyMin) {
       getNewToken();
     }
   };
@@ -42,15 +45,12 @@ const ManageUserActivity = ({ setTokenStatus, getNewToken, tokenStatus }) => {
   };
 
   const logOut = () => {
-    console.log('jsem  v logout ,', registeredIdleTimeout);
     setRegisteredIdleTimeout(false);
     localStorage.clear();
     setModalIsOpen(false);
     clearTimeout(sessionTimeoutRef.current);
     setTokenStatus({ deleted: true });
   };
-  // console.log('jsem konec manage registeredIdleTimeout !!!!!!!!',registeredIdleTimeout);
-  console.log('token status', tokenStatus);
   return (
     <div>
       <Modal show={modalIsOpen} backdrop="static" keyboard={false} centered={true}>

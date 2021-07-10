@@ -14,11 +14,12 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
   const userId = localStorage.userId;
-  const [startDate, setStartDate] = useState(new Date().getTime());
+  const [startDate, setStartDate] = useState(new Date().getTime() - 7889400000);
   const [endDate, setEndDate] = useState(new Date().getTime());
   const [eventType, setEventType] = useState(1);
   const [usersAttendance, setUsersAttendance] = useState();
   const [totalSelectedEvents, setTotalSelectedEvents] = useState();
+
 
   useEffect(() => {
     fetchUsersProfiles();
@@ -28,7 +29,6 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
     if (occurrencesList && usersProfiles) {
       const eventsAccordingDate = filterEventsAccordingData(startDate, endDate);
       const eventsAccordingTypeAndDate = filterEventsAccordingType(eventType, eventsAccordingDate);
-      console.log('eventsAccordingTypeAndDate', eventsAccordingTypeAndDate);
 
       const usersAttendanceQuantity = countUsersAttendance(eventsAccordingTypeAndDate);
       setUsersAttendance(usersAttendanceQuantity);
@@ -155,7 +155,7 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
                     </div>
                     <div>
                       <h4>
-                        {user?.firstName} {" "} {user?.lastName}
+                        {user?.firstName} {" "} {user?.lastName} byl celkem na {user.attendance}
                       </h4>
                       <LinearProgress
                         variant="determinate"

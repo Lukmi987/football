@@ -45,6 +45,8 @@ const Event = ({
     return occurrencesList.filter((event) => event.creationTime < Date.now());
   }
 
+  console.log('occurrencesList',occurrencesList);
+
   const getEventTypeName = (eventType) => {
     if (eventType === 1) return 'Trening';
     if (eventType === 2) return 'Zápas';
@@ -66,43 +68,43 @@ const Event = ({
   }
 
   const userAttendanceStatus = (row) => {
-    const userAttendanceIndex = row?.attendance.findIndex((el) => el?.userID === userId);
+    const userAttendanceIndex = row?.attendance?.findIndex((el) => el?.userID === userId);
     let userAttendanceStatus;
     if (userAttendanceIndex !== -1) {
-      userAttendanceStatus = row.attendance[userAttendanceIndex].status;
+      userAttendanceStatus = row?.attendance[userAttendanceIndex]?.status;
       return userAttendanceStatus;
     }
   };
 
-  const disabledButton = attendanceButton && nearestEvents[0].creationTime !== rowId;
+  const disabledButton = attendanceButton && occurrencesList[0].creationTime !== rowId;
 
   return (
     <div>
       <GridContainer justify="center">
-        {nearestEvents.length && (
+        {occurrencesList.length && (
           <>
             <GridItem className="cabin">
               <h3 className="cabin-headline">
-                Další {getEventTypeName(nearestEvents[0].eventType)} tě čeká{' '}
-                {timeStampToData(nearestEvents[0]?.creationTime)}
+                Další {getEventTypeName(occurrencesList[0].eventType)} tě čeká{' '}
+                {timeStampToData(occurrencesList[0]?.creationTime)}
               </h3>
               <div className="cabin-nearest-attendance">
-                {attendanceButton && nearestEvents[0].creationTime === rowId && <Spinner />}
+                {attendanceButton && occurrencesList[0].creationTime === rowId && <Spinner />}
                 {!attendanceButton && (
                   <EventAttendanceButtons
-                    occurrence={nearestEvents[0]}
+                    occurrence={occurrencesList[0]}
                     handleAttendance={handleAttendance}
-                    userAttendanceStatus={userAttendanceStatus(nearestEvents[0])}
-                    cr={nearestEvents[0].creationTime}
+                    userAttendanceStatus={userAttendanceStatus(occurrencesList[0])}
+                    cr={occurrencesList[0].creationTime}
                   />
                 )}
                 {disabledButton && (
                   <EventAttendanceButtons
-                    occurrence={nearestEvents[0]}
+                    occurrence={occurrencesList[0]}
                     disabledButton={disabledButton}
                     handleAttendance={handleAttendance}
-                    userAttendanceStatus={userAttendanceStatus(nearestEvents[0])}
-                    cr={nearestEvents[0].creationTime}
+                    userAttendanceStatus={userAttendanceStatus(occurrencesList[0])}
+                    cr={occurrencesList[0].creationTime}
                   />
                 )}
               </div>
@@ -110,8 +112,8 @@ const Event = ({
             </GridItem>
             <GridItem xs={12} sm={12} md={12} className="cabin-nearest-avatars">
               <div className="flex flex-wrap">
-                {nearestEvents[0]?.attendance &&
-                  nearestEvents[0].attendance.map(
+                {occurrencesList[0]?.attendance &&
+                occurrencesList[0].attendance.map(
                     (item) =>
                       item?.profileUrl ? (
                        <div className='flex items-center my-2 flex-column'>

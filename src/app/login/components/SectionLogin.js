@@ -17,6 +17,7 @@ import styles from 'assets/jss/material-kit-react/views/componentsSections/login
 import Header from '../../../components/Header/Header';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
 import { Redirect } from 'react-router-dom';
+import ManageUserActivity from '../../manageToken/containers/ManageUserActivity';
 
 const useStyles = makeStyles(styles);
 
@@ -31,7 +32,6 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
   const composeFormData = () => ({
     email,
     pwd,
-    isSignup,
   });
 
   const handleInputChange = (e) => {
@@ -88,7 +88,7 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
               <Card>
                 <form className={classes.form}>
                   <CardHeader color="primary" className={classes.cardHeader}>
-                    {isSignup ? <h4>Registrace</h4> : <h4>Prihlaseni</h4>}
+                    <span className='text-max'>Přihlásit se</span>
                     <div className={classes.socialLine}>
                       <Button
                         justIcon
@@ -156,12 +156,11 @@ export default function SectionLogin({ idToken, processLoginForm, history, error
                     />
                   </CardBody>
                   <CardFooter className={classes.cardFooter}>
-                    <Button simple color="primary"  onClick={switchAuthTypeHandler}>
-                      Prejdi na {isSignup ? 'Prihlasit se' : 'Registraci'}
-                    </Button>
+                    <div className='flex justify-center'>
                     <Button simple color="primary" size="lg" onClick={handleSubmit}>
-                      Submit
+                      Přihlásit se
                     </Button>
+                    </div>
                   </CardFooter>
                 </form>
               </Card>

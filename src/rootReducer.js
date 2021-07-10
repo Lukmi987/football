@@ -3,6 +3,7 @@ import events from './app/event/reducers/events';
 import createEvent from './app/event/reducers/createEvent';
 import loadingStatus from './app/loadingStatus/reducers/loadingStatus';
 import occurrences from './app/event/reducers/occurrences';
+import futureOccurrences from './app/event/reducers/futureOccurrences';
 import login from './app/login/reducers/login';
 import logout from './app/login/reducers/logout';
 import user from './app/userAccount/reducers/storeUser';
@@ -24,13 +25,14 @@ const rootReducer = combineReducers({
   logout,
   events,
   occurrences,
+  futureOccurrences,
   user,
   occurrencesWithUsers,
   loadingStatus,
   manageToken,
   usersProfiles,
   eventNews,
-  players
+  players,
 });
 
 export default rootReducer;

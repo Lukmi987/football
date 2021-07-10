@@ -5,6 +5,11 @@ export const getOccurrences = createSelector(
   (state) => state.occurrencesWithUsers,
 );
 
+export const getFutureOccurrences = createSelector(
+  (state) => state,
+  (state) => state.futureOccurrences,
+);
+
 export const getCreateEventIsCreated = createSelector(
   (state) => state,
   (state) => state.createEvent.isEventCreated,
