@@ -20,19 +20,46 @@ import {
 
 import * as PropTypes from 'prop-types';
 import Card from "../../../components/Card/Card";
+import { Snackbar } from '@material-ui/core';
+import Check from '@material-ui/icons/Check';
+import { setLoadingStatus } from '../../loadingStatus/actions';
+import Spinner from '../../Spinner';
+import Button from '../../../components/CustomButtons/Button';
+import CardBody from '../../../components/Card/CardBody';
 const useStyles = makeStyles(styles);
 
-export default function AddPlayer({ createPlayer }) {
+export default function AddPlayer({ createPlayer, loadingStatus, setLoadingStatus, }) {
   const classes = useStyles();
-
+console.log('ff');
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer className={classes.textCenter} justify="center">
-            <GridItem xs={12} sm={12} md={8}>
+            <GridItem xs={12} sm={12} md={4}>
+              <Snackbar
+                anchorOrigin={{
+                  vertical: 'top',
+                  horizontal: 'center',
+                }}
+                message={
 
+                    loadingStatus.error ? 'Chyba Email jiz existuje' :
+                      <span>
+                      <b>Úspěch:</b> Uživatelský profil byl úspěšně založen !!
+                    </span>
+
+                }
+                open={loadingStatus.success || loadingStatus.error}
+                autoHideDuration={2000}
+                onClose={setLoadingStatus}
+                color="success"
+                icon={Check}
+                className="mt-10"
+              />
+            </GridItem>
+            <GridItem xs={12} sm={12} md={8}>
               <Formik
                 initialValues ={{
                 firstName: '',
@@ -48,13 +75,9 @@ export default function AddPlayer({ createPlayer }) {
               .max(20, Last_Name_Limit)
               .required('Required'),
               email: Yup.string().email().required('Required'),
-                password: Yup
-                  .string()
-                  .required('Please Enter your password')
-                  .matches(
-                    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                    "Must Contain 8 Characters, One Uppercase, One Lowercase, One Number and one special case Character"
-                  ),
+                password: Yup.string()
+                  .min(6, "Heslo musí mít minimalně 6 znaků")
+                  .required('Required'),
             })}
                 onSubmit={(values, { setSubmitting }) => {
                   createPlayer(values)
@@ -88,7 +111,15 @@ export default function AddPlayer({ createPlayer }) {
                       <label htmlFor="isAdmin">Admin</label>
                       <Field name="isAdmin" type="checkbox" />
                   </div>
-                  <button type="submit">{Create}</button>
+                  <div className='mt-1'>
+                    {loadingStatus.isLoading ? (
+                      <Spinner />
+                    ) : (
+                      <Button type="submit" simple color="primary" size="lg"  >
+                        {Create}
+                      </Button>
+                    )}
+                  </div>
                 </Form>
               </Formik>
             </GridItem>

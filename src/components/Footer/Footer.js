@@ -36,6 +36,9 @@ export default function Footer(props) {
             <ListItem className={classes.inlineBlock}>
               <Link to={'/about-us'}>
                 <Button color="transparent" className={classes.navLink}>
+                  Copyright (c) 2020 Creative Tim
+                </Button>
+                <Button color="transparent" className={classes.navLink}>
                   O nás
                 </Button>
               </Link>

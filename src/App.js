@@ -25,8 +25,8 @@ console.log(userId?.length, 'she has to');
           <Route path="/logout-page" component={LogOut} />
           <Route path="/about-us" component={AboutUs} />
           <Route path="/photo-gallery" component={PhotoGallery} />
-          {userId &&  <Route path="/cabin" component={Cabin} /> }
-          {userId &&  <Route path="/manage-accounts" component={ManageAccounts} />}
+          <Route path="/cabin" component={Cabin} /> }
+          <Route path="/manage-accounts" component={ManageAccounts} />
           <Route path="/" component={Components} />
       </Switch>
       </Router>

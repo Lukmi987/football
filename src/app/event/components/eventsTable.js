@@ -58,7 +58,7 @@ function createData(name, calories, fat, carbs, protein, price) {
 export function timeStampToData(timeStamp) {
   const date = new Date(timeStamp);
   const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
-  return new Intl.DateTimeFormat('de-DE', options).format(timeStamp)
+  return new Intl.DateTimeFormat('default', options).format(timeStamp)
 }
 
 const getEventType = (eventTypeId) => {
