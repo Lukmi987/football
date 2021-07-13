@@ -9,11 +9,11 @@ import AboutUs from './app/aboutUs/AboutUs';
 import PhotoGallery from './app/photoGallery/PhotoGallery';
 import Cabin from './app/cabin/Cabin';
 import Components from './views/Components/Components';
-import { createBrowserHistory } from 'history';
+import { createBrowserHistory, createHashHistory } from 'history';
 import ManageAccounts from './app/manageAccounts/ManageAccounts';
 
 const App = () => {
-  const hist = createBrowserHistory();
+  const hist = createHashHistory();
 const userId = localStorage.userId;
 console.log(userId?.length, 'she has to');
   return (

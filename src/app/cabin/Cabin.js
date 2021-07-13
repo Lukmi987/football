@@ -13,11 +13,13 @@ import Tab from 'react-bootstrap/Tab';
 import EventStats from '../event/containers/EventStats';
 import EventNews from '../event/containers/EventNews';
 import ball from '../../assets/img/ball.jpeg'
+import Fade from 'react-bootstrap/Fade'
 
 const useStyles = makeStyles(styles);
 
 const Cabin = () => {
   const classes = useStyles();
+  const [key, setKey] = useState('events');
 
   return (
     <div>
@@ -26,14 +28,15 @@ const Cabin = () => {
         <div className={classes.section}>
           <div className={classes.container}>
             <GridContainer className={classes.textCenter} justify="center">
-              <img src={ball} className='mt-12 rounded-circle' width='400' height='300'/>
+              <img src={ball} className='mt-12 rounded-circle ' width='400' height='300'/>
             </GridContainer>
 
-            <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
-              <Tab eventKey="home" title="Statistiky">
+            <Tabs  defaultActiveKey="profile"  activeKey={key} onSelect={(k) => {setKey(k); console.log('key',k)}} id="uncontrolled-tab-example">
+              <Tab  eventKey="home"  title="Statistiky" >
                 <EventStats />
               </Tab>
-              <Tab eventKey="profile" title="Manage Events">
+
+              <Tab eventKey="events" title="Manage Events">
                 <Event />
               </Tab>
               <Tab eventKey="contact" title="Novinky">

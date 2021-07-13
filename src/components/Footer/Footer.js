@@ -32,29 +32,23 @@ export default function Footer(props) {
     <footer className={footerClasses}>
       <div className={classes.container}>
         <div className={classes.left}>
-          <List className={classes.list}>
-            <ListItem className={classes.inlineBlock}>
+          <List className='flex sm:flex-col items-center'>
+            <ListItem className='inline-block'>
               <Link to={'/about-us'}>
                 <Button color="transparent" className={classes.navLink}>
                   Copyright (c) 2020 Creative Tim
                 </Button>
-                <Button color="transparent" className={classes.navLink}>
-                  O nás
-                </Button>
+                {/*<Button color="transparent" className={classes.navLink}>*/}
+                {/*  O nás*/}
+                {/*</Button>*/}
               </Link>
             </ListItem>
+            <div className='w-full'>
+              {1900 + new Date().getYear()} , made by Komprs Lukas
+            </div>
           </List>
         </div>
-        <div className={classes.right}>
-          &copy; {1900 + new Date().getYear()} , made by{' '}
-          <a
-            href=""
-            className={aClasses}
-            target="_blank"
-          >
-            Komprs Lukas
-          </a>{' '}
-        </div>
+
       </div>
     </footer>
   );

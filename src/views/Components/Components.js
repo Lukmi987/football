@@ -57,10 +57,10 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Home"
+        brand="Domů"
         rightLinks={<HeaderLinks />}
         fixed
-        color="transparent"
+        color="white"
         changeColorOnScroll={{
           height: 1,
           color: 'white',

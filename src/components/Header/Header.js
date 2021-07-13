@@ -62,7 +62,7 @@ export default function Header(props) {
 
   const brandComponent = (
     <Link to={'/'}>
-      <Button className={classes.title}>{brand}</Button>
+      <Button className="shadow rounded-circle">{brand}</Button>
     </Link>
   );
   return (

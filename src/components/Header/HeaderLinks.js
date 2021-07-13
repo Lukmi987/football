@@ -74,7 +74,7 @@ export default function HeaderLinks() {
       }
       <ListItem className={classes.listItem}>
         {!token ? (
-          <Link to={'/login-page'}>
+          <Link to='/login-page'>
             <Button color="transparent" className={classes.navLink}>
               Přihlášní/Registrace
             </Button>
