@@ -32,6 +32,7 @@ export function* fetchOccurrences() {
             let occurrencesValues = Object.values(occurrences);
             for (let k = 0; k < occurrencesValues.length; k++) {
               const attendance = mapUsers(occurrencesValues, k, responseUsers);
+              console.log('map user kk',attendance);
               occurrencesValues[k].attendance = attendance;
               console.log('bim', occurrencesValues);
               let result = { ...node, ...occurrencesValues[k] };
@@ -44,22 +45,26 @@ export function* fetchOccurrences() {
     };
     const occurrencesWithUsers = mapNodeIdAndUsersToEachEvent(occurrenceList);
 
+
     const futureEvents = occurrencesWithUsers.filter((item) => item.creationTime > new Date().getTime())
     // Sort events according their creating date
     futureEvents.sort(function (a, b) {
       return a?.creationTime - b?.creationTime;
     });
 
-    console.log('ahh', futureEvents);
+    console.log('occurrencesWithUsers futureEvents',futureEvents);
+
     function mapUsers(occurrencesValues, index, responseUsers) {
       return occurrencesValues[index].attendance.map((attendance) => {
         const user = responseUsers.data.filter((user) => user.userID === attendance.userId);
         const userCopy = JSON.parse(JSON.stringify(user));
 
-        if (attendance.status === 0 || attendance.status === 1 || attendance.status === 2) {
-          userCopy[0].status = attendance.status;
+        if ((attendance?.status === 0 || attendance?.status === 1 || attendance?.status === 2) && userCopy.length) {
+          console.log('moje attendance', attendance?.status);
+          userCopy[0].status = attendance?.status || 3;
+          console.log('moje attendance za user copy',attendance?.status);
         }
-        return userCopy[0];
+        return userCopy[0] ? userCopy[0] : [];
       });
     }
 

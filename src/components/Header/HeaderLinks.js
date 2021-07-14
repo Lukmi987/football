@@ -27,6 +27,7 @@ import {
   MANAGE_ACCOUNTS,
   MANAGEACCOUNT,
 } from '../../app/constants/headerLinks';
+import { Avatar } from '@material-ui/core';
 
 const useStyles = makeStyles(styles);
 
@@ -34,12 +35,23 @@ export default function HeaderLinks() {
   const classes = useStyles();
   const [token, setToken] = useState(null);
   const tokenStatus = useSelector((state) => state.manageToken.deleted);
-
+  const [profileUrl, setProfileUrl] = useState();
   const userId = localStorage.userId;
 
+
   useEffect(() => {
+
     setToken(localStorage.token || null);
   }, [tokenStatus]);
+
+  useEffect(() => {
+    console.log('hmm use effect headerlinks');
+    if(localStorage?.profileUrl) {
+      console.log('hmm use effect headerlinks st profile',localStorage);
+      setProfileUrl(localStorage.profileUrl)
+    }
+  },[localStorage?.profileUrl])
+
   return (
     <List className={classes.listItem}>
       <ListItem className={classes.listItem}>
@@ -93,21 +105,6 @@ export default function HeaderLinks() {
             <DeleteIcon />
           </IconButton>
         </Tooltip>*/}
-        <Tooltip
-          id="instagram-twitter"
-          title="Follow us on twitter"
-          placement={window.innerWidth > 959 ? 'top' : 'left'}
-          classes={{ tooltip: classes.tooltip }}
-        >
-          <Button
-            href="https://twitter.com/CreativeTim?ref=creativetim"
-            target="_blank"
-            color="transparent"
-            className={classes.navLink}
-          >
-            <i className={classes.socialIcons + ' fab fa-twitter'} />
-          </Button>
-        </Tooltip>
       </ListItem>
       <ListItem className={classes.listItem}>
         <Tooltip
@@ -142,6 +139,9 @@ export default function HeaderLinks() {
             <i className={classes.socialIcons + ' fab fa-instagram'} />
           </Button>
         </Tooltip>
+      </ListItem>
+      <ListItem className={classes.listItem}>
+      <div className='mt-1'><Avatar src={profileUrl} /></div>
       </ListItem>
     </List>
   );

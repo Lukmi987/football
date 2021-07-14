@@ -102,7 +102,7 @@ export default function UserAccount({ storeUser, user, loadingStatus, setLoading
                 />
               </GridItem>
             )}
-            <div className='p-4 shadow border flex flex-col rounded  items-center'>
+            <div className='sm:p-1 lg:p-4 shadow border flex flex-col rounded  items-center'>
               <GridItem xs={12} sm={8} md={6}>
                 <div className='flex flex-column'>
                 <h1 className='mb-6'>Vyplň základní údaje o sobě</h1>
@@ -164,11 +164,11 @@ export default function UserAccount({ storeUser, user, loadingStatus, setLoading
                       ),
                     }}
                   />
-                  <div className='mt-15'>
+                  <div className='mt-8'>
                     {loadingStatus.isLoading ? (
                       <Spinner />
                     ) : (
-                      <Button simple color="primary" size="lg" onClick={handleSubmit} >
+                      <Button color="primary" size="lg" onClick={handleSubmit} >
                         Potvrď
                       </Button>
                     )}

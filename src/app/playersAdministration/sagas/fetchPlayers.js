@@ -12,7 +12,9 @@ export function* fetchPlayers() {
         `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
       );
 
-    yield put({type: SET_PLAYERS, data: responseUsers.data})
+      // const responUsersCopy = JSON.parse(JSON.stringify(responseUsers.data));
+
+   if(responseUsers.data) yield put({type: SET_PLAYERS, data: responseUsers.data})
   } catch (e) {
 
   }

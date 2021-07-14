@@ -78,9 +78,9 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
   };
 
   const dateListener = (id) => (ev) => handleDateChange(id, ev);
-
   const handleEventType = (ev) => setEventType(ev.target.value);
 
+  const overAll = 'byl celkem na';
   return (
     <div>
       <GridContainer justify="left">
@@ -155,7 +155,9 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
                     </div>
                     <div>
                       <h4>
-                        {user?.firstName} {" "} {user?.lastName} byl celkem na {user.attendance}
+                        {/*{user?.firstName} {" "} {user?.lastName} byl celkem na {user.attendance}*/}
+                        {user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName} ${overAll} ${user.attendance}` : user?.nickname ?
+                         `${user?.nickname} ${overAll} ${user.attendance}`  : `${user?.email} ${overAll} ${user.attendance}` }
                       </h4>
                       <LinearProgress
                         variant="determinate"

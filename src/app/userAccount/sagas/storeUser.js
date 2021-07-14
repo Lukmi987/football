@@ -11,9 +11,10 @@ export function* storeUser(action) {
     const responseUsers = yield axios.get(
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
     );
+
     const findUser = (user) => user.userID === userId;
-    const index = responseUsers.data.findIndex(findUser);
-    const playerListCopy = JSON.parse(JSON.stringify(responseUsers.data));
+    const index = responseUsers.data ? responseUsers.data.findIndex(findUser) : -1;
+    const playerListCopy = responseUsers.data ? JSON.parse(JSON.stringify(responseUsers.data)) : [];
 
     if (index !== -1) {
       playerListCopy[index].nickname = nickname;
@@ -27,6 +28,8 @@ export function* storeUser(action) {
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
       playerListCopy,
     );
+    localStorage.setItem('profileUrl', imageUrl);
+
     yield put({ type: STORE_USER, data: action.user });
     yield put({ type: SET_LOADING_EVENT, data: { isLoading: false, success: true, error: false } });
   } catch (e) {

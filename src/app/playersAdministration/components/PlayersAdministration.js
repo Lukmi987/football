@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import GridContainer from 'components/Grid/GridContainer.js';
-import GridItem from 'components/Grid/GridItem.js';
 import styles from 'assets/jss/material-kit-react/views/componentsSections/downloadStyle.js';
 import Header from '../../../components/Header/Header';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
@@ -33,12 +32,12 @@ useEffect(()=> {
         <div className={classes.section}>
           <div className={classes.container}>
           <GridContainer className={classes.textCenter} justify="center">
-            <GridItem xs={12} sm={12} md={8} >
-              <ul className=' flex flex-column  align-items-center shadow-lg  pt-5'>
+
+              <ul className=' flex flex-column  align-items-center shadow-lg  sm:p-2  lg:p-4 rounded'>
               {players.length && players.map(player =>
               <li key={uuid_v4()} className='flex'>
-                <div className='w-40 h-10'><h1>{player?.firstName}{" "}{player?.lastName}</h1></div>
-                <div className="ml-10">
+                <div className='sm:w-17 w-60 sm:h-8 h-10'><h1>{player?.firstName || player?.lastName ? `${player?.firstName} ${player?.lastName}` : player?.nickname ? player?.nickname : player?.email }</h1></div>
+                <div className="sm:ml-3 ml-10">
                   {loadingStatus.isLoading && selectedUser === player.email ? <Spinner /> :
                   <Switch  checked={player?.isAdmin} name={player.email}  onChange={(ev) => handleChange(ev, player) } />
                   }
@@ -46,7 +45,7 @@ useEffect(()=> {
               </li>
               )}
               </ul>
-            </GridItem>
+
           </GridContainer>
         </div>
       </div>

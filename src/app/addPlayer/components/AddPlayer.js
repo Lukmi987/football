@@ -30,14 +30,15 @@ const useStyles = makeStyles(styles);
 
 export default function AddPlayer({ createPlayer, loadingStatus, setLoadingStatus, }) {
   const classes = useStyles();
-console.log('ff');
+const fiedStyles = 'py-1 sm:w-25 rounded shadow';
+  const labelStyles = 'text-black-50 text-lg font-semibold'
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
       <div className={classes.section}>
         <div className={classes.container}>
           <GridContainer className={classes.textCenter} justify="center">
-            <GridItem xs={12} sm={12} md={4}>
+            <GridItem xs={12} sm={12} >
               <Snackbar
                 anchorOrigin={{
                   vertical: 'top',
@@ -85,37 +86,37 @@ console.log('ff');
               >
                 <Form className="flex w-full justify-content-center flex-column bg-neutral-graylight p-6 shadow-lg rounded">
                   <div className=' mb-5 flex flex-column items-center'>
-                   <label htmlFor="firstName">{First_Name}</label>
-                  <Field name="firstName" type="text" className='py-2 rounded shadow' />
+                   <label className={labelStyles} htmlFor="firstName">{First_Name}</label>
+                  <Field name="firstName" type="text" className={fiedStyles} />
                   <ErrorMessage name="firstName" />
                   </div>
 
                   <div className='mb-5 flex flex-column items-center'>
-                      <label htmlFor="lastName">{Last_Name}</label>
-                      <Field name="lastName" type="text" />
+                      <label className={labelStyles} htmlFor="lastName">{Last_Name}</label>
+                      <Field className={fiedStyles} name="lastName" type="text" />
                   <ErrorMessage name="lastName" />
                   </div>
 
                   <div className='mb-5 flex flex-column items-center'>
-                    <label htmlFor="email">Email</label>
-                  <Field name="email" type="email" />
+                    <label className={labelStyles} htmlFor="email">Email</label>
+                  <Field className={fiedStyles} name="email" type="email" />
                   <ErrorMessage name="email" />
                   </div>
 
                   <div className='mb-5 flex flex-column items-center'>
-                      <label htmlFor="password">Pwd</label>
-                      <Field name="password" type="password" />
+                      <label className={labelStyles} htmlFor="password">Pwd</label>
+                      <Field className={fiedStyles} name="password" type="password" />
                     <ErrorMessage name="password" />
                   </div>
                   <div className='mb-5 flex flex-column items-center'>
-                      <label htmlFor="isAdmin">Admin</label>
+                      <label className={labelStyles} htmlFor="isAdmin">Admin práva</label>
                       <Field name="isAdmin" type="checkbox" />
                   </div>
                   <div className='mt-1'>
                     {loadingStatus.isLoading ? (
                       <Spinner />
                     ) : (
-                      <Button type="submit" simple color="primary" size="lg"  >
+                      <Button type="submit"  color="primary" size="lg"  >
                         {Create}
                       </Button>
                     )}
