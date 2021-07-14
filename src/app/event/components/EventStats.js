@@ -106,11 +106,12 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
             </FormControl>
             <div>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <div className=' shadow flex max-w-md  justify-center rounded mt-2 pl-1'>
                 <KeyboardDatePicker
                   margin="normal"
                   className="cabin-stats-form-date-from"
                   id="date-picker-dialog"
-                  label="from"
+                  label="Od"
                   required
                   format="dd/MM/yyyy"
                   value={startDate}
@@ -119,10 +120,12 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
                     'aria-label': 'change date',
                   }}
                 />
+               </div>
+                <div className=' shadow flex max-w-md  justify-center rounded mt-2 pl-1'>
                 <KeyboardDatePicker
                   margin="normal"
                   id="date-picker-dialog"
-                  label="to"
+                  label="Do"
                   required
                   format="dd/MM/yyyy"
                   minDate={startDate}
@@ -132,6 +135,7 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
                     'aria-label': 'change date',
                   }}
                 />
+                </div>
               </MuiPickersUtilsProvider>
             </div>
           </div>
