@@ -3,6 +3,7 @@ import { SET_LOADING_EVENT, STORE_USER } from '../../constants/actionTypes';
 import { put } from 'redux-saga/effects';
 
 export function* storeUser(action) {
+  console.log('action',action)
   const { nickname, bday, aboutMe, imageUrl, email, firstName, lastName, userId: userIdAddPlayerForm = null, isAdmin = false } = action.user;
   const userToken = localStorage.token;
   const userId = userIdAddPlayerForm || localStorage.userId;
@@ -16,11 +17,13 @@ export function* storeUser(action) {
     const index = responseUsers.data ? responseUsers.data.findIndex(findUser) : -1;
     const playerListCopy = responseUsers.data ? JSON.parse(JSON.stringify(responseUsers.data)) : [];
 
+    console.log('nickname',nickname.length);
+
     if (index !== -1) {
       playerListCopy[index].nickname = nickname;
       playerListCopy[index].age = bday;
       playerListCopy[index].aboutMe = aboutMe;
-      playerListCopy[index].profileUrl = imageUrl;
+      if(imageUrl.length)  playerListCopy[index].profileUrl = imageUrl;
     } else {
       playerListCopy.push({ nickname, bday, aboutMe, email, firstName, lastName, profileUrl: imageUrl, userID: userId, isAdmin: isAdmin });
     }

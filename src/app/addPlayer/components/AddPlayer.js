@@ -71,7 +71,8 @@ const fiedStyles = 'py-1 sm:w-25 rounded shadow';
               }}
               validationSchema = {Yup.object({
               firstName: Yup.string()
-              .max(15, First_Name_Limit),
+              .max(15, First_Name_Limit)
+                .required('Required'),
               lastName: Yup.string()
               .max(20, Last_Name_Limit)
               .required('Required'),
