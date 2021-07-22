@@ -88,7 +88,7 @@ function Row(props) {
 
   const groupByUsers = groupBy(occurrence.attendance, (a) => a?.status);
   const disabledButton = handleAttendanceButton && occurrence.creationTime !== rowId;
-
+  console.log('gjjg',groupByUsers.get('yes'));
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
@@ -141,9 +141,9 @@ function Row(props) {
                       <Tabs defaultActiveKey="profile" id="uncontrolled-tab-example">
                         <Tab eventKey="home" title="Jdou">
                           <div className='flex wrap'>
-                          {groupByUsers.get(1) ? (
+                          {groupByUsers.get('yes') ? (
                             groupByUsers
-                              .get(1)
+                              .get('yes')
                               .map((user) => (
                                 <div key={uuid_v4()} className='flex items-center my-2 mx-2 flex-column'>
                                   <EventAttendanceList
@@ -160,9 +160,9 @@ function Row(props) {
                         </Tab>
                         <Tab eventKey="profile" title="Neví">
                           <div className='flex wrap'>
-                          {groupByUsers.get(2) ? (
+                          {groupByUsers.get('dunno') ? (
                             groupByUsers
-                              .get(2)
+                              .get('dunno')
                               .map((user) => (
                                 <div key={uuid_v4()} className='flex items-center my-2 mx-2 flex-column'>
                                 <EventAttendanceList
@@ -179,9 +179,9 @@ function Row(props) {
                         </Tab>
                         <Tab eventKey="contact" title="Nejdou">
                           <div className='flex wrap'>
-                          {groupByUsers.get(0) ? (
+                          {groupByUsers.get('no') ? (
                             groupByUsers
-                              .get(0)
+                              .get('no')
                               .map((user) => (
                                 <div key={uuid_v4()} className='flex items-center my-2 mx-2 flex-column'>
                                   <EventAttendanceList

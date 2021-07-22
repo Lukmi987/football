@@ -6,16 +6,13 @@ import { put, select } from 'redux-saga/effects';
 
 export function* fetchOccurrences() {
   try {
-    console.log('ale jooo fetchEvents');
     const userToken = localStorage.token;
-    console.log('............. picccccccccccco fetch', userToken);
     const response = yield axios.get(`/occurrences.json?auth=${userToken}`);
     const responseUsers = yield axios.get(
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
     );
 
     const entr = Object.entries(response.data);
-
     const occurrenceList = JSON.parse(JSON.stringify(entr));
 
     const mapNodeIdAndUsersToEachEvent = (array) => {
@@ -32,9 +29,7 @@ export function* fetchOccurrences() {
             let occurrencesValues = Object.values(occurrences);
             for (let k = 0; k < occurrencesValues.length; k++) {
               const attendance = mapUsers(occurrencesValues, k, responseUsers);
-              console.log('map user kk',attendance);
               occurrencesValues[k].attendance = attendance;
-              console.log('bim', occurrencesValues);
               let result = { ...node, ...occurrencesValues[k] };
               acumm.push(result);
             }
@@ -52,17 +47,14 @@ export function* fetchOccurrences() {
       return a?.creationTime - b?.creationTime;
     });
 
-    console.log('occurrencesWithUsers futureEvents',futureEvents);
 
     function mapUsers(occurrencesValues, index, responseUsers) {
       return occurrencesValues[index].attendance.map((attendance) => {
         const user = responseUsers.data.filter((user) => user.userID === attendance.userId);
         const userCopy = JSON.parse(JSON.stringify(user));
 
-        if ((attendance?.status === 0 || attendance?.status === 1 || attendance?.status === 2) && userCopy.length) {
-          console.log('moje attendance', attendance?.status);
-          userCopy[0].status = attendance?.status || 3;
-          console.log('moje attendance za user copy',attendance?.status);
+        if ((attendance?.status) && userCopy.length) {
+          userCopy[0].status = attendance?.status;
         }
         return userCopy[0] ? userCopy[0] : [];
       });

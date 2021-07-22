@@ -58,9 +58,9 @@ const Event = ({
     setAttendanceButton(true);
     setRowId(creationTime);
     let status = null;
-    if (ev.currentTarget.name === 'yes') status = 1;
-    if (ev.currentTarget.name === 'no') status = 0;
-    if (ev.currentTarget.name === 'dunno') status = 2;
+    if (ev.currentTarget.name === 'yes') status = 'yes';
+    if (ev.currentTarget.name === 'no') status = 'no';
+    if (ev.currentTarget.name === 'dunno') status = 'dunno';
 
     const occurrenceId = ev.currentTarget.id;
     setEditedEventRow(occurrenceId);
@@ -68,6 +68,7 @@ const Event = ({
   }
 
   const userAttendanceStatus = (row) => {
+    console.log('row',row);
     const userAttendanceIndex = row?.attendance?.findIndex((el) => el?.userID === userId);
     let userAttendanceStatus;
     if (userAttendanceIndex !== -1) {

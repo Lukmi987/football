@@ -4,7 +4,6 @@ import { FETCH_OCCURRENCES } from '../../constants/actionTypes';
 
 export function* processEventAttendance(action) {
   const { occurrenceId, status, creationTime } = action;
-  console.log('tak status je', action);
   const userToken = localStorage.token;
 
   try {
@@ -13,16 +12,10 @@ export function* processEventAttendance(action) {
         `/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`,
       );
       const userId = localStorage.userId;
-      const user = data.filter((attendance) => {
-        return attendance.userId === userId;
-      });
       const userIndex = data.findIndex((item) => item.userId === userId);
 
-      console.log('v sage manage userIndex je a status !!!', userIndex, status);
       if (userIndex === -1) {
-        console.log('prvni');
         const addedUserArr = [...data, { userId: userId, status: status }];
-        console.log('v sage manage addUser', addedUserArr);
         yield axios.put(
           `/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`,
           addedUserArr,
@@ -30,9 +23,7 @@ export function* processEventAttendance(action) {
         yield put({ type: FETCH_OCCURRENCES });
       } else if (userIndex !== -1) {
         const copy = [...data];
-        console.log('druha', copy[userIndex], 'a cista copy', copy);
         copy[userIndex].status = status;
-        console.log('a cista copy po zmene', copy);
         yield axios.put(
           `/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`,
           copy,

@@ -8,6 +8,7 @@ const EventAttendanceButtons = ({
   userAttendanceStatus,
   cr,
 }) => {
+  console.log('userAttendanceStatus',userAttendanceStatus);
   return (
     <div className="attendance-table-attendance-cell">
       <Button
@@ -20,7 +21,7 @@ const EventAttendanceButtons = ({
         round
         onClick={(e) => handleAttendance(e, cr)}
         className={
-          userAttendanceStatus === 1
+          userAttendanceStatus === 'yes'
             ? 'attendance-active-button'
             : '' || disabledButton
             ? 'attendance-disabled-button'
@@ -37,7 +38,7 @@ const EventAttendanceButtons = ({
         round
         onClick={(e) => handleAttendance(e, cr)}
         className={
-          userAttendanceStatus === 2
+          userAttendanceStatus === 'dunno'
             ? 'attendance-active-button'
             : '' || disabledButton
             ? 'attendance-disabled-button'
@@ -54,7 +55,7 @@ const EventAttendanceButtons = ({
         round
         onClick={(e) => handleAttendance(e, cr)}
         className={
-          userAttendanceStatus === 0
+          userAttendanceStatus === 'no'
             ? 'attendance-active-button'
             : '' || disabledButton
             ? 'attendance-disabled-button'
