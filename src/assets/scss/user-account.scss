@@ -4,3 +4,77 @@
 .user-account-submit-button:hover {
   background-color: aqua !important;
 }
+
+$blue: #125B68;
+$green: #02906b;
+$salmon: #e85f5f;
+$link: $green;
+$fastInEaseOut: cubic-bezier(0.000, 0, .3, 1);
+
+
+ .flex-grid {
+   display: flex;
+   justify-content: center;
+   align-content: center;
+   background: white;
+   margin: 2rem 2rem;
+   min-width: 120px;
+   padding: 2rem 1rem 2.4rem;
+   position: relative;
+ }
+
+#toggle-button {
+  background: none;
+  border: none;
+  color: #444;
+  padding: 1.2rem 1.2rem 1rem;
+  border-radius: 50%;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  margin: 10px;
+  transition: all .2s $fastInEaseOut;
+  outline: none;
+
+  &:focus {
+    box-shadow: 0px 0px 2px $salmon;
+    background-color: orange
+  }
+
+  &:focus,
+  &:hover {
+
+
+
+    .btn__icon {
+      fill: blue;
+    }
+  }
+
+}
+
+.btn__icon {
+  width: 48px;
+  height: 48px;
+  fill: #444;
+  transition: all .25s $fastInEaseOut;
+}
+
+.btn__icon--top {
+  position: absolute;
+  left: 0;
+  right: 0;
+  margin: auto;
+}
+
+
+.btn--flip-out.is-active {
+  .btn__icon--bottom {
+    transform: translateY(-7.75%);
+  }
+
+  .btn__icon--top {
+    transform: rotateX(-180deg) translateY(-7.75%);
+  }
+
+}

@@ -1,5 +1,5 @@
 /*eslint-disable*/
-import React, { useState } from 'react';
+import React, { useLayoutEffect, useState } from 'react';
 // @material-ui/core components
 import { makeStyles } from '@material-ui/core/styles';
 // @material-ui/icons
@@ -27,6 +27,7 @@ import Checkbox from '@material-ui/core/Checkbox';
 import HeaderLinks from '../../../components/Header/HeaderLinks';
 import Header from '../../../components/Header/Header';
 import { setLoadingStatus } from '../../loadingStatus/actions';
+import classNames from 'classnames';
 
 const useStyles = makeStyles(styles);
 
@@ -52,6 +53,14 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
   const [eventCount, setEventCount] = useState(0);
   const [eventType, setEventType] = useState(1);
   const [validDate, setValidDate] = useState(true);
+  const [isMenuOpen, setMenuOpen] = useState(false);
+
+
+  useLayoutEffect(() => {
+    const chev = document.getElementById('toggle-button');
+
+    console.log('chev ',chev);
+  },[])
 
   const handleDateChange = (id, ev) => {
     if (ev === 'Invalid Date Format') {
@@ -119,7 +128,11 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
     processEvent(composeEventData(), eventCount);
   };
 
+const handleToggle = () => {
+  setMenuOpen(!isMenuOpen)
+}
 
+console.log('is meu',isMenuOpen);
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
@@ -150,6 +163,31 @@ export default function EventForm({ processEvent, createEvent, eventStatusMes, s
                   color="warning"
                 />
               )}
+            </GridItem>
+
+            <GridItem>
+              <div id='holland'> blblb</div>
+              tadu
+              <svg  width="0" height="0" version="1.1" className='absolute'
+                   xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
+                <defs>
+                  <svg id="icon-chevron" viewBox="0 0 1024 1024">
+                    <title>Show More</title>
+                    <path className="path1" d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
+                  </svg>
+                </defs>
+              </svg>
+
+              <div className='flex-grid'>
+              <button onClick={handleToggle} id='toggle-button' className={classNames('btn btn--flip-out flex items-center', isMenuOpen && 'is-active')} type="button">
+                <svg className="btn__icon btn__icon--bottom">
+                  <use href="#icon-chevron" />
+                </svg>
+                <svg className="btn__icon btn__icon--top">
+                  <use href="#icon-chevron" />
+                </svg>
+              </button>
+              </div>
             </GridItem>
             <GridItem>
               <FormControl className={selectClasses.formControl}>
