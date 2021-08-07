@@ -10,7 +10,7 @@ import PhotoGallery from './app/photoGallery/PhotoGallery';
 import Cabin from './app/cabin/Cabin';
 import Components from './views/Components/Components';
 import { createBrowserHistory, createHashHistory } from 'history';
-import ManageAccounts from './app/manageAccounts/ManageAccounts';
+import ManageAccounts from './app/manageAccounts/containers/ManageAccounts';
 
 const App = () => {
   const hist = createHashHistory();

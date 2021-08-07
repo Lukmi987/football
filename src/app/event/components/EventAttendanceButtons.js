@@ -1,9 +1,11 @@
+import React from 'react'
 import Button from '../../../components/CustomButtons/Button';
-import React from 'react';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const EventAttendanceButtons = ({
   occurrence,
   handleAttendance,
+                                 handleDeleteEvent,
   disabledButton = false,
   userAttendanceStatus,
   cr,

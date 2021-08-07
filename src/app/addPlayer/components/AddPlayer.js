@@ -112,6 +112,7 @@ const fiedStyles = 'py-1 sm:w-25 rounded shadow';
                   <div className='mb-5 flex flex-column items-center'>
                       <label className={labelStyles} htmlFor="isAdmin">Admin práva</label>
                       <Field name="isAdmin" type="checkbox" />
+                      <div>Admin práva dovolují hráčovi: Přidat hráče, Nastavit admin práva, Vytvořit událost, V kabině sekci novinky vytvořit článek a smazat událost</div>
                   </div>
                   <div className='mt-1'>
                     {loadingStatus.isLoading ? (

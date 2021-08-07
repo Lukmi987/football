@@ -11,16 +11,20 @@ import 'react-draft-wysiwyg/dist/react-draft-wysiwyg.css';
 import { convertToHTML } from 'draft-convert';
 import DOMPurify from 'dompurify';
 import { setLoadingStatus } from '../../loadingStatus/actions';
+import { getAdmin } from '../actions';
 
-export default function EventNews({ fetchNews, saveNews, loadingStatus, setLoadingStatus, eventNews }) {
+export default function EventNews({ fetchNews, saveNews, loadingStatus, setLoadingStatus, eventNews, getAdmin, admin }) {
   const [disableEditable, setDisableEditable] = useState(true);
   const [editorState, setEditorState] = useState(EditorState.createEmpty());
   const [convertedContent, setConvertedContent] = useState(null);
 
   useEffect(() => {
     fetchNews();
+    getAdmin();
   }, []);
-  console.log('eventNews,', eventNews);
+
+  console.log('jsem admin bo jak',admin);
+
   useEffect(() => {
     if (eventNews?.eventNews) {
       console.log('aha ale jsem');
@@ -73,14 +77,15 @@ export default function EventNews({ fetchNews, saveNews, loadingStatus, setLoadi
         message={loadingStatus.error || '!!!Uspesne ulozeno'}
       />
       <div className='pb-3'>
+        {admin.isAdmin &&
         <>
           <Button
             color={!disableEditable ? 'warning' : 'success'}
             onClick={() => setDisableEditable(!disableEditable)}
           >
-            Povol edit mode
+            {disableEditable ? 'Povol edit mode' : 'Zakaz editaci'}
           </Button>
-          <div className={classNames(disableEditable && 'hidden')} >
+          <div className={classNames(disableEditable && 'hidden')}>
             {loadingStatus.isLoading ? (
               <Spinner />
             ) : (
@@ -89,7 +94,8 @@ export default function EventNews({ fetchNews, saveNews, loadingStatus, setLoadi
               </Button>
             )}
           </div>
-          </>
+        </>
+        }
         </div>
         <div className="bg-danger hidden">testisk</div>
         <div className={classNames(disableEditable && 'hidden')}>

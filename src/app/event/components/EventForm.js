@@ -149,7 +149,7 @@ console.log('is meu',isMenuOpen);
                   open={true}
                   autoHideDuration={2000}
                   onClose={setLoadingStatus}
-                  message={eventStatusMes.error || 'Uspesne vytvoreno'}
+                  message={eventStatusMes.error || 'Údálost vytvořena. Přehled všch událostí najdes v kabině'}
                 />
               )}
               {!validDate && (
@@ -166,33 +166,12 @@ console.log('is meu',isMenuOpen);
             </GridItem>
 
             <GridItem>
-              <div id='holland'> blblb</div>
-              tadu
-              <svg  width="0" height="0" version="1.1" className='absolute'
-                   xmlns="http://www.w3.org/2000/svg" xlink="http://www.w3.org/1999/xlink">
-                <defs>
-                  <svg id="icon-chevron" viewBox="0 0 1024 1024">
-                    <title>Show More</title>
-                    <path className="path1" d="M316 334l196 196 196-196 60 60-256 256-256-256z"></path>
-                  </svg>
-                </defs>
-              </svg>
 
-              <div className='flex-grid'>
-              <button onClick={handleToggle} id='toggle-button' className={classNames('btn btn--flip-out flex items-center', isMenuOpen && 'is-active')} type="button">
-                <svg className="btn__icon btn__icon--bottom">
-                  <use href="#icon-chevron" />
-                </svg>
-                <svg className="btn__icon btn__icon--top">
-                  <use href="#icon-chevron" />
-                </svg>
-              </button>
-              </div>
             </GridItem>
             <GridItem>
               <FormControl className={selectClasses.formControl}>
-                <div className='shadow-sm px-2 rounded'>
-                <InputLabel id="event-type-select">Typ Udalosti</InputLabel>
+                <div className='shadow px-2 rounded'>
+                <InputLabel className='font-weight-bold pt-1 pl-1 ' id="event-type-select">Typ Udalosti</InputLabel>
                 <Select
                   labelId="event-type-select"
                   id="event-type"
@@ -249,7 +228,7 @@ console.log('is meu',isMenuOpen);
                 control={
                   <Checkbox checked={repeatEvent} onChange={handleRepeatCheckbox} color="primary" />
                 }
-                label="Chceš opakovat událost týdně ?"
+                label={<span className='font-weight-bold'>Chceš opakovat událost týdně ?</span>}
               />
               {repeatEvent && (
                 <FormControl className={selectClasses.formControl}>

@@ -29,7 +29,7 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
     if (occurrencesList && usersProfiles) {
       const eventsAccordingDate = filterEventsAccordingData(startDate, endDate);
       const eventsAccordingTypeAndDate = filterEventsAccordingType(eventType, eventsAccordingDate);
-
+console.log('eventsAccordingTypeAndDate',eventsAccordingTypeAndDate);
       const usersAttendanceQuantity = countUsersAttendance(eventsAccordingTypeAndDate);
       setUsersAttendance(usersAttendanceQuantity);
       setTotalSelectedEvents(eventsAccordingTypeAndDate.length);
@@ -39,7 +39,8 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
   const filterEventsAccordingType = (eventType, events) => {
     return events.filter((ev) => ev.eventType === eventType);
   };
-
+console.log('stats',occurrencesList);
+console.log('user namap !!!!!!!',usersAttendance);
   const filterEventsAccordingData = (startDate, endDate) => {
     return occurrencesList.filter(
       (ev) => ev.creationTime >= startDate && ev.creationTime <= endDate,
@@ -53,7 +54,7 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
     usersProfiles.forEach((user) => {
       eventsAccordingTypeAndDate.forEach((ev) => {
         ev.attendance.forEach((attendance) => {
-          if (attendance?.userID === user.userID && attendance?.status === 1) {
+          if (attendance?.userID === user.userID && attendance?.status === 'yes') {
             const userProfileIndex = userProfilesCopy.findIndex(
               (userCop) => userCop.userID === user.userID,
             );
@@ -86,8 +87,9 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
       <GridContainer justify="left">
         <GridItem xs={12} sm={12} md={8}>
           <div className="cabin-stats-form">
-            <FormControl className="cabin-stats-form-select-event">
-              <InputLabel id="event-type-select">Typ Udalosti</InputLabel>
+            <span className="font-weight-bold text-lg my-4">Třiď události dle typu a data</span>
+            <FormControl className='max-w-md shadow-sm'>
+              <InputLabel id="event-type-select" className="font-weight-bold">Typ Udalosti</InputLabel>
               <Select
                 labelId="event-type-select"
                 id="event-type"
@@ -106,10 +108,10 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
             </FormControl>
             <div>
               <MuiPickersUtilsProvider utils={DateFnsUtils}>
-                <div className=' shadow flex max-w-md  justify-center rounded mt-2 pl-1'>
+                <div className=' shadow flex max-w-md  justify-center rounded mt-4 pl-1'>
                 <KeyboardDatePicker
                   margin="normal"
-                  className="cabin-stats-form-date-from"
+                  className="cabin-stats-form-date-from font-weight-bold"
                   id="date-picker-dialog"
                   label="Od"
                   required
@@ -144,36 +146,35 @@ const EventStats = ({ fetchUsersProfiles, occurrencesList, usersProfiles }) => {
       <br />
       <br />
 
-      <GridContainer justify="left">
-        <GridItem xs={12} sm={12} md={8}>
-          <div className="cabin-stats">
-            <h2 className="cabin-stats-title">
+      {/*<GridContainer justify="left">*/}
+
+          <div className=" my-3 pb-10">
+            <div className="font-bold  pb-3">
               Celkový počet události za zvolené období {totalSelectedEvents}
-            </h2>
+            </div>
             <ul>
               {usersAttendance &&
                 usersAttendance.map((user) => (
-                  <li className="cabin-stats-list">
-                    <div>
+                  <li className='mb-3'>
+                  <div>
                       <Avatar key={uuid_v4()} alt="Remy Sharp" src={user?.profileUrl} />
                     </div>
                     <div>
                       <h4>
                         {/*{user?.firstName} {" "} {user?.lastName} byl celkem na {user.attendance}*/}
-                        {user?.firstName || user?.lastName ? `${user?.firstName} ${user?.lastName} ${overAll} ${user.attendance}` : user?.nickname ?
-                         `${user?.nickname} ${overAll} ${user.attendance}`  : `${user?.email} ${overAll} ${user.attendance}` }
+                        {user?.nickname ? ` ${user?.nickname} ${overAll} ${user.attendance}` :  `${user?.firstName} ${user?.lastName} ${overAll} ${user.attendance}` }
                       </h4>
                       <LinearProgress
                         variant="determinate"
-                        value={(user.attendance / totalSelectedEvents) * 100}
+                        value={ (user?.attendance / totalSelectedEvents  * 100) || 0}
                       />
                     </div>
                   </li>
                 ))}
             </ul>
           </div>
-        </GridItem>
-      </GridContainer>
+
+      {/*</GridContainer>*/}
     </div>
   );
 };

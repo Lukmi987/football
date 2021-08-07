@@ -40,12 +40,9 @@ export function* loginUser(action) {
     localStorage.setItem('expTime', expTime.toString());
     localStorage.setItem('refreshToken', response.data.refreshToken);
     localStorage.setItem('userId', response.data.localId);
-
     const tokenCreatedTime = new Date().getTime().toString();
     localStorage.setItem('tokenCreatedTime', tokenCreatedTime);
     localStorage.setItem('userEmail', response.data.email);
-    localStorage.setItem('isAdmin', response.data?.isAdmin);
-
 
     yield put({ type: SET_TOKEN_STATUS, data: { deleted: false } });
 

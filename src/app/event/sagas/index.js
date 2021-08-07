@@ -6,7 +6,7 @@ import {
   FETCH_OCCURRENCES,
   FETCH_USERS_PROFILES,
   FETCH_NEWS_SAGA,
-  SAVE_NEWS_SAGA,
+  SAVE_NEWS_SAGA, DELETE_EVENT_SAGA,
 } from '../../constants/actionTypes';
 import { processEvent } from './processEvent';
 import { fetchEvents } from './fetchEvents';
@@ -15,6 +15,7 @@ import { processEventAttendance } from './processEventAttendance';
 import { fetchUsersProfiles } from './fetchUsersProfiles';
 import { fetchNews } from './fetchNews';
 import { saveNews } from './saveNews';
+import { deleteEvent } from './deleteEvent';
 
 const eventSagas = [
   takeLatest(PROCESS_EVENT, processEvent),
@@ -24,6 +25,7 @@ const eventSagas = [
   takeLatest(FETCH_USERS_PROFILES, fetchUsersProfiles),
   takeLatest(FETCH_NEWS_SAGA, fetchNews),
   takeLatest(SAVE_NEWS_SAGA, saveNews),
+  takeLatest(DELETE_EVENT_SAGA, deleteEvent),
 ];
 
 export default eventSagas;

@@ -7,20 +7,20 @@ export const loadEvents = (result, event) => {
   return result;
 };
 
+// eventCount represents number of weeks, multiply number of weeks(to get total days) to calculate how much to add up to default start time
 export const createOccurrences = (eventCount, eventId, defaultStartTime, eventType) => {
   const occurrences = {};
-  const attendance = [{ userId: '', attendance: '' }];
+
   for (let i = 0; i <= eventCount; i++) {
-    let increaseWeeks = i * 7;
+    let increaseByDays = i * 7;
     let time = defaultStartTime.getTime();
-    if (increaseWeeks) {
-      time = defaultStartTime.setDate(defaultStartTime.getDate() + increaseWeeks);
+    if (increaseByDays) {
+      time = defaultStartTime.getTime() + (increaseByDays * 86400000);
     }
     occurrences[time] = {
       eventId: eventId,
       creationTime: time,
       eventType,
-      attendance,
     };
   }
   return occurrences;

@@ -1,13 +1,9 @@
 import React, { useEffect, useState } from 'react';
-// @material-ui/core components
-import { makeStyles } from '@material-ui/core/styles';
 import './Event.scss';
 import GridContainer from 'components/Grid/GridContainer.js';
 import GridItem from 'components/Grid/GridItem.js';
 import 'date-fns';
-
 import CollapsibleTable, { timeStampToData } from './eventsTable';
-
 import 'react-multi-carousel/lib/styles.css';
 import { Avatar, Switch } from '@material-ui/core';
 import Spinner from '../../Spinner';
@@ -15,37 +11,32 @@ import { v4 as uuid_v4 } from 'uuid';
 import EventAttendanceButtons from './EventAttendanceButtons';
 
 const Event = ({
-  processEvent,
   processEventAttendance,
-  fetchEvents,
   fetchOccurrences,
-  eventsList,
   occurrencesList,
+  deleteEvent,
+  getAdmin,
+  admin
 }) => {
   const userId = localStorage?.userId;
-  const userEmail = localStorage?.userEmail;
   const [editedEventRow, setEditedEventRow] = useState();
-
   const [rowId, setRowId] = useState();
-  const [nearestEvents, setNearestEvents] = useState([]);
   const [attendanceButton, setAttendanceButton] = useState(false);
   const types = ['image/png', 'image/jpeg'];
+
   useEffect(() => {
     fetchOccurrences();
   }, [localStorage.token]);
 
   useEffect(() => {
     if (occurrencesList) {
-      setNearestEvents(filterNearestEvents(occurrencesList));
       setAttendanceButton(false);
     }
   }, [occurrencesList]);
 
-  function filterNearestEvents(occurrencesList) {
-    return occurrencesList.filter((event) => event.creationTime < Date.now());
-  }
-
-  console.log('occurrencesList',occurrencesList);
+  useEffect(()=> {
+    getAdmin();
+  },[admin.isAdmin])
 
   const getEventTypeName = (eventType) => {
     if (eventType === 1) return 'Trening';
@@ -67,8 +58,10 @@ const Event = ({
     processEventAttendance(status, occurrenceId, creationTime);
   }
 
+   const handleDeleteEvent = (ev, creationTime) => deleteEvent(ev.currentTarget.id, creationTime);
+
+
   const userAttendanceStatus = (row) => {
-    console.log('row',row);
     const userAttendanceIndex = row?.attendance?.findIndex((el) => el?.userID === userId);
     let userAttendanceStatus;
     if (userAttendanceIndex !== -1) {
@@ -97,6 +90,7 @@ const Event = ({
                     handleAttendance={handleAttendance}
                     userAttendanceStatus={userAttendanceStatus(occurrencesList[0])}
                     cr={occurrencesList[0].creationTime}
+                    handleDeleteEvent={handleDeleteEvent}
                   />
                 )}
                 {disabledButton && (
@@ -116,19 +110,25 @@ const Event = ({
                 {occurrencesList[0]?.attendance &&
                 occurrencesList[0].attendance.map(
                     (item) =>
-                      item?.profileUrl ? (
-                       <div className='flex items-center my-2 flex-column'>
-                        <Avatar
-                          key={uuid_v4()}
-                          alt="Remy Sharp"
-                          src={item?.profileUrl}
-                          className="nearest-event-player"
-                        />
-                        <span>{item?.nickname}</span>
-                       </div>
+                      (item.status === 'yes') && (
+                        item?.profileUrl ? (
+                        <div className='flex items-center my-2 flex-column'>
+                          <Avatar
+                            key={uuid_v4()}
+                            alt="Remy Sharp"
+                            src={item?.profileUrl}
+                            className="nearest-event-player"
+                          />
+                          <span>{item?.nickname}</span>
+                        </div>
                       ) : (
-                        <div key={uuid_v4()} className='bg-primary-yellow p-2 mx-2 text-sm rounded align-self-center'>{item?.firstName} {' '} {item?.lastName}</div>
+                        <div key={uuid_v4()}
+                             className='bg-primary-yellow p-2 mx-2 text-sm rounded align-self-center'>
+                          {item?.nickname || `${item?.firstName} ${item?.lastName}` }
+                        </div>
+                        )
                       )
+
                   )}
               </div>
             </GridItem>
@@ -149,9 +149,11 @@ const Event = ({
             className="cabin-collapsible-table"
             occurrencesList={occurrencesList}
             handleAttendance={handleAttendance}
+            handleDeleteEvent={handleDeleteEvent}
             handleAttendanceButton={attendanceButton}
             userId={userId}
             editedEventRow={editedEventRow}
+            isAdmin={admin.isAdmin}
             rowId={rowId}
           />
         )}

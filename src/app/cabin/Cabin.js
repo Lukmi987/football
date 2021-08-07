@@ -31,12 +31,11 @@ const Cabin = () => {
               <img src={ball} className='mt-12 rounded-circle ' width='400' height='300'/>
             </GridContainer>
 
-            <Tabs  defaultActiveKey="profile"  activeKey={key} onSelect={(k) => {setKey(k); console.log('key',k)}} id="uncontrolled-tab-example">
+            <Tabs className='sm:mt-6'  defaultActiveKey="profile"  activeKey={key} onSelect={(k) => {setKey(k); console.log('key',k)}} id="uncontrolled-tab-example">
               <Tab  eventKey="home"  title="Statistiky" >
                 <EventStats />
               </Tab>
-
-              <Tab eventKey="events" title="Manage Events">
+              <Tab eventKey="events" title="Správa událostí">
                 <Event />
               </Tab>
               <Tab eventKey="contact" title="Novinky">

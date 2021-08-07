@@ -92,16 +92,16 @@ export default function UserAccount({ storeUser, user, loadingStatus, setLoading
               <GridItem xs={12} sm={12} md={4}>
                 <Snackbar
                   anchorOrigin={{
-                    vertical: 'top',
-                    horizontal: 'center',
+                    vertical: 'center',
+                    horizontal: 'top',
                   }}
                   message={
                     <span>
-                      <b>Uspech:</b> Data usepesne ulozena !!
+                      <b>Uspech:</b> Data úspěšně uložena!!
                     </span>
                   }
                   open={loadingStatus.success}
-                  autoHideDuration={2000}
+                  autoHideDuration={4000}
                   onClose={setLoadingStatus}
                   color="success"
                   icon={Check}
@@ -127,7 +127,8 @@ export default function UserAccount({ storeUser, user, loadingStatus, setLoading
                   }}
                   validationSchema={Yup.object({
                     nickname: Yup.string().max(15, NICKNAME_LIMIT).required('Required'),
-                    bDay: Yup.string().max(20, BDAY_LIMIT).required('Required'),
+                    bDay: Yup.string().min(4, "Malo znaku")
+                      .max(20, 'Moc znaku').required('Required'),
                     aboutMe: Yup.string().max(60, BDAY_LIMIT)
                   })}
                   onSubmit={(values => { storeUser({...values, imageUrl})})}
@@ -141,7 +142,7 @@ export default function UserAccount({ storeUser, user, loadingStatus, setLoading
 
                     <div className='mb-5 flex flex-column items-center'>
                       <label className={labelStyles} htmlFor="bDay">Den narození</label>
-                      <Field className={fiedStyles} name="bDay" type="text" />
+                      <Field className={fiedStyles} name="bDay" type="number" />
                       <ErrorMessage name="bDay" />
                     </div>
 

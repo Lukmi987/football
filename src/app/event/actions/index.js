@@ -7,7 +7,7 @@ import {
   FETCH_USERS_IDS,
   FETCH_USERS_PROFILES,
   FETCH_NEWS_SAGA,
-  SAVE_NEWS_SAGA,
+  SAVE_NEWS_SAGA, DELETE_EVENT_SAGA, GET_ADMIN,
 } from '../../constants/actionTypes';
 import { createRoutine } from 'redux-saga-routines';
 
@@ -45,3 +45,13 @@ export const saveNews = (payload) => ({
   type: SAVE_NEWS_SAGA,
   data: payload,
 });
+
+export const deleteEvent = (occurrenceId, creationTime) => ({
+  type: DELETE_EVENT_SAGA,
+  occurrenceId,
+  creationTime
+})
+
+export const getAdmin = () => ({
+  type: GET_ADMIN,
+})

@@ -1,5 +1,5 @@
 import axios from '../../axios-football';
-import { FETCH_PLAYERS_SAGA, SET_LOADING_EVENT, SET_PLAYERS } from '../../constants/actionTypes';
+import { FETCH_PLAYERS_SAGA, SET_ADMIN, SET_LOADING_EVENT, SET_PLAYERS } from '../../constants/actionTypes';
 import { put, select } from 'redux-saga/effects';
 
 export function* saveEditedPlayer(payload) {
@@ -19,6 +19,8 @@ export function* saveEditedPlayer(payload) {
       `/users/players/-MWEMVOl0OXP0c5Npsq4.json?auth=${userToken}`,
       playersCopy,
     );
+
+    yield put({type: SET_ADMIN, data: {isAdmin: isAdmin}})
     yield put({ type: SET_PLAYERS, data: responsePlayers.data });
     yield put({ type: SET_LOADING_EVENT, data: { isLoading: false, success: true, error: false } });
   } catch (e) {

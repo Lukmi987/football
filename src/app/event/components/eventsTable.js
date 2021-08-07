@@ -24,6 +24,7 @@ import Tab from 'react-bootstrap/Tab';
 import EventAttendanceButtons from './EventAttendanceButtons';
 import EventAttendanceList from './EventAttendanceList';
 import { groupBy } from '../../helpers/eventHelpers';
+import CancelIcon from '@material-ui/icons/Cancel';
 
 const useRowStyles = makeStyles({
   root: {
@@ -57,7 +58,7 @@ function createData(name, calories, fat, carbs, protein, price) {
 
 export function timeStampToData(timeStamp) {
   const date = new Date(timeStamp);
-  const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric' };
+  const options = { weekday: 'short', year: 'numeric', month: 'long', day: 'numeric', hour:'numeric', minute:'numeric' };
   return new Intl.DateTimeFormat('default', options).format(timeStamp)
 }
 
@@ -75,7 +76,7 @@ const getEventType = (eventTypeId) => {
 };
 
 function Row(props) {
-  const { occurrence, handleAttendance, userId, handleAttendanceButton, rowId } = props;
+  const { occurrence, handleAttendance, userId, handleAttendanceButton, rowId, handleDeleteEvent, isAdmin } = props;
   const cr = occurrence.creationTime;
   const [open, setOpen] = React.useState(false);
   const classes = useRowStyles();
@@ -88,7 +89,7 @@ function Row(props) {
 
   const groupByUsers = groupBy(occurrence.attendance, (a) => a?.status);
   const disabledButton = handleAttendanceButton && occurrence.creationTime !== rowId;
-  console.log('gjjg',groupByUsers.get('yes'));
+
   return (
     <React.Fragment>
       <TableRow className={classes.root}>
@@ -113,6 +114,7 @@ function Row(props) {
               occurrence={occurrence}
               handleAttendance={handleAttendance}
               userAttendanceStatus={userAttendanceStatus}
+              handleDeleteEvent={handleDeleteEvent}
               cr={cr}
             />
           )}
@@ -126,13 +128,21 @@ function Row(props) {
             />
           )}
         </TableCell>
+        {isAdmin &&
+        <TableCell>
+          <div className='w-3 h-3 rounded hover:bg-red-700 cursor-pointer m-auto lg:ml-4' id={occurrence.id}
+               onClick={(ev) => handleDeleteEvent(ev, cr)}>
+            <CancelIcon />
+          </div>
+        </TableCell>
+        }
       </TableRow>
       <TableRow>
         <TableCell style={{ paddingBottom: 0, paddingTop: 0 }} colSpan={6}>
           <Collapse in={open} timeout="auto" unmountOnExit>
             <Box margin={1}>
               <Typography variant="h6" gutterBottom component="div">
-                Players
+                Docházka
               </Typography>
               <Table size="small" aria-label="purchases">
                 <tbody>
@@ -150,7 +160,7 @@ function Row(props) {
                                     user={user}
                                     classes={classes}
                                   />
-                                  <span>{user?.nickname}</span>
+                                  <span>{user?.nickname  || `${user?.firstName} ${user?.lastName}` }</span>
                                 </div>
                               ))
                           ) : (
@@ -242,7 +252,8 @@ const CollapsibleTable = ({
   userId,
   editedEventRow,
   rowId,
-  creationTime,
+  handleDeleteEvent,
+  isAdmin
 }) => {
   return (
     <TableContainer component={Paper}>
@@ -253,6 +264,7 @@ const CollapsibleTable = ({
             <TableCell align="right">Typ události</TableCell>
             <TableCell align="right">Začátek</TableCell>
             <TableCell align="right">Zůčastním se?</TableCell>
+            {isAdmin && <TableCell align="right">Smaž událost</TableCell>}
           </TableRow>
         </TableHead>
         <TableBody>
@@ -264,8 +276,10 @@ const CollapsibleTable = ({
                 editedEventRow={editedEventRow}
                 userId={userId}
                 handleAttendance={handleAttendance}
+                handleDeleteEvent={handleDeleteEvent}
                 handleAttendanceButton={handleAttendanceButton}
                 rowId={rowId}
+                isAdmin={isAdmin}
               />
             );
           })}

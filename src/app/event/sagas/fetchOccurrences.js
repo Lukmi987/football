@@ -14,7 +14,7 @@ export function* fetchOccurrences() {
 
     const entr = Object.entries(response.data);
     const occurrenceList = JSON.parse(JSON.stringify(entr));
-
+    console.log('occurrenceList',occurrenceList);
     const mapNodeIdAndUsersToEachEvent = (array) => {
       const acumm = [];
       const occurrencesArray = 1;
@@ -29,6 +29,7 @@ export function* fetchOccurrences() {
             let occurrencesValues = Object.values(occurrences);
             for (let k = 0; k < occurrencesValues.length; k++) {
               const attendance = mapUsers(occurrencesValues, k, responseUsers);
+              console.log('attendance v map',occurrencesValues[k]);
               occurrencesValues[k].attendance = attendance;
               let result = { ...node, ...occurrencesValues[k] };
               acumm.push(result);
@@ -39,7 +40,7 @@ export function* fetchOccurrences() {
       return acumm;
     };
     const occurrencesWithUsers = mapNodeIdAndUsersToEachEvent(occurrenceList);
-
+    console.log('occurrencesWithUsers',occurrencesWithUsers);
 
     const futureEvents = occurrencesWithUsers.filter((item) => item.creationTime > new Date().getTime())
     // Sort events according their creating date
@@ -49,7 +50,7 @@ export function* fetchOccurrences() {
 
 
     function mapUsers(occurrencesValues, index, responseUsers) {
-      return occurrencesValues[index].attendance.map((attendance) => {
+      return (occurrencesValues[index]?.attendance || []).map((attendance) => {
         const user = responseUsers.data.filter((user) => user.userID === attendance.userId);
         const userCopy = JSON.parse(JSON.stringify(user));
 

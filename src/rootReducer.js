@@ -7,6 +7,7 @@ import futureOccurrences from './app/event/reducers/futureOccurrences';
 import login from './app/login/reducers/login';
 import logout from './app/login/reducers/logout';
 import user from './app/userAccount/reducers/storeUser';
+import admin from './app/userAccount/reducers/setAdmin';
 import occurrencesWithUsers from './app/event/reducers/occurrencesWithUsers';
 import manageToken from './app/manageToken/reducers/setTokenStatus';
 import usersProfiles from './app/event/reducers/usersProfiles';
@@ -27,6 +28,7 @@ const rootReducer = combineReducers({
   occurrences,
   futureOccurrences,
   user,
+  admin,
   occurrencesWithUsers,
   loadingStatus,
   manageToken,

@@ -24,3 +24,8 @@ export const getTokenStatus = createSelector(
   (state) => state,
   (state) => state.manageToken.deleted,
 );
+
+export const getAdminStatus = createSelector(
+  (state) => state,
+  (state) => state.admin
+)

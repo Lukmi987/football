@@ -11,19 +11,25 @@ export function* processEventAttendance(action) {
       const { data } = yield axios.get(
         `/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`,
       );
-      const userId = localStorage.userId;
-      const userIndex = data.findIndex((item) => item.userId === userId);
 
-      if (userIndex === -1) {
-        const addedUserArr = [...data, { userId: userId, status: status }];
+      const userId = localStorage.userId;
+      console.log('data v nechz hledam index',data);
+
+      const userAttendance = data?.find((item) => item?.userId === userId) || undefined;
+      console.log('status v userAttendance',userAttendance);
+
+      if (userAttendance === undefined) {
+        const addedUserArr = [...(data || []), { userId: userId, status: status }];
+        console.log('v -1 jkfjpico',addedUserArr);
         yield axios.put(
           `/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`,
           addedUserArr,
         );
         yield put({ type: FETCH_OCCURRENCES });
-      } else if (userIndex !== -1) {
+      } else if (userAttendance) {
         const copy = [...data];
-        copy[userIndex].status = status;
+        copy[data.findIndex((item) => item.userId === userId)].status = status;
+        console.log('nasel v plus jedna',copy);
         yield axios.put(
           `/occurrences/${occurrenceId}/${creationTime}/attendance.json?auth=${userToken}`,
           copy,

@@ -40,14 +40,12 @@ export default function HeaderLinks() {
 
 
   useEffect(() => {
-
     setToken(localStorage.token || null);
   }, [tokenStatus]);
 
   useEffect(() => {
     console.log('hmm use effect headerlinks');
     if(localStorage?.profileUrl) {
-      console.log('hmm use effect headerlinks st profile',localStorage);
       setProfileUrl(localStorage.profileUrl)
     }
   },[localStorage?.profileUrl])
@@ -141,7 +139,8 @@ export default function HeaderLinks() {
         </Tooltip>
       </ListItem>
       <ListItem className={classes.listItem}>
-      <div className='mt-1'><Avatar src={profileUrl} /></div>
+        {console.log('v jsx headerl inks',profileUrl)}
+      <div className='my-2 ml-2.5'><Avatar src={profileUrl} /></div>
       </ListItem>
     </List>
   );

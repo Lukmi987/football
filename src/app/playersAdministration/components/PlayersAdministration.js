@@ -12,7 +12,7 @@ import {Switch} from "@material-ui/core";
 import Spinner from '../../Spinner';
 const useStyles = makeStyles(styles);
 
-export default function PlayersAdministration({ fetchPlayers, players, saveEditedPlayer, loadingStatus }) {
+export default function PlayersAdministration({ fetchPlayers, players, saveEditedPlayer, loadingStatus, user }) {
   const classes = useStyles();
   const [selectedUser, setSelectedUser ] = useState();
   const [] = useState();
@@ -25,7 +25,7 @@ useEffect(()=> {
     setSelectedUser(ev.target.name);
     saveEditedPlayer({userID: player?.userID || '', isAdmin: !player?.isAdmin})
   }
-
+console.log('players',players);
   return  (
       <div>
         <Header brand={ADD_PLAYER} rightLinks={<HeaderLinks/>} fixed color="white"/>
@@ -35,14 +35,20 @@ useEffect(()=> {
 
               <ul className=' flex flex-column  align-items-center shadow-lg  sm:p-2  lg:p-4 rounded'>
               {players.length && players.map(player =>
-              <li key={uuid_v4()} className='flex'>
-                <div className='sm:w-17 w-60 sm:h-8 h-10'><h1>{player?.firstName || player?.lastName ? `${player?.firstName} ${player?.lastName}` : player?.nickname ? player?.nickname : player?.email }</h1></div>
-                <div className="sm:ml-3 ml-10">
-                  {loadingStatus.isLoading && selectedUser === player.email ? <Spinner /> :
-                  <Switch  checked={player?.isAdmin} name={player.email}  onChange={(ev) => handleChange(ev, player) } />
-                  }
-                </div>
-              </li>
+              <>
+                {player &&
+                <li key={uuid_v4()} className='flex'>
+                  <div className='sm:w-17 w-60 sm:h-8 h-10'>
+                    <h1>{player?.nickname || `${player?.firstName} ${player?.lastName}`}</h1></div>
+                  <div className="sm:ml-3 ml-10">
+                    {loadingStatus.isLoading && selectedUser === player.userID ? <Spinner /> :
+                      <Switch checked={player?.isAdmin} name={player.userID}
+                              onChange={(ev) => handleChange(ev, player)} />
+                    }
+                  </div>
+                </li>
+                }
+                </>
               )}
               </ul>
 
