@@ -18,6 +18,7 @@ import styles from 'assets/jss/material-kit-react/components/headerStyle.js';
 import ListItem from '@material-ui/core/ListItem';
 import List from '@material-ui/core/List';
 import { Link } from 'react-router-dom';
+import logoSlavoj from '../../assets/img/logo-slavoj.jpg'
 
 const useStyles = makeStyles(styles);
 
@@ -62,7 +63,10 @@ export default function Header(props) {
 
   const brandComponent = (
     <Link to={'/'}>
-      <Button className="shadow rounded-circle">{brand}</Button>
+      {/*<Button className="shadow rounded-circle">{brand}</Button>*/}
+      <div className='inline-flex'>
+      <img src={logoSlavoj}  width='48' height='24'/>
+      </div>
     </Link>
   );
   return (

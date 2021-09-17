@@ -16,19 +16,6 @@ import Parallax from 'components/Parallax/Parallax.js';
 // sections for this page
 
 import HeaderLinks from 'components/Header/HeaderLinks.js';
-import SectionBasics from './Sections/SectionBasics.js';
-import SectionNavbars from './Sections/SectionNavbars.js';
-import SectionTabs from './Sections/SectionTabs.js';
-import SectionPills from './Sections/SectionPills.js';
-import SectionNotifications from './Sections/SectionNotifications.js';
-import SectionTypography from './Sections/SectionTypography.js';
-import SectionJavascript from './Sections/SectionJavascript.js';
-import SectionCarousel from './Sections/SectionCarousel.js';
-import SectionCompletedExamples from './Sections/SectionCompletedExamples.js';
-import SectionLogin from '../../app/login/containers/SectionLogin.js';
-import Event from '../../app/event/containers/Event.js';
-import SectionExamples from './Sections/SectionExamples.js';
-import SectionDownload from './Sections/SectionDownload.js';
 import SnackbarContent from 'components/Snackbar/SnackbarContent.js';
 import Check from '@material-ui/icons/Check';
 
@@ -39,11 +26,14 @@ import { Carousel } from 'react-bootstrap';
 import CarouselSection from '../../app/carouselSection/CarouselSection';
 import ParagraphSection from '../../app/paragraphSection/ParagraphSection';
 import footballPitch from '../../assets/img/footballPitch.jpg';
+import slovojMain from '../../assets/img/fkSlavoj-min.jpg';
+import UseMobileWidth from '../../hooks/useMobileWidth';
 
 const useStyles = makeStyles(styles);
 
 export default function Components(props) {
   const { history } = props;
+  const isMobile = UseMobileWidth();
   const isUserLoggedIn = history.location.state;
   const aboutClub =
     ' Ve svých počátcích byl fotbalový oddíl SK Mikulov začleněn do slovácké fotbalové župy, kde hrával převážně s družstvy z Hodonínska okresní soutěž. Kromě SK Mikulov působily ve městě tři německé fotbalové kluby – ASK, Macabi a DSF, který byl nejsilnějším klubem na Mikulovsku a hrával v německém regionu divizi. Rozvoj české tělovýchovy v Mikulově byl přerušen rokem 1938. Po skončení 2. světové války byla obnovena činnost SK Mikulov a v roce 1949 byl klub přejmenován na Slavoj Mikulov. Jeho hlavním patronem se staly Vinařské závody Mikulov, které do něj investovaly nemalé finanční prostředky a jejichž podpora sehrála klíčovou úlohu při rozvoji organizovaného sportu v Mikulově. Fotbalový oddíl vinařů se díky svým výborným výsledkům dostal až do krajského přeboru. Počátkem 70. let došlo k přejmenování SK Mikulov na TJ Pálava Mikulov. Fotbalový oddíl společně s oddílem stolních tenistů, plavání a dalšími patřil se svou členskou základnou mezi největší společenské organizace Národní fronty. K osamostatnění fotbalového oddílu od ostatních sportovních oddílů TJ Pálava došlo až v roce 1991. Od té doby začal klub používat současný název FC Pálava Mikulov.';
@@ -57,7 +47,7 @@ export default function Components(props) {
   return (
     <div>
       <Header
-        brand="Domů"
+        brand="Domfů"
         rightLinks={<HeaderLinks />}
         fixed
         color="white"
@@ -67,12 +57,12 @@ export default function Components(props) {
         }}
         {...rest}
       />
-      <Parallax image={footballPitch}>
+      <Parallax image={slovojMain}>
         <div className={classes.container}>
           <GridContainer>
             <GridItem>
               <div className={classes.brand}>
-                <h1 className={classes.title}>FC ...</h1>
+                <h1 className={classNames(classes.title, 'font-italic')}>FK Slavoj Brno</h1>
                 <h3 className={classes.subtitle}></h3>
               </div>
             </GridItem>
@@ -80,7 +70,7 @@ export default function Components(props) {
         </div>
       </Parallax>
 
-      <div className={classNames(classes.main, classes.mainRaised)}>
+      <div className={classNames(classes.main, !isMobile && classes.mainRaised)}>
         <GridItem md={12} className={classes.textCenter}>
           {isUserLoggedIn && (
             <SnackbarContent
@@ -95,9 +85,13 @@ export default function Components(props) {
             />
           )}
         </GridItem>
-        <ParagraphSection content={news} headline={newsHeadLine} />
-        <CarouselSection />
-        <ParagraphSection content={aboutClub} headline={aboutClubHeadLine} />
+        <div className='flex justify-center my-4 flex-column items-center'>
+        <h3 className="m-auto text-lg font-weight-bold">Vítej na stránkách FK Slavoj Brno</h3>
+          <p className='my-10'>Připravujeme, děkujeme za strpení</p>
+        </div>
+        {/*<ParagraphSection content={news} headline={newsHeadLine} />*/}
+        {/*<CarouselSection />*/}
+        {/*<ParagraphSection content={aboutClub} headline={aboutClubHeadLine} />  {/*<ParagraphSection content={aboutClub} headline={aboutClubHeadLine} />*/}
       </div>
       <Footer />
     </div>

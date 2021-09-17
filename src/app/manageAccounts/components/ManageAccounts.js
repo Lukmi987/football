@@ -12,10 +12,13 @@ import PlayersAdministration from '../../playersAdministration/containers/Player
 import AddPlayer from '../../addPlayer/containers/AddPlayer';
 import UserAccount from '../../userAccount/containers/UserAccount';
 import EventForm from '../../event/containers/EventForm';
+import UseMobileWidth from '../../../hooks/useMobileWidth';
 const useStyles = makeStyles(styles);
 
 export default function ManageAccounts({admin, getAdmin }) {
   const classes = useStyles();
+  const isMobile = UseMobileWidth();
+
   useEffect(()=>{
     getAdmin();
   },[admin.isAdmin])
@@ -23,7 +26,7 @@ export default function ManageAccounts({admin, getAdmin }) {
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
-      <div className={classNames(classes.main, classes.mainRaised)}>
+      <div className={classNames(classes.main, !isMobile && classes.mainRaised)}>
         <div className={classes.section}>
           <div className={classes.container}>
             <Tabs className="mt-25" defaultActiveKey="profile" id="uncontrolled-tab-example">

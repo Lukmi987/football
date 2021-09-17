@@ -9,16 +9,18 @@ import GridItem from '../../components/Grid/GridItem';
 import classNames from 'classnames';
 import Footer from '../../components/Footer/Footer';
 import { Carousel } from 'react-bootstrap';
+import UseMobileWidth from '../../hooks/useMobileWidth';
 
 const useStyles = makeStyles(styles);
 
 export default function UserAccount({ storeProfileImgSaga, storeUser, user }) {
   const classes = useStyles();
+  const isMobile = UseMobileWidth();
 
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
-      <div className={classNames(classes.main, classes.mainRaised)}>
+      <div className={classNames(classes.main, !isMobile && classes.mainRaised)}>
         <div className={classes.section}>
           <div className={classes.container}>
             <GridContainer className={classes.textCenter} justify="center">

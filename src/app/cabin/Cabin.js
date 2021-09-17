@@ -14,17 +14,19 @@ import EventStats from '../event/containers/EventStats';
 import EventNews from '../event/containers/EventNews';
 import ball from '../../assets/img/ball.jpeg'
 import Fade from 'react-bootstrap/Fade'
+import UseMobileWidth from '../../hooks/useMobileWidth';
 
 const useStyles = makeStyles(styles);
 
 const Cabin = () => {
   const classes = useStyles();
+  const isMobile = UseMobileWidth();
   const [key, setKey] = useState('events');
 
   return (
     <div>
       <Header brand="Domu" rightLinks={<HeaderLinks />} fixed color="white" />
-      <div className={classNames(classes.main, classes.mainRaised)}>
+      <div className={classNames(classes.main, !isMobile && classes.mainRaised)}>
         <div className={classes.section}>
           <div className={classes.container}>
             <GridContainer className={classes.textCenter} justify="center">
